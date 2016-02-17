@@ -7,7 +7,7 @@ Set oWEB = CreateObject("Microsoft.XMLHTTP")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 Set oARG = WScript.Arguments
 
-currentVersion = "4.0"
+currentVersion = "5.0"
 
 Call ForceConsole()
 Call showBanner()
@@ -38,7 +38,7 @@ Function updateCheck()
 		If res = "s" Then
 			printf ""
 			printl " > Descargando nueva version desde GitHub... "
-			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/master.bat", False
+			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/aikoncwd-win10-script.vbs", False
 			oWEB.Send
 
 			Set F = oFSO.CreateTextFile(WScript.ScriptFullName, 2, True)
