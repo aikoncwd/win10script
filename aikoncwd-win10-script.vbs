@@ -31,8 +31,10 @@ Function updateCheck()
 	printf ""
 	printf " > Version actual: " & currentVersion
 	printf " > Version GitHub: " & oWEB.responseText
+	new = CDbl(Replace(oWEB.responseText, vbcrlf, ""))
 
-	If oWEB.responseText <> currentVersion Then
+
+	If new <> CDbl(currentVersion) Then
 		printl "   Deseas actualizar el script? (s/n): "
 		res = scanf()
 		If res = "s" Then
