@@ -19,10 +19,6 @@ Call printf(" Comprobando actualizaciones en GitHub...")
 Call updateCheck()
 Call showMenu(1)
 
-
-'Win+U = cmd.exe
-'reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe" /v "Debugger" /t REG_SZ /d "cmd.exe" /f > NUL 2>&1
-
 Function updateCheck()
 	Wait(1)
 	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/updateCheck", False
@@ -57,57 +53,55 @@ Function updateCheck()
 	'WScript.Quit
 End Function
 
-
-oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
-oWEB.Send
-
-With oADO
-	.Type = 1
-	.Open
-	.Write oWEB.responseBody
-	.SaveToFile "C:\raw_host", 2
-End With
-
-Set F = oFSO.OpenTextFile("C:\raw_host", 8)
-	F.WriteLine "#Antimalware Links"
-	F.WriteLine "0.0.0.0 tracking.opencandy.com.s3.amazonaws.com"
-	F.WriteLine "0.0.0.0 media.opencandy.com"
-	F.WriteLine "0.0.0.0 cdn.opencandy.com"
-	F.WriteLine "0.0.0.0 tracking.opencandy.com"
-	F.WriteLine "0.0.0.0 api.opencandy.com"
-	F.WriteLine "0.0.0.0 api.recommendedsw.com"
-	F.WriteLine "0.0.0.0 installer.betterinstaller.com"
-	F.WriteLine "0.0.0.0 installer.filebulldog.com"
-	F.WriteLine "0.0.0.0 d3oxtn1x3b8d7i.cloudfront.net"
-	F.WriteLine "0.0.0.0 inno.bisrv.com"
-	F.WriteLine "0.0.0.0 nsis.bisrv.com"
-	F.WriteLine "0.0.0.0 cdn.file2desktop.com"
-	F.WriteLine "0.0.0.0 cdn.goateastcach.us"
-	F.WriteLine "0.0.0.0 cdn.guttastatdk.us"
-	F.WriteLine "0.0.0.0 cdn.inskinmedia.com"
-	F.WriteLine "0.0.0.0 cdn.insta.oibundles2.com"
-	F.WriteLine "0.0.0.0 cdn.insta.playbryte.com"
-	F.WriteLine "0.0.0.0 cdn.llogetfastcach.us"
-	F.WriteLine "0.0.0.0 cdn.montiera.com"
-	F.WriteLine "0.0.0.0 cdn.msdwnld.com"
-	F.WriteLine "0.0.0.0 cdn.mypcbackup.com"
-	F.WriteLine "0.0.0.0 cdn.ppdownload.com"
-	F.WriteLine "0.0.0.0 cdn.riceateastcach.us"
-	F.WriteLine "0.0.0.0 cdn.shyapotato.us"
-	F.WriteLine "0.0.0.0 cdn.solimba.com"
-	F.WriteLine "0.0.0.0 cdn.tuto4pc.com"
-	F.WriteLine "0.0.0.0 cdn.appround.biz"
-	F.WriteLine "0.0.0.0 cdn.bigspeedpro.com"
-	F.WriteLine "0.0.0.0 cdn.bispd.com"
-	F.WriteLine "0.0.0.0 cdn.bisrv.com"
-	F.WriteLine "0.0.0.0 cdn.cdndp.com"
-	F.WriteLine "0.0.0.0 cdn.download.sweetpacks.com"
-	F.WriteLine "0.0.0.0 cdn.dpdownload.com"
-	F.WriteLine "0.0.0.0 cdn.visualbee.net"
-F.Close
-
-wait(5)
-WScript.Quit
+Function updateHostsFile()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
+	oWEB.Send
+	
+	With oADO
+		.Type = 1
+		.Open
+		.Write oWEB.responseBody
+		.SaveToFile "C:\raw_host", 2
+	End With
+	
+	Set F = oFSO.OpenTextFile("C:\raw_host", 8)
+		F.WriteLine "#Antimalware Links"
+		F.WriteLine "0.0.0.0 tracking.opencandy.com.s3.amazonaws.com"
+		F.WriteLine "0.0.0.0 media.opencandy.com"
+		F.WriteLine "0.0.0.0 cdn.opencandy.com"
+		F.WriteLine "0.0.0.0 tracking.opencandy.com"
+		F.WriteLine "0.0.0.0 api.opencandy.com"
+		F.WriteLine "0.0.0.0 api.recommendedsw.com"
+		F.WriteLine "0.0.0.0 installer.betterinstaller.com"
+		F.WriteLine "0.0.0.0 installer.filebulldog.com"
+		F.WriteLine "0.0.0.0 d3oxtn1x3b8d7i.cloudfront.net"
+		F.WriteLine "0.0.0.0 inno.bisrv.com"
+		F.WriteLine "0.0.0.0 nsis.bisrv.com"
+		F.WriteLine "0.0.0.0 cdn.file2desktop.com"
+		F.WriteLine "0.0.0.0 cdn.goateastcach.us"
+		F.WriteLine "0.0.0.0 cdn.guttastatdk.us"
+		F.WriteLine "0.0.0.0 cdn.inskinmedia.com"
+		F.WriteLine "0.0.0.0 cdn.insta.oibundles2.com"
+		F.WriteLine "0.0.0.0 cdn.insta.playbryte.com"
+		F.WriteLine "0.0.0.0 cdn.llogetfastcach.us"
+		F.WriteLine "0.0.0.0 cdn.montiera.com"
+		F.WriteLine "0.0.0.0 cdn.msdwnld.com"
+		F.WriteLine "0.0.0.0 cdn.mypcbackup.com"
+		F.WriteLine "0.0.0.0 cdn.ppdownload.com"
+		F.WriteLine "0.0.0.0 cdn.riceateastcach.us"
+		F.WriteLine "0.0.0.0 cdn.shyapotato.us"
+		F.WriteLine "0.0.0.0 cdn.solimba.com"
+		F.WriteLine "0.0.0.0 cdn.tuto4pc.com"
+		F.WriteLine "0.0.0.0 cdn.appround.biz"
+		F.WriteLine "0.0.0.0 cdn.bigspeedpro.com"
+		F.WriteLine "0.0.0.0 cdn.bispd.com"
+		F.WriteLine "0.0.0.0 cdn.bisrv.com"
+		F.WriteLine "0.0.0.0 cdn.cdndp.com"
+		F.WriteLine "0.0.0.0 cdn.download.sweetpacks.com"
+		F.WriteLine "0.0.0.0 cdn.dpdownload.com"
+		F.WriteLine "0.0.0.0 cdn.visualbee.net"
+	F.Close
+End Function
 
 Function printf(txt)
 	WScript.StdOut.WriteLine txt
@@ -227,8 +221,8 @@ End Function
 
 Function showMenu(n)
 	cls
-	Call showBanner
 	Wait(n)
+	Call showBanner
 	printf " Selecciona una opcion:"
 	printf ""
 	printf "   1 = Instalar/Desinstalar varios Tweaks para Windows 10"
@@ -291,15 +285,15 @@ Function showMenu(n)
 			Call restoreMenu()
 		Case 0
 			printf ""
-			printf " Gracias por utilizar mi script"
-			printf " AikonCWD dice adios!! ;D"
-			wait(2)
+			printf " Gracias por utilizar mi script :)"
+			printf "                       AikonCWD"
+			wait(1)
 			WScript.Quit
 		Case Else
-		printf ""
-		printf " INFO: Opcion invalida, ese numero no esta disponible"
-		Call showMenu(2)
-		Exit Function
+			printf ""
+			printf " INFO: Opcion invalida, ese numero no esta disponible"
+			Call showMenu(2)
+			Exit Function
 	End Select
 End Function
 
