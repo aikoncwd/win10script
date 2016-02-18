@@ -33,7 +33,7 @@ Function updateCheck()
 	printf " > Version GitHub: " & oWEB.responseText
 	ne = CDbl(Replace(oWEB.responseText, vbcrlf, ""))
 
-	If ne <> CDbl(currentVersion) Then
+	If ne > CDbl(currentVersion) Then
 		printl "   Deseas actualizar el script? (s/n): "
 		res = scanf()
 		If res = "s" Then
@@ -50,8 +50,9 @@ Function updateCheck()
 			WScript.Quit
 		End If
 	Else
-		printl "   Tienes la ultima version"
-		Wait(3)
+		printf "   Tienes la ultima version"
+		printf "   Iniciando el script..."
+		Wait(2)
 	End If
 	'WScript.Quit
 End Function
@@ -225,9 +226,9 @@ Function cls()
 End Function
 
 Function showMenu(n)
-	Wait(n)
 	cls
 	Call showBanner
+	Wait(n)
 	printf " Selecciona una opcion:"
 	printf ""
 	printf "   1 = Instalar/Desinstalar varios Tweaks para Windows 10"
