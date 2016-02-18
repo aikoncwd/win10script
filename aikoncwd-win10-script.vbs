@@ -50,7 +50,6 @@ Function updateCheck()
 		printf "   Iniciando el script..."
 		Wait(2)
 	End If
-	'WScript.Quit
 End Function
 
 Function updateHostsFile()
@@ -220,8 +219,8 @@ Function cls()
 End Function
 
 Function showMenu(n)
-	cls
 	Wait(n)
+	cls
 	Call showBanner
 	printf " Selecciona una opcion:"
 	printf ""
