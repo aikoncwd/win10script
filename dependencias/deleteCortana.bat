@@ -1,8 +1,8 @@
 net stop WSearch
 sc config WSearch start= disabled
-taskkill /F /IM SearchUI.exe
+taskkill.exe /F /IM SearchUI.exe
 cmd.exe /c takeown /f "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy" /r /d s && icacls "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy" /grant Administradores:F /t
-taskkill /F /IM SearchUI.exe
+taskkill.exe /F /IM SearchUI.exe
 ren "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy\SearchUI.exe" "SearchUIC.exe"
 rd /s /q "%windir%\SystemApps\Microsoft.Windows.Cortana_cw5n1h2txyewy"
 Reg.exe add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d "0" /f
