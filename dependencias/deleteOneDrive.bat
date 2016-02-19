@@ -1,6 +1,6 @@
 set x86="%SYSTEMROOT%\System32\OneDriveSetup.exe"
 set x64="%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe"
-taskkill /f /im OneDrive.exe
+taskkill.exe /f /im OneDrive.exe
 if exist %x64% (
 %x64% /uninstall
 ) else (
@@ -11,8 +11,7 @@ rd "%systemroot%/Users/%username%/OneDrive" /Q /S
 rd "C:\OneDriveTemp" /Q /S
 rd "%LOCALAPPDATA%\Microsoft\OneDrive" /Q /S
 rd "%PROGRAMDATA%\Microsoft OneDrive" /Q /S
-rd "%Windir%\SysWOW64" /Q /S
-TASKKILL /F /IM OneDrive.exe /T 
+TASKKILL.exe /F /IM OneDrive.exe /T 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableLibrariesDefaultSaveToOneDrive" /t REG_DWORD /d 1 /f 
 reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableMeteredNetworkFileSync" /t REG_DWORD /d 1 /f 
