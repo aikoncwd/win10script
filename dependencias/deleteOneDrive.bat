@@ -1,5 +1,5 @@
-set x86="%SYSTEMROOT%\System32\OneDriveSetup.exe"
-set x64="%SYSTEMROOT%\SysWOW64\OneDriveSetup.exe"
+set x86="%ProgramFiles(x86)%\Microsoft OneDrive\OneDriveSetup.exe"
+set x64="%ProgramFiles%\Microsoft OneDrive\OneDriveSetup.exe"
 taskkill.exe /f /im OneDrive.exe
 if exist %x64% (
 %x64% /uninstall
