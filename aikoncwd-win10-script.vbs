@@ -17,115 +17,10 @@ Call checkW10()
 Call runElevated()
 Call printf(" Privilegios de Administrador OK!")
 Call printf(" Comprobando actualizaciones en GitHub...")
-'Call updateCheck()
-
-Call developer()
-
+Call updateCheck()
 Call showMenu(1)
 
-Function deleteOneDrive()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\deleteOneDrive.bat"
-End Function
-
-Function deleteCortana()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\deleteCortana.bat"
-End Function
-
-Function telemetryOFF()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\telemetryOFF.bat"
-End Function
-
-Function telemetryON()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\telemetryON.bat"
-End Function
-
-Function DisableWinDefender()
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 1, "REG_DWORD"
-	oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0, "REG_DWORD"
-
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 1, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 1, "REG_DWORD"
-	oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0, "REG_DWORD"
-End Function
-
-Function new_click_derecho()
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Icon", "themecpl.dll"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\MUIVerb", "Personalizar (clásico)"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Position", "Bottom"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\SubCommands", ""
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\MUIVerb", "Temas"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\ControlPanelName", "Microsoft.Personalization"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\Icon", "themecpl.dll"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\Icon", "imageres.dll,-110"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\MUIVerb", "Fondo Pantalla"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\CommandFlags", 32, "REG_DWORD"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,@desktop"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\MUIVerb", "Cambiar tamaño texto"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\ControlPanelName", "Microsoft.Display"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\Icon", "display.dll,-1"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\Icon", "themecpl.dll"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\MUIVerb", "Color y apariencia"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,Advanced,@Advanced"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\Icon", "SndVol.exe,-101"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\MUIVerb", "Sonidos"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\command", "rundll32.exe shell32.dll,Control_RunDLL mmsys.cpl,,2"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\Icon", "PhotoScreensaver.scr"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\MUIVerb", "Salvapantallas"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,1"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\Icon", "desk.cpl"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\MUIVerb", "Iconos del Escritorio"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\CommandFlags", 32, "REG_DWORD"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,0"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\Icon", "main.cpl"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\MUIVerb", "Mouse"
-	oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\command", "rundll32.exe shell32.dll,Control_RunDLL main.cpl,,1"
-	
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\"
-	oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\"
-End Function
-
-Function tweaks()
+Function menuSysTweaks()
 	printl " # Deshabilitar 'Acceso Rapido' como opcion por defecto en Explorer? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\LaunchTo", 1, "REG_DWORD"
@@ -181,51 +76,27 @@ Function tweaks()
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ForceClassicControlPanel", 0, "REG_DWORD"
 	End If
 
-	printl " # Deshabilitar 'Windows Update Sharing'? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DownloadMode", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DODownloadMode", 0, "REG_DWORD"
-		oWSH.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\SystemSettingsDownloadMode", 0, "REG_DWORD"
-	Else
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DownloadMode", 3, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DODownloadMode", 3, "REG_DWORD"
-		oWSH.RegDelete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\SystemSettingsDownloadMode"
-	End If
-	
-	printl " # Deshabilitar 'Windows Auto Update'? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\AUOptions", 2, "REG_DWORD"
-	Else
-		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\AUOptions"
-	End If
-	
-	printl " # Deshabilitar Cortana + Bing + Barra busqueda? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 0, "REG_DWORD"
-	Else
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 1, "REG_DWORD"
-	End If
-
-	printl " # Deshabilitar Reporte de Errores de Windows? (s/n) > "
+	printl " # Deshabilitar 'Reporte de Errores' de Windows? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled", 1, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled", 0, "REG_DWORD"
 	End If
 	
-	printl " # Abrir cmd.exe pulsando Win+U? (s/n) > "
+	printl " # Abrir cmd.exe al pulsar Win+U? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger", "cmd.exe"
 	Else
 		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger"
 	End If
 	
+	printl " # Habilitar menu 'Personalizar clasico' en Escritorio ? (s/n) > "
+	If LCase(scanf) = "s" Then
+		click_derecho(1)
+	Else
+		click_derecho(0)
+	End If
+
 	printl " # Utilizar control de volumen clasico? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC\EnableMtcUvc", 0, "REG_DWORD"
@@ -241,7 +112,68 @@ Function tweaks()
 	End If
 	oWSH.Run "taskkill.exe /F /IM explorer.exe"
 	oWSH.Run "explorer.exe"
+End Function
 
+Function menuOneDrive()
+	Call disableOneDrive()
+	Call deleteOneDrive()
+End Function
+
+Function menuCortana()
+	Call disableCortana()
+	Call deleteCortana()
+End Function
+
+Function menuTelemetry()
+'sc config TrkWks start= disabled > NUL 2>&1
+End Function
+
+Function menuWindowsDefender()
+End Function
+
+Function menuWindowsUpdate()
+	printl " # Deshabilitar 'Windows Auto Update'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DeferUpgrade", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\AUOptions", 2, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate", 1, "REG_DWROD"
+		oWSH.Run "sc stop wuauserv"
+		oWSH.Run "sc config wuauserv start=disabled"
+	Else
+		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DeferUpgrade", 0, "REG_DWORD"
+		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\AUOptions"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU\NoAutoUpdate", 0, "REG_DWROD"
+		oWSH.Run "sc config wuauserv start=auto"
+		oWSH.Run "sc start wuauserv"
+	End If
+	
+	printl " # Deshabilitar 'Windows Update Sharing'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DownloadMode", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DODownloadMode", 0, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\SystemSettingsDownloadMode", 0, "REG_DWORD"
+	Else
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DownloadMode", 3, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DODownloadMode", 3, "REG_DWORD"
+		oWSH.RegDelete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\SystemSettingsDownloadMode"
+	End If
+	
+	printl " # Deshabilitar 'Windows Update App'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate\AutoDownload", 2, "REG_DWORD"
+	Else
+		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate\AutoDownload", 4, "REG_DWORD"
+	End If
+	
+	printl " # Deshabilitar 'Windows Update Driver'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching\DontSearchWindowsUpdate", 1, "REG_DWORD"
+	Else
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching\DontSearchWindowsUpdate", 0, "REG_DWORD"
+	End If
+End Function
+
+Function menuPerfomance()
 	printl " # Desinstalar WindowsFeedbackReport y WindowsContactSupport? (s/n) > "
 	If LCase(scanf) = "s" Then
 		Call IWT()
@@ -252,49 +184,142 @@ Function tweaks()
 		Wait(2)
 		oFSO.DeleteFile(currentFolder & "\Packages.txt")
 		oFSO.DeleteFile(currentFolder & "\IWT.exe")
-	Else
 	End If
+End Function
 
-	printl " > "
+Function menuPowerSSD()
+End Function
+
+Function menuLicense()
+End Function
+
+'''''''''''''''''''''''''''''''''''''''
+Function deleteOneDrive()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\deleteOneDrive.bat"
+End Function
+
+Function disableOneDrive()
+	printf ""
+	printf " Deshabilitando OneDrive..."
+	wait(1)
+		oWSH.Run "taskkill.exe /F /IM OneDrive.exe /T"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableLibrariesDefaultSaveToOneDrive", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableMeteredNetworkFileSync", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive\DisableLibrariesDefaultSaveToOneDrive", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive\DisableMeteredNetworkFileSync", 1, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 0, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 0, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CURRENT_USER\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 0, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CURRENT_USER\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 0, "REG_DWORD"
+		oWSH.RegDelete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\OneDrive"
+	printf ""
+	printf " INFO: OneDrive deshabilitado correctamente"
+	Call showMenu(2)
+End Function
+
+Function deleteCortana()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\deleteCortana.bat"
+End Function
+
+Function disableCortana()
+	printl " # Deshabilitar Cortana + Bing + Barra busqueda? (s/n) > "
 	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 0, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 0, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 0, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 0, "REG_DWORD"
 	Else
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 1, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 1, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 1, "REG_DWORD"
+		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 1, "REG_DWORD"
 	End If
+	oWSH.Run "taskkill.exe /F /IM explorer.exe"
+	oWSH.Run "explorer.exe"
+End Function
 
-	printl " > "
-	If LCase(scanf) = "s" Then
+Function telemetryOFF()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\telemetryOFF.bat"
+End Function
+
+Function telemetryON()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\telemetryON.bat"
+End Function
+
+Function click_derecho(n)
+	If n = 1 Then
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Icon", "themecpl.dll"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\MUIVerb", "Personalizar (clásico)"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Position", "Bottom"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\SubCommands", ""
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\MUIVerb", "Temas"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\ControlPanelName", "Microsoft.Personalization"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\Icon", "themecpl.dll"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\Icon", "imageres.dll,-110"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\MUIVerb", "Fondo Pantalla"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\CommandFlags", 32, "REG_DWORD"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,@desktop"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\MUIVerb", "Cambiar tamaño texto"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\ControlPanelName", "Microsoft.Display"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\Icon", "display.dll,-1"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\Icon", "themecpl.dll"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\MUIVerb", "Color y apariencia"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,Advanced,@Advanced"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\Icon", "SndVol.exe,-101"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\MUIVerb", "Sonidos"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\command", "rundll32.exe shell32.dll,Control_RunDLL mmsys.cpl,,2"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\Icon", "PhotoScreensaver.scr"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\MUIVerb", "Salvapantallas"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,1"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\Icon", "desk.cpl"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\MUIVerb", "Iconos del Escritorio"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\CommandFlags", 32, "REG_DWORD"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,0"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\Icon", "main.cpl"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\MUIVerb", "Mouse"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\command", "rundll32.exe shell32.dll,Control_RunDLL main.cpl,,1"
 	Else
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\"
+		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\"
 	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
-	printl " > "
-	If LCase(scanf) = "s" Then
-	Else
-	End If
-
 End Function
 
 Function powerSSD()
@@ -308,42 +333,61 @@ Function powerSSD()
 End Function
 
 Function optimizarSistema()
+	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\AutoEndTasks", 1, "REG_SZ"
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\HungAppTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\WaitToKillServiceTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
+	End If
 
-	'del C:\Windows\SoftwareDistribution\Download
-	oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
-	oWSH.RegWrite "HKCU\Control Panel\Desktop\AutoEndTasks", 1, "REG_SZ"
-	oWSH.RegWrite "HKCU\Control Panel\Desktop\HungAppTimeout", 1000, "REG_SZ"
-	oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\WaitToKillServiceTimeout", 1000, "REG_SZ"
-	oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
+	printl " # Deshabilitar servicios: BitLocker, Cifrado y OfflineFiles? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "sc config BDESVC start=disabled"
+		oWSH.Run "sc config EFS start=disabled"
+		oWSH.Run "sc config CscService start=disabled"
+	Else
+		oWSH.Run "sc config BDESVC start=auto"
+		oWSH.Run "sc config EFS start=auto"
+		oWSH.Run "sc config CscService start=auto"
+	End If
 
-	'sc config BDESVC start= disabled	'bitlocker
-	'sc config EFS start= disabled		'cifrado ficheros
-	'sc config CscService start= disabled 'archivos sin conexion
-	'sc config WlanSvc start= disabled	'wifi
+	printl " # Deshabilitar servicios Wifi? (No usar en laptops!) (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "sc config WlanSvc start=disabled"
+	Else
+		oWSH.Run "sc config WlanSvc start=auto"
+	End If
 	
-	'compact /CompactOs:never
-	'compact /CompactOs:always
+	printl " # Deshabilitar la compresion de ficheros? (tarda un poco!) (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "compact /CompactOs:never"
+	Else
+		oWSH.Run "compact /CompactOs:always"
+	End If
 	
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
-	oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
+	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
+	Else
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
+	End If
 End Function
 
 Function CPUcorePark()
-	oWEB.Open "GET", "https://www.dropbox.com/s/nu0v02w7d4pqtz7/CPM.exe?dl=1", False
+	oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/CPM.exe", False
 	oWEB.Send
-
 	oADO.Type = 1
 	oADO.Open
 	oADO.Write oWEB.ResponseBody
 	oADO.SaveToFile currentFolder & "\CPM.exe", 2
 	oADO.Close
-	oWSH.Run currentFolder & "\CPM.exe"
 End Function
 
 Function KMS()
-	oWEB.Open "GET", "https://www.dropbox.com/s/k5z3s5yqqe9stl7/ACT.exe?dl=1", False
+	oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
 	oWEB.Send
-
 	oADO.Type = 1
 	oADO.Open
 	oADO.Write oWEB.ResponseBody
@@ -352,9 +396,8 @@ Function KMS()
 End Function
 
 Function IWT()
-	oWEB.Open "GET", "https://www.dropbox.com/s/iss3ya2trgijanx/install_wim_tweak.exe?dl=1", False
+	oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/install_wim_tweak.exe", False
 	oWEB.Send
-
 	oADO.Type = 1
 	oADO.Open
 	oADO.Write oWEB.ResponseBody
@@ -396,17 +439,14 @@ Function updateCheck()
 End Function
 
 Function updateHostsFile()
+	hostsFile = oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
 	oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
 	oWEB.Send
-	
-	With oADO
-		.Type = 1
-		.Open
-		.Write oWEB.responseBody
-		.SaveToFile oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
-	End With
-	
-	Set F = oFSO.OpenTextFile(oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts", True, 8)
+	If oFSO.FileExists(hostsFile & ".cwd") = False Then oFSO.CopyFile hostsFile, hostsFile & ".cwd"
+	Set F = oFSO.OpenTextFile(hostsFile, 2, True)
+		F.Write oWEB.ResponseText
+	F.Close
+	Set F = oFSO.OpenTextFile(hostsFile, 8, True)
 		F.WriteLine "#Antimalware"
 		F.WriteLine "0.0.0.0 tracking.opencandy.com.s3.amazonaws.com"
 		F.WriteLine "0.0.0.0 media.opencandy.com"
@@ -491,28 +531,7 @@ Function updateHostsFile()
 	F.Close
 End Function
 
-Function printf(txt)
-	WScript.StdOut.WriteLine txt
-End Function
-
-Function printl(txt)
-	WScript.StdOut.Write txt
-End Function
-
-Function scanf()
-	scanf = LCase(WScript.StdIn.ReadLine)
-End Function
-
-Function Wait(n)
-	WScript.Sleep Int(n * 1000)
-End Function
-
-Function ForceConsole()
-	If InStr(LCase(WScript.FullName), "cscript.exe") = 0 Then
-		oWSH.Run "cscript //NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34)
-		WScript.Quit
-	End If
-End Function
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''
 
 Function showBanner()
 	printf " _____ _ _           _____         _    _____         _     _   "
@@ -520,91 +539,6 @@ Function showBanner()
 	printf "|     | | '_| . |   |   --| | | | . |  |__   |  _|  _| | . |  _|"
 	printf "|__|__|_|_,_|___|_|_|_____|_____|___|  |_____|___|_| |_|  _|_|  "
 	printf "                                                       |_|     v" & currentVersion
-End Function
-
-Function checkW10()
-	If getNTversion < 10 Then
-		printf " ERROR: Necesitas ejecutar este script bajo Windows 10"
-		printf ""
-		printf " Press <enter> to quit"
-		scanf
-		WScript.Quit
-	End If
-End Function
-
-Function runElevated()
-	If isUACRequired Then
-		If Not isElevated Then RunAsUAC
-	Else
-		If Not isAdmin Then
-			printf " ERROR: Necesitas ejecutar este script como Administrador!"
-			printf ""
-			printf " Press <enter> to quit"
-			scanf
-			WScript.Quit
-		End If
-	End If
-End Function
- 
-Function isUACRequired()
-	r = isUAC()
-	If r Then
-		intUAC = oWSH.RegRead("HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA")
-		r = 1 = intUAC
-	End If
-	isUACRequired = r
-End Function
-
-Function isElevated()
-	isElevated = CheckCredential("S-1-16-12288")
-End Function
-
-Function isAdmin()
-	isAdmin = CheckCredential("S-1-5-32-544")
-End Function
- 
-Function CheckCredential(p)
-	Set oWhoAmI = oWSH.Exec("whoami /groups")
-	Set WhoAmIO = oWhoAmI.StdOut
-	WhoAmIO = WhoAmIO.ReadAll
-	CheckCredential = InStr(WhoAmIO, p) > 0
-End Function
- 
-Function RunAsUAC()
-	If isUAC Then
-		printf ""
-		printf " El script necesita ejecutarse con permisos elevados..."
-		printf " acepta el siguiente mensaje:"
-		Wait(1)
-		oAPP.ShellExecute "cscript", "//NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34), "", "runas", 1
-		WScript.Quit
-	End If
-End Function
- 
-Function isUAC()
-	Set cWin = oWMI.ExecQuery("SELECT * FROM Win32_OperatingSystem")
-	r = False
-	For Each OS In cWin
-		If Split(OS.Version,".")(0) > 5 Then
-			r = True
-		Else
-			r = False
-		End If
-	Next
-	isUAC = r
-End Function
-
-Function getNTversion()
-	Set cWin = oWMI.ExecQuery("SELECT * FROM Win32_OperatingSystem")
-	For Each OS In cWin
-		getNTversion = Split(OS.Version,".")(0)
-	Next
-End Function
-
-Function cls()
-	For i = 1 To 50
-		printf ""
-	Next
 End Function
 
 Function showMenu(n)
@@ -638,7 +572,7 @@ Function showMenu(n)
 	RP = scanf
 	If Not isNumeric(RP) = True Then
 		printf ""
-		printf " ERROR: Opcion invalida, solo se permiten numero..."
+		printf " ERROR: Opcion invalida, solo se permiten numeros..."
 		Call showMenu(2)
 		Exit Function
 	End If
@@ -922,7 +856,7 @@ Function disableSpyware()
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\AITEnable", 0, "REG_DWORD"
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows\CEIPEnable", 0, "REG_DWORD"
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableUAR", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata\PreventDeviceMetadataFromNetwork", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata\PreventDeviceMetadataFromNetwork", 1, "REG_DWORD"		
 	printf ""
 	printf " INFO: Telemetry deshabilitado correctamente"
 	
@@ -979,17 +913,6 @@ Function disableSpyware()
 	Call showMenu(2)
 End Function
 
-Function disableOneDrive()
-	printf ""
-	printf " Deshabilitando OneDrive usando el registro..."
-	wait(1)
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 1, "REG_DWORD"
-	printf ""
-	printf " INFO: OneDrive deshabilitado correctamente"
-	Call showMenu(2)
-End Function
-
 Function disableDefender()
 	printf ""
 	printf " Deshabilitando Windows Defender usando el registro..."
@@ -1004,6 +927,10 @@ Function disableDefender()
 		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Verification" & chr(34) & " /DISABLE"
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
 		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 1, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 1, "REG_DWORD"
+		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0, "REG_DWORD"
 	printf ""
 	printf " INFO: Windows Defender deshabilitado correctamente"
 	printf " WARNING: Si no tienes antivirus, te recomiendo 360 Total Security: www.360totalsecurity.com"
@@ -1022,54 +949,16 @@ Function showActivation()
 	Call showMenu(2)
 End Function
 
-Function activate30()
-	printf ""
-	printf " Esta funcion sirve para forzar la activacion de Windows 10"
-	printf " solo se debe utilizar si tienes problemas para validar la licencia"
-	printf ""
-	printl " El proceso demora varios minutos. Deseas continuar? (s/n) "
-	
-	If scanf <> "s" Then
-		printf ""
-		printf " INFO: Proceso cancelado por el usuario"
-		wait(1)
-		Call showMenu(2)
-		Exit Function
-	End If
-	
-	printf " Se va a ejecutar slmgr /ato 30 veces, sea paciente..."
-	wait(1)
-		For i = 1 To 30
-			printf "  > (" & i & ") Ejecutando slmgr.vbs /ato"
-			oWSH.Run "slmgr.vbs /ato"
-		Next
-	printf ""
-	printf " INFO: Script slmgr ejecutado correctamente"
-	printf " INFO: El resultado tarda unos segundos en aparecer, espere..."
-	wait(1)
-	Call showMenu(2)
-End Function
-
 Function cleanApps()
 	printf ""
 	printf " Este script va a desinstalar el siguiente listado de Apps:"
 	printf ""
-	printf "  > Bing"
-	printf "  > Zune"
-	printf "  > Skype"
-	printf "  > XboxApp"
-	printf "  > OneNote"
-	printf "  > 3DBuilder"
-	printf "  > Getstarted"
-	printf "  > Windows Maps"
-	printf "  > Windows Phone"
-	printf "  > Windows Camera"
-	printf "  > Windows Alarms"
-	printf "  > Windows Sound Recorder"
-	printf "  > Windows Communications Apps"
-	printf "  > Microsoft People"
-	printf "  > Microsoft Office Hub"
-	printf "  > Microsoft Solitaire Collection"
+	printf "  > Bing, Zune, Skype, XboxApp"
+	printf "  > Getstarted, Messagin, 3D Builder"
+	printf "  > Windows Maps, Phone, Camera, Alarms, People"
+	printf "  > Windows Communications Apps, Sound Recorder"
+	printf "  > Microsoft Office Hub, Office Sway, OneNote"
+	printf "  > Solitaire Collection, CandyCrushSaga"
 	printf ""
 	printl " La opcion NO es reversible. Deseas continuar? (s/n) "
 	
@@ -1090,6 +979,12 @@ Function cleanApps()
 		oWSH.Run "powershell get-appxpackage -Name *WindowsPhone* | Remove-AppxPackage", 1, True
 		oWSH.Run "powershell get-appxpackage -Name *WindowsSoundRecorder* | Remove-AppxPackage", 1, True
 		oWSH.Run "powershell get-appxpackage -Name *windowscommunicationsapps* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *CandyCrushSaga* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Messagin* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *ConnectivityStore* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *CommsPhone* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Office.Sway* | Remove-AppxPackage", 1, True
+		
 		printf ""
 		printf " INFO: Las Apps se han desinstalado correctamente..."
 	Else
@@ -1155,128 +1050,110 @@ Function powerSSD()
 	Call showMenu(2)
 End Function
 
-Function regTweaks()
-	On Error Resume Next
-	printf ""
-	showMenu(2)
+Function printf(txt)
+	WScript.StdOut.WriteLine txt
 End Function
 
+Function printl(txt)
+	WScript.StdOut.Write txt
+End Function
 
-''''''''''''''''''''''''''''''''''''''''''''
+Function scanf()
+	scanf = LCase(WScript.StdIn.ReadLine)
+End Function
 
-Remove Telemetry
-	reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata" /v PreventDeviceMetadataFromNetwork /t REG_DWORD /d 1 /f > NUL 2>&1	
-    reg add "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\MRT" /v DontOfferThroughWUAU /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows" /v "CEIPEnable" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "AITEnable" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat" /v "DisableUAR" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection" /v "AllowTelemetry" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!dss-winrt-telemetry.js" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry.js" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry-event_8ac43a41e5030538" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0" /v "f!proactive-telemetry-inter_58073761d33f144b" /t REG_DWORD /d 0 /f > NUL 2>&1
+Function Wait(n)
+	WScript.Sleep Int(n * 1000)
+End Function
 
-Internet Explorer 11 tweaks
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "DoNotTrack" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "Search Page" /t REG_SZ /d "http://www.google.com" /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "Start Page Redirect Cache" /t REG_SZ /d "http://www.google.com" /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "DisableFirstRunCustomize" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "RunOnceHasShown" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Internet Explorer\Main" /v "RunOnceComplete" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Internet Explorer\Main" /v "DisableFirstRunCustomize" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Internet Explorer\Main" /v "RunOnceHasShown" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Microsoft\Internet Explorer\Main" /v "RunOnceComplete" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\Software\Policies\Microsoft\Internet Explorer\Main" /v "DisableFirstRunCustomize" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\Software\Policies\Microsoft\Internet Explorer\Main" /v "RunOnceHasShown" /t REG_DWORD /d 1 /f > NUL 2>&1
-    reg add "HKCU\Software\Policies\Microsoft\Internet Explorer\Main" /v "RunOnceComplete" /t REG_DWORD /d 1 /f > NUL 2>&1
+Function cls()
+	For i = 1 To 50
+		printf ""
+	Next
+End Function
 
-Disable Cortana, Bing Search and Searchbar
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "CortanaEnabled" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d 0 /f > NUL 2>&1
-    reg add "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d 0 /f > NUL 2>&1
+Function ForceConsole()
+	If InStr(LCase(WScript.FullName), "cscript.exe") = 0 Then
+		oWSH.Run "cscript //NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34)
+		WScript.Quit
+	End If
+End Function
 
-Disable tracking srv
-    sc config DiagTrack start= disabled > NUL 2>&1
-    sc config diagnosticshub.standardcollector.service start= disabled > NUL 2>&1
-    sc config TrkWks start= disabled > NUL 2>&1
-    sc config WMPNetworkSvc start= disabled > NUL 2>&1
-	sc config dmwappushservice start= disabled > NUL 2>&1
+Function checkW10()
+	If getNTversion < 10 Then
+		printf " ERROR: Necesitas ejecutar este script bajo Windows 10"
+		printf ""
+		printf " Press <enter> to quit"
+		scanf
+		WScript.Quit
+	End If
+End Function
 
-Disable Windows Search
-	sc config WSearch start= disabled > NUL 2>&1
+Function runElevated()
+	If isUACRequired Then
+		If Not isElevated Then RunAsUAC
+	Else
+		If Not isAdmin Then
+			printf " ERROR: Necesitas ejecutar este script como Administrador!"
+			printf ""
+			printf " Press <enter> to quit"
+			scanf
+			WScript.Quit
+		End If
+	End If
+End Function
+ 
+Function isUACRequired()
+	r = isUAC()
+	If r Then
+		intUAC = oWSH.RegRead("HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA")
+		r = 1 = intUAC
+	End If
+	isUACRequired = r
+End Function
 
-Disable Superfecth
-	sc config SysMain start= disabled > NUL 2>&1
+Function isElevated()
+	isElevated = CheckCredential("S-1-16-12288")
+End Function
 
-Disable Windows Defender
-    sc config WinDefend start= disabled > NUL 2>&1
-    sc config WdNisSvc start= disabled > NUL 2>&1
-    reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v "DisableAntiSpyware" /t REG_DWORD /d 1 /f > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Cleanup" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Windows Defender\Windows Defender Verification" /Disable > NUL 2>&1
-    del "C:\ProgramData\Microsoft\Windows Defender\Scans\mpcache*" /s > NUL 2>&1
+Function isAdmin()
+	isAdmin = CheckCredential("S-1-5-32-544")
+End Function
+ 
+Function CheckCredential(p)
+	Set oWhoAmI = oWSH.Exec("whoami /groups")
+	Set WhoAmIO = oWhoAmI.StdOut
+	WhoAmIO = WhoAmIO.ReadAll
+	CheckCredential = InStr(WhoAmIO, p) > 0
+End Function
+ 
+Function RunAsUAC()
+	If isUAC Then
+		printf ""
+		printf " El script necesita ejecutarse con permisos elevados..."
+		printf " acepta el siguiente mensaje:"
+		Wait(1)
+		oAPP.ShellExecute "cscript", "//NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34), "", "runas", 1
+		WScript.Quit
+	End If
+End Function
+ 
+Function isUAC()
+	Set cWin = oWMI.ExecQuery("SELECT * FROM Win32_OperatingSystem")
+	r = False
+	For Each OS In cWin
+		If Split(OS.Version,".")(0) > 5 Then
+			r = True
+		Else
+			r = False
+		End If
+	Next
+	isUAC = r
+End Function
 
-Unnecessary schedules
-    schtasks /Change /TN "Microsoft\Windows\AppID\SmartScreenSpecific" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\Consolidator" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\NetTrace\GatherNetworkInfo" /Disable > NUL 2>&1
-    schtasks /Change /TN "Microsoft\Windows\Windows Error Reporting\QueueReporting" /Disable > NUL 2>&1
-
-Disable OneDrive
-	TASKKILL /F /IM OneDrive.exe /T 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableFileSyncNGSC" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableLibrariesDefaultSaveToOneDrive" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" /v "DisableMeteredNetworkFileSync" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" /v "DisableFileSyncNGSC" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" /v "DisableLibrariesDefaultSaveToOneDrive" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" /v "DisableMeteredNetworkFileSync" /t REG_DWORD /d 1 /f 
-	reg add "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f 
-	reg add "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f 
-	reg add "HKEY_CURRENT_USER\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f 
-	reg add "HKEY_CURRENT_USER\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" /v "System.IsPinnedToNameSpaceTree" /t REG_DWORD /d 0 /f 
-	reg delete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "OneDrive" /f
-
-	Enable
-	
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" / v "DisableFileSyncNGSC" / f 
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" / v "DisableLibrariesDefaultSaveToOneDrive" / f 
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\OneDrive" / v "DisableMeteredNetworkFileSync" / f 
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" / v "DisableFileSyncNGSC" / f 
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" / v "DisableLibrariesDefaultSaveToOneDrive" / f 
-	reg delete "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive" / v "DisableMeteredNetworkFileSync" / f 
-	reg add "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" / v "System.IsPinnedToNameSpaceTree" / t REG_DWORD / d 1 / f 
-	reg add "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" / v "System.IsPinnedToNameSpaceTree" / t REG_DWORD / d 1 / f 
-	reg add "HKEY_CURRENT_USER\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" / v "System.IsPinnedToNameSpaceTree" / t REG_DWORD / d 1 / f 
-	reg add "HKEY_CURRENT_USER\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}" / v "System.IsPinnedToNameSpaceTree" / t REG_DWORD / d 1 / f 
-	reg add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" / v "OneDrive" / t REG_SZ / d "\"% USERPROFILE% \ AppData \ Local \ Microsoft \ OneDrive \ OneDrive.exe \ "/ background" / f
-	
-Disable Windows Update
-	Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" /v "NoAutoUpdate" /t REG_DWORD /d "1" /f
-	Reg.exe add "HKLM\SYSTEM\CurrentControlSet\Services\wuauserv" /v "Start" /t REG_DWORD /d "4" /f
-
-Disable Windows App Updates
-	Reg.exe add "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate" /v "AutoDownload" /t REG_DWORD /d "2" /f (4 = enable)
-	
-Disable Windows Update Drivers
-	Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching" /v "DontSearchWindowsUpdate" /t REG_DWORD /d "1" /f
-	
-Enable Deffering Updates
-	Reg.exe add "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate" /v "DeferUpgrade" /t REG_DWORD /d "1" /f
-	
-Disable CortanaSearchBar
-	Reg.exe add "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Search" /v "SearchboxTaskbarMode" /t REG_DWORD /d "0" /f (1 = icon 2 = barra)
-	
-Disable Bing on Search
-	reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Search" /v "BingSearchEnabled" /t REG_DWORD /d "0" /f
-
-Disable Cortana
-	Reg.exe add "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search" /v "AllowCortana" /t REG_DWORD /d "0" /f
-	taskkill /IM explorer.exe /F & explorer.exe
+Function getNTversion()
+	Set cWin = oWMI.ExecQuery("SELECT * FROM Win32_OperatingSystem")
+	For Each OS In cWin
+		getNTversion = Split(OS.Version,".")(0)
+	Next
+End Function
