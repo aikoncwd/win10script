@@ -502,21 +502,24 @@ Function menuWindowsUpdate()
 End Function
 
 Function menuPerfomance()
+	On Error Resume Next
+	cls
+	printf " _____         ___                              _____               _   "
+	printf "|  _  |___ ___|  _|___ _____ ___ ___ ___ ___   |_   _|_ _ _ ___ ___| |_ "
+	printf "|   __| -_|  _|  _| . |     | .'|   |  _| -_|    | | | | | | -_| .'| '_|"
+	printf "|__|  |___|_| |_| |___|_|_|_|__,|_|_|___|___|    |_| |_____|___|__,|_,_|"                                                                        
 	printf ""
 	printl " # Desinstalar WindowsFeedbackReport y WindowsContactSupport? (s/n) > "
 	If LCase(scanf) = "s" Then
 		Call IWT()
+		Wait(3)
 		oWSH.Run currentFolder & "\IWT.exe /o /l"
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-Windows-ContactSupport /r"
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-WindowsFeedback /r"
 		oWSH.Run currentFolder & "\IWT.exe /h /o /l"
 		Wait(3)
 		oFSO.DeleteFile(currentFolder & "\IWT.exe")
-		printf ""
-		printf "Todos los tweaks de rendimiento se han aplicado correctamente"
-		Call showMenu(2)
 	End If
-	printf ""
 	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
@@ -525,47 +528,53 @@ Function menuPerfomance()
 		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\WaitToKillServiceTimeout", 1000, "REG_SZ"
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
 	End If
-
 	printl " # Deshabilitar servicios: BitLocker, Cifrado y OfflineFiles? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.Run "sc config BDESVC start=disabled"
 		oWSH.Run "sc config EFS start=disabled"
 		oWSH.Run "sc config CscService start=disabled"
+		oWSH.Run "sc stop BDESVC"
+		oWSH.Run "sc stop EFS"
+		oWSH.Run "sc stop CscService"
 	Else
 		oWSH.Run "sc config BDESVC start=auto"
 		oWSH.Run "sc config EFS start=auto"
 		oWSH.Run "sc config CscService start=auto"
+		oWSH.Run "sc start BDESVC"
+		oWSH.Run "sc start EFS"
+		oWSH.Run "sc start CscService"
 	End If
-
 	printl " # Deshabilitar servicios Wifi? (No usar en laptops!) (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.Run "sc config WlanSvc start=disabled"
+		oWSH.Run "sc stop WlanSvc"
 	Else
 		oWSH.Run "sc config WlanSvc start=auto"
+		oWSH.Run "sc start WlanSvc"
 	End If
-	
 	printl " # Deshabilitar la compresion de ficheros? (tarda un poco!) (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.Run "compact /CompactOs:never"
 	Else
 		oWSH.Run "compact /CompactOs:always"
 	End If
-	
+	Wait(3)
 	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
 	End If
-	
 	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
 	If LCase(scanf) = "s" Then
-		printf " _______________________________________________________________________"
+		printf ""
+		printf " -----------------------------------------------------------------------"
 		printf " | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
 		printf " | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
 		printf " | CPU a trabajar a su maxima velocidad.                               |"
 		printf " |                                                                     |"
-		printf " | Se va a descargar un programa, mueve la barra al 100% pulsa aplicar |"
+		printf " | Se va a descargar un programa, mueve la barra al 100% y pulsa       |"
+		printf " | aplicar.                                                            |"
 		printf " |                                                                     |"
 		printf " | > Pulsa una INTRO para continuar...                                 |"
 		printf " -----------------------------------------------------------------------"
@@ -574,8 +583,10 @@ Function menuPerfomance()
 		Call CPUcorePark()
 		printf " >> Ejecutando CPM.exe..."
 		oWSH.Run currentFolder & "\CPM.exe"
-		showMenu(2)
-	End If	
+	End If
+	printf ""
+	printf " Todos los tweaks de sistema se han aplicado correctamente"	
+	showMenu(3)
 End Function
 
 Function menuPowerSSD()
@@ -837,7 +848,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call menuWindowsUpdate()
+			Call menuPerfomance()
 		Case 2
 			Call disableUAC()
 		Case 3
