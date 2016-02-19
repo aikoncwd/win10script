@@ -21,6 +21,13 @@ Call updateCheck()
 Call showMenu(1)
 
 Function menuSysTweaks()
+	cls
+	printf ""
+	printf " _____         _                _____               _       "
+	printf "|   __|_ _ ___| |_ ___ _____   |_   _|_ _ _ ___ ___| |_ ___ "
+	printf "|__   | | |_ -|  _| -_|     |    | | | | | | -_| .'| '_|_ -|"
+	printf "|_____|_  |___|_| |___|_|_|_|    |_| |_____|___|__,|_,_|___|"
+	printf "      |___|                                                 "	
 	printf ""
 	printl " # Deshabilitar 'Acceso Rapido' como opcion por defecto en Explorer? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -28,7 +35,6 @@ Function menuSysTweaks()
 	Else
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\LaunchTo", 2, "REG_DWORD"
 	End If
-
 	printl " # Crear icono 'Modo Dios' en el Escritorio? (s/n) > "
 	If LCase(scanf) = "s" Then
 		godFolder = oWSH.SpecialFolders("Desktop") & "\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}"
@@ -37,7 +43,6 @@ Function menuSysTweaks()
 		godFolder = oWSH.SpecialFolders("Desktop") & "\GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}"
 		If oFSO.FolderExists(godFolder) = True Then oFSO.DeleteFolder(godFolder)	
 	End If
-	
 	printl " # Habilitar el tema oscuro de Windows 'Dark Theme'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 0, "REG_DWORD"
@@ -46,21 +51,18 @@ Function menuSysTweaks()
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 1, "REG_DWORD"
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 1, "REG_DWORD"		
 	End If
-	
 	printl " # Mostrar icono 'Mi PC' en el Escritorio? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel\{20D04FE0-3AEA-1069-A2D8-08002B30309D}", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel\{20D04FE0-3AEA-1069-A2D8-08002B30309D}", 1, "REG_DWORD"
 	End If
-
 	printl " # Mostrar siempre la extesion para archivos conocidos? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt", 1, "REG_DWORD"
 	End If
-	
 	printl " # Deshabilitar 'Lock Screen'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization\NoLockScreen", 1, "REG_DWORD"
@@ -69,42 +71,36 @@ Function menuSysTweaks()
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Personalization\NoLockScreen", 0, "REG_DWORD"
 		oWSH.RegWrite "HKLM\Software\Policies\Microsoft\Windows\System\DisableLogonBackgroundImage", 0, "REG_DWORD"
 	End If
-	
 	printl " # Forzar 'Vista Clasica' en el Panel de Control? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ForceClassicControlPanel", 1, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer\ForceClassicControlPanel", 0, "REG_DWORD"
 	End If
-
 	printl " # Deshabilitar 'Reporte de Errores' de Windows? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled", 1, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting\Disabled", 0, "REG_DWORD"
 	End If
-	
 	printl " # Abrir cmd.exe al pulsar Win+U? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger", "cmd.exe"
 	Else
 		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger"
 	End If
-	
 	printl " # Habilitar menu 'Personalizar clasico' en Escritorio ? (s/n) > "
 	If LCase(scanf) = "s" Then
-		click_derecho(1)
+		Call click_derecho(1)
 	Else
-		click_derecho(0)
+		Call click_derecho(0)
 	End If
-
 	printl " # Utilizar control de volumen clasico? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC\EnableMtcUvc", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\MTCUVC\EnableMtcUvc", 1, "REG_DWORD"
 	End If
-
 	printl " # Utilizar el centro de notificaciones clasico? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience", 0, "REG_DWORD"
@@ -117,12 +113,16 @@ Function menuSysTweaks()
 	Wait(5)
 	oWSH.Run "explorer.exe"
 	printf ""
-	printf "Todos los tweaks de sistema se han aplicado correctamente"
+	printf " Todos los tweaks de sistema se han aplicado correctamente"
 	Call showMenu(2)
 End Function
 
 Function menuOneDrive()
-	cls
+	cls                                                                         
+	printf " _____ _                     ___ _      _____            ____      _         "
+	printf "|     |_|___ ___ ___ ___ ___|  _| |_   |     |___ ___   |    \ ___|_|_ _ ___ "
+	printf "| | | | |  _|  _| . |_ -| . |  _|  _|  |  |  |   | -_|  |  |  |  _| | | | -_|"
+	printf "|_|_|_|_|___|_| |___|___|___|_| |_|    |_____|_|_|___|  |____/|_| |_|\_/|___|"                                                                         
 	printf ""
 	printf " Selecciona una opcion:"
 	printf ""
@@ -133,17 +133,16 @@ Function menuOneDrive()
 	printf "  0 = Volver al menu principal"
 	printf ""
 	printl "  > "
-	res = scanf
-	Select Case res
-		Case 1
+	Select Case scanf
+		Case "1"
 			Call disableOneDrive()
-		Case 2
+		Case "2"
 			Call enableOneDrive()
-		Case 3
+		Case "3"
 			printf ""
 			printl "  >> Desinstalar definitivamente One Drive. Opcion no reversible. Continuar? (s/n) > "
 			If scanf = "s" Then Call deleteOneDrive()
-		Case 0
+		Case "0"
 			Call showMenu(0)
 		Case Else
 			Call menuOneDrive()
@@ -152,18 +151,314 @@ Function menuOneDrive()
 End Function
 
 Function menuCortana()
-	Call disableCortana()
-	Call deleteCortana()
+	cls                                                                         
+	printf " _____ _                     ___ _      _____         _               "
+	printf "|     |_|___ ___ ___ ___ ___|  _| |_   |     |___ ___| |_ ___ ___ ___ "
+	printf "| | | | |  _|  _| . |_ -| . |  _|  _|  |   --| . |  _|  _| .'|   | .'|"
+	printf "|_|_|_|_|___|_| |___|___|___|_| |_|    |_____|___|_| |_| |_|_|_|_|_|_|"                                                                  
+	printf ""
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "  1 = Deshabilitar Microsoft Cortana"
+	printf "  2 = Habilitar Microsoft Cortana"
+	printf "  3 = Desinstalar Microsoft Cortana"
+	printf ""
+	printf "  0 = Volver al menu principal"
+	printf ""
+	printl "  > "
+	Select Case scanf
+		Case "1"
+			oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 0, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 0, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 0, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 0, "REG_DWORD"
+			printf ""
+			printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
+			oWSH.Run "taskkill.exe /F /IM explorer.exe"
+			Wait(5)
+			oWSH.Run "explorer.exe"
+		Case "2"
+			oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 1, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 1, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 1, "REG_DWORD"
+			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 1, "REG_DWORD"
+			printf ""
+			printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
+			oWSH.Run "taskkill.exe /F /IM explorer.exe"
+			Wait(5)
+			oWSH.Run "explorer.exe"
+		Case "3"
+			printf ""
+			printl "  >> Desinstalar definitivamente Cortana. Opcion no reversible. Continuar? (s/n) > "
+			If scanf = "s" Then Call deleteCortana()
+		Case "0"
+			Call showMenu(0)
+		Case Else
+			Call menuCortana()
+	End Select
+	Call menuCortana()
 End Function
 
 Function menuTelemetry()
-'sc config TrkWks start= disabled > NUL 2>&1
+	On Error Resume Next
+	cls
+	printf " _____                              _____     _               _           "
+	printf "|   __|___ _ _ _ _ _ ___ ___ ___   |_   _|___| |___ _____ ___| |_ ___ _ _ "
+	printf "|__   | . | | | | | | .'|  _| -_|    | | | -_| | -_|     | -_|  _|  _| | |"
+	printf "|_____|  _|_  |_____|_|_|_| |___|    |_| |___|_|___|_|_|_|___|_| |_| |_  |"
+	printf "      |_| |___|                                                      |___|"
+	printf ""
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "  1 = Deshabilitar TODO el Telemetry"
+	printf "  2 = Habilitar TODO el Telemetry"
+	printf ""
+	printf "  0 = Volver al menu principal"
+	printf ""
+	printl "  > "
+	Select Case scanf
+		Case "1"
+			printf " Aplicando parches para deshabilitar Telemetry (10 segundos)..."
+			Wait(1)
+			Call telemetryOFF()
+			Wait(9)
+			printf " Deshabilitando Telemetry usando el registro..."
+			wait(1)
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection\AllowTelemetry", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..riencehost.appxmain_31bf3856ad364e35_10.0.10240.16384_none_0ab8ea80e84d4093\f!telemetry.js", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!dss-winrt-telemetry.js", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry.js", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry-event_8ac43a41e5030538", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry-inter_58073761d33f144b", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\MRT\DontOfferThroughWUAU", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\AITEnable", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows\CEIPEnable", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableUAR", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata\PreventDeviceMetadataFromNetwork", 1, "REG_DWORD"		
+			printf ""
+			printf " INFO: Telemetry deshabilitado correctamente"
+			pathLOG = oWSH.ExpandEnvironmentStrings("%ProgramData%") & "\Microsoft\Diagnosis\ETLLogs\AutoLogger\AutoLogger-Diagtrack-Listener.etl"
+			printf ""
+			printf " Borrando DiagTrack Log..."
+			wait(1)
+				If oFSO.FileExists(pathLOG) Then oFSO.DeleteFile(pathLOG)
+				oWSH.Run "cmd /C echo " & chr(34) & chr(34) & " > " & pathLOG
+			printf ""
+			printf " INFO: DiagTrack Log borrado correctamente"
+			printf ""
+			printf " Deshabilitando servicios de seguimiento..."
+			wait(1)
+				oWSH.Run "sc stop TrkWks"
+				oWSH.Run "sc stop DiagTrack"
+				oWSH.Run "sc stop RetailDemo"
+				oWSH.Run "sc stop WMPNetworkSvc"
+				oWSH.Run "sc stop dmwappushservice"
+				oWSH.Run "sc stop diagnosticshub.standardcollector.service"
+				oWSH.Run "sc config TrkWks start=disabled"
+				oWSH.Run "sc config DiagTrack start=disabled"
+				oWSH.Run "sc config RetailDemo start=disabled"
+				oWSH.Run "sc config WMPNetworkSvc start=disabled"
+				oWSH.Run "sc config dmwappushservice start=disabled"
+				oWSH.Run "sc config diagnosticshub.standardcollector.service start=disabled"
+			printf ""
+			printf " INFO: Servicios de seguimiento deshabilitados"
+			printf ""			
+			printf " Deshabilitando tareas programadas que envian datos a Microsoft..."	
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Application Experience\ProgramDataUpdater" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\Uploader" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\AppID\SmartScreenSpecific" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\NetTrace\GatherNetworkInfo" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Error Reporting\QueueReporting" & chr(34) & " /DISABLE"
+			printf ""
+			printf " INFO: Tareas programadas de seguimiento deshabilitadas"
+			printf ""
+			printf " Deshabilitando acceso a los servidores de publicidad de Microsoft..."
+			wait(1)
+			hostsFile = oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
+			oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
+			oWEB.Send
+			If oFSO.FileExists(hostsFile & ".cwd") = False Then oFSO.CopyFile hostsFile, hostsFile & ".cwd"
+			Set F = oFSO.OpenTextFile(hostsFile, 2, True)
+				F.Write oWEB.ResponseText
+			F.Close
+			Set F = oFSO.OpenTextFile(hostsFile, 8, True)
+				F.WriteLine "#Antimalware"
+				F.WriteLine "0.0.0.0 tracking.opencandy.com.s3.amazonaws.com"
+				F.WriteLine "0.0.0.0 media.opencandy.com"
+				F.WriteLine "0.0.0.0 cdn.opencandy.com"
+				F.WriteLine "0.0.0.0 tracking.opencandy.com"
+				F.WriteLine "0.0.0.0 api.opencandy.com"
+				F.WriteLine "0.0.0.0 api.recommendedsw.com"
+				F.WriteLine "0.0.0.0 installer.betterinstaller.com"
+				F.WriteLine "0.0.0.0 installer.filebulldog.com"
+				F.WriteLine "0.0.0.0 d3oxtn1x3b8d7i.cloudfront.net"
+				F.WriteLine "0.0.0.0 inno.bisrv.com"
+				F.WriteLine "0.0.0.0 nsis.bisrv.com"
+				F.WriteLine "0.0.0.0 cdn.file2desktop.com"
+				F.WriteLine "0.0.0.0 cdn.goateastcach.us"
+				F.WriteLine "0.0.0.0 cdn.guttastatdk.us"
+				F.WriteLine "0.0.0.0 cdn.inskinmedia.com"
+				F.WriteLine "0.0.0.0 cdn.insta.oibundles2.com"
+				F.WriteLine "0.0.0.0 cdn.insta.playbryte.com"
+				F.WriteLine "0.0.0.0 cdn.llogetfastcach.us"
+				F.WriteLine "0.0.0.0 cdn.montiera.com"
+				F.WriteLine "0.0.0.0 cdn.msdwnld.com"
+				F.WriteLine "0.0.0.0 cdn.mypcbackup.com"
+				F.WriteLine "0.0.0.0 cdn.ppdownload.com"
+				F.WriteLine "0.0.0.0 cdn.riceateastcach.us"
+				F.WriteLine "0.0.0.0 cdn.shyapotato.us"
+				F.WriteLine "0.0.0.0 cdn.solimba.com"
+				F.WriteLine "0.0.0.0 cdn.tuto4pc.com"
+				F.WriteLine "0.0.0.0 cdn.appround.biz"
+				F.WriteLine "0.0.0.0 cdn.bigspeedpro.com"
+				F.WriteLine "0.0.0.0 cdn.bispd.com"
+				F.WriteLine "0.0.0.0 cdn.bisrv.com"
+				F.WriteLine "0.0.0.0 cdn.cdndp.com"
+				F.WriteLine "0.0.0.0 cdn.download.sweetpacks.com"
+				F.WriteLine "0.0.0.0 cdn.dpdownload.com"
+				F.WriteLine "0.0.0.0 cdn.visualbee.net"
+				F.WriteLine "#Telemetry"
+				F.WriteLine "0.0.0.0 vortex.data.microsoft.com"
+				F.WriteLine "0.0.0.0 vortex-win.data.microsoft.com"
+				F.WriteLine "0.0.0.0 telecommand.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 telecommand.telemetry.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 oca.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 oca.telemetry.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 sqm.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 sqm.telemetry.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 watson.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 watson.telemetry.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 redir.metaservices.microsoft.com"
+				F.WriteLine "0.0.0.0 choice.microsoft.com"
+				F.WriteLine "0.0.0.0 choice.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 df.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 wes.df.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 reports.wes.df.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 services.wes.df.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 sqm.df.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 watson.ppe.telemetry.microsoft.com"
+				F.WriteLine "0.0.0.0 telemetry.appex.bing.net"
+				F.WriteLine "0.0.0.0 telemetry.urs.microsoft.com"
+				F.WriteLine "0.0.0.0 telemetry.appex.bing.net:443"
+				F.WriteLine "0.0.0.0 settings-sandbox.data.microsoft.com"
+				F.WriteLine "0.0.0.0 vortex-sandbox.data.microsoft.com"
+				F.WriteLine "0.0.0.0 survey.watson.microsoft.com"
+				F.WriteLine "0.0.0.0 watson.live.com"
+				F.WriteLine "0.0.0.0 watson.microsoft.com"
+				F.WriteLine "0.0.0.0 statsfe2.ws.microsoft.com"
+				F.WriteLine "0.0.0.0 corpext.msitadfs.glbdns2.microsoft.com"
+				F.WriteLine "0.0.0.0 compatexchange.cloudapp.net"
+				F.WriteLine "0.0.0.0 cs1.wpc.v0cdn.net"
+				F.WriteLine "0.0.0.0 a-0001.a-msedge.net"
+				F.WriteLine "0.0.0.0 statsfe2.update.microsoft.com.akadns.net"
+				F.WriteLine "0.0.0.0 sls.update.microsoft.com.akadns.net"
+				F.WriteLine "0.0.0.0 fe2.update.microsoft.com.akadns.net"
+				F.WriteLine "0.0.0.0 diagnostics.support.microsoft.com"
+				F.WriteLine "0.0.0.0 corp.sts.microsoft.com"
+				F.WriteLine "0.0.0.0 statsfe1.ws.microsoft.com"
+				F.WriteLine "0.0.0.0 pre.footprintpredict.com"
+				F.WriteLine "0.0.0.0 i1.services.social.microsoft.com"
+				F.WriteLine "0.0.0.0 i1.services.social.microsoft.com.nsatc.net"
+				F.WriteLine "0.0.0.0 feedback.windows.com"
+				F.WriteLine "0.0.0.0 feedback.microsoft-hohm.com"
+				F.WriteLine "0.0.0.0 feedback.search.microsoft.com"
+			F.Close
+			printf ""
+			printf " INFO: Fichero HOSTS escrito correctamente"
+			Wait(2)
+		Case "2"
+			Call telemetryON()
+		Case "0"
+			Call showMenu(0)
+		Case Else
+			Call menuTelemetry()
+	End Select
+	Call menuTelemetry()
 End Function
 
 Function menuWindowsDefender()
+	cls                                                                                                                                           
+	printf " _ _ _ _       _                  ____      ___           _         "
+	printf "| | | |_|___ _| |___ _ _ _ ___   |    \ ___|  _|___ ___ _| |___ ___ "
+	printf "| | | | |   | . | . | | | |_ -|  |  |  | -_|  _| -_|   | . | -_|  _|"
+	printf "|_____|_|_|_|___|___|_____|___|  |____/|___|_| |___|_|_|___|___|_|  "
+	printf ""
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "  1 = Deshabilitar Microsoft Windows Defender"
+	printf "  2 = Habilitar Microsoft Windows Defender"
+	printf ""
+	printf "  0 = Volver al menu principal"
+	printf ""
+	printl "  > "
+	Select Case scanf
+		Case "1"
+			printf ""
+			printf " Deshabilitando Windows Defender usando el registro..."
+			wait(1)
+				oWSH.Run "sc stop WdNisSvc"
+				oWSH.Run "sc stop WinDefend"
+				oWSH.Run "sc config WdNisSvc start=disabled"
+				oWSH.Run "sc config WinDefend start=disabled"	
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" & chr(34) & " /DISABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Verification" & chr(34) & " /DISABLE"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 1, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 1, "REG_DWORD"
+				oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0, "REG_DWORD"
+			printf ""
+			printf " INFO: Windows Defender deshabilitado correctamente"
+			printf " WARNING: Si no tienes antivirus, te recomiendo 360 Total Security: www.360totalsecurity.com"
+			Wait(3)
+		Case "2"
+			printf ""
+			printf " Habilitando Windows Defender usando el registro..."
+			wait(1)
+				oWSH.Run "sc config WdNisSvc start=auto"
+				oWSH.Run "sc config WinDefend start=auto"	
+				oWSH.Run "sc start WdNisSvc"
+				oWSH.Run "sc start WinDefend"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" & chr(34) & " /ENABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup" & chr(34) & " /ENABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" & chr(34) & " /ENABLE"
+				oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Verification" & chr(34) & " /ENABLE"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 0, "REG_DWORD"
+				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 0, "REG_DWORD"
+				oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 1, "REG_DWORD"
+			printf ""
+			printf " INFO: Windows Defender habilitado correctamente"
+			wait(2)
+		Case "0"
+			Call showMenu(0)
+		Case Else
+			Call menuWindowsDefender()
+	End Select
+	Call menuWindowsDefender()
 End Function
 
 Function menuWindowsUpdate()
+	On Error Resume Next
+	cls
+	printf " _ _ _ _       _                  _____       _     _       "
+	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |___ _| |___| |_ ___ "
+	printf "| | | | |   | . | . | | | |_ -|  |  |  | . | . | .'|  _| -_|"
+	printf "|_____|_|_|_|___|___|_____|___|  |_____|  _|___|__,|_| |___|"
+	printf "                                       |_|                  "
 	printf ""
 	printl " # Deshabilitar 'Windows Auto Update'? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -179,7 +474,6 @@ Function menuWindowsUpdate()
 		oWSH.Run "sc config wuauserv start=auto"
 		oWSH.Run "sc start wuauserv"
 	End If
-	
 	printl " # Deshabilitar 'Windows Update Sharing'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DownloadMode", 0, "REG_DWORD"
@@ -190,14 +484,12 @@ Function menuWindowsUpdate()
 		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\Config\DODownloadMode", 3, "REG_DWORD"
 		oWSH.RegDelete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\DeliveryOptimization\SystemSettingsDownloadMode"
 	End If
-	
 	printl " # Deshabilitar 'Windows Update App'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate\AutoDownload", 2, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsStore\WindowsUpdate\AutoDownload", 4, "REG_DWORD"
 	End If
-	
 	printl " # Deshabilitar 'Windows Update Driver'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching\DontSearchWindowsUpdate", 1, "REG_DWORD"
@@ -224,6 +516,66 @@ Function menuPerfomance()
 		printf "Todos los tweaks de rendimiento se han aplicado correctamente"
 		Call showMenu(2)
 	End If
+	printf ""
+	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\AutoEndTasks", 1, "REG_SZ"
+		oWSH.RegWrite "HKCU\Control Panel\Desktop\HungAppTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\WaitToKillServiceTimeout", 1000, "REG_SZ"
+		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
+	End If
+
+	printl " # Deshabilitar servicios: BitLocker, Cifrado y OfflineFiles? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "sc config BDESVC start=disabled"
+		oWSH.Run "sc config EFS start=disabled"
+		oWSH.Run "sc config CscService start=disabled"
+	Else
+		oWSH.Run "sc config BDESVC start=auto"
+		oWSH.Run "sc config EFS start=auto"
+		oWSH.Run "sc config CscService start=auto"
+	End If
+
+	printl " # Deshabilitar servicios Wifi? (No usar en laptops!) (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "sc config WlanSvc start=disabled"
+	Else
+		oWSH.Run "sc config WlanSvc start=auto"
+	End If
+	
+	printl " # Deshabilitar la compresion de ficheros? (tarda un poco!) (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.Run "compact /CompactOs:never"
+	Else
+		oWSH.Run "compact /CompactOs:always"
+	End If
+	
+	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
+	Else
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
+	End If
+	
+	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		printf " _______________________________________________________________________"
+		printf " | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
+		printf " | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
+		printf " | CPU a trabajar a su maxima velocidad.                               |"
+		printf " |                                                                     |"
+		printf " | Se va a descargar un programa, mueve la barra al 100% pulsa aplicar |"
+		printf " |                                                                     |"
+		printf " | > Pulsa una INTRO para continuar...                                 |"
+		printf " -----------------------------------------------------------------------"
+		scanf
+		printf " >> Descargando CPM.exe desde las dependencias de GitHub..."
+		Call CPUcorePark()
+		printf " >> Ejecutando CPM.exe..."
+		oWSH.Run currentFolder & "\CPM.exe"
+		showMenu(2)
+	End If	
 End Function
 
 Function menuPowerSSD()
@@ -287,23 +639,6 @@ Function deleteOneDrive()
 	oWSH.Run currentFolder & "\deleteOneDrive.bat"
 End Function
 
-Function disableCortana()
-	printl " # Deshabilitar Cortana + Bing + Barra busqueda? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 0, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 0, "REG_DWORD"
-	Else
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\CortanaEnabled", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\SearchboxTaskbarMode", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Search\BingSearchEnabled", 1, "REG_DWORD"
-	End If
-	oWSH.Run "taskkill.exe /F /IM explorer.exe"
-	oWSH.Run "explorer.exe"
-End Function
-
 Function deleteCortana()
 	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
 	oWEB.Send
@@ -312,26 +647,6 @@ Function deleteCortana()
 		F.Write oWEB.ResponseText
 	F.Close
 	oWSH.Run currentFolder & "\deleteCortana.bat"
-End Function
-
-Function telemetryOFF()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\telemetryOFF.bat"
-End Function
-
-Function telemetryON()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\telemetryON.bat"
 End Function
 
 Function click_derecho(n)
@@ -384,6 +699,26 @@ Function click_derecho(n)
 	End If
 End Function
 
+Function telemetryOFF()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\telemetryOFF.bat"
+End Function
+
+Function telemetryON()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\telemetryON.bat"
+End Function
+
 Function powerSSD()
 	oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power\HiberbootEnabled", 0, "REG_DWORD"
 	oWSH.Run "powercfg -h off"
@@ -392,69 +727,6 @@ Function powerSSD()
 	oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\OptimizeComplete", "No"
 	oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\Enable", "N"
 	
-End Function
-
-Function optimizarSistema()
-	printf ""
-	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
-		oWSH.RegWrite "HKCU\Control Panel\Desktop\AutoEndTasks", 1, "REG_SZ"
-		oWSH.RegWrite "HKCU\Control Panel\Desktop\HungAppTimeout", 1000, "REG_SZ"
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\WaitToKillServiceTimeout", 1000, "REG_SZ"
-		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Serialize\StartupDelayInMSec", 0, "REG_DWORD"
-	End If
-
-	printl " # Deshabilitar servicios: BitLocker, Cifrado y OfflineFiles? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.Run "sc config BDESVC start=disabled"
-		oWSH.Run "sc config EFS start=disabled"
-		oWSH.Run "sc config CscService start=disabled"
-	Else
-		oWSH.Run "sc config BDESVC start=auto"
-		oWSH.Run "sc config EFS start=auto"
-		oWSH.Run "sc config CscService start=auto"
-	End If
-
-	printl " # Deshabilitar servicios Wifi? (No usar en laptops!) (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.Run "sc config WlanSvc start=disabled"
-	Else
-		oWSH.Run "sc config WlanSvc start=auto"
-	End If
-	
-	printl " # Deshabilitar la compresion de ficheros? (tarda un poco!) (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.Run "compact /CompactOs:never"
-	Else
-		oWSH.Run "compact /CompactOs:always"
-	End If
-	
-	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
-	Else
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
-	End If
-	
-	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
-	If LCase(scanf) = "s" Then
-		printf " _______________________________________________________________________"
-		printf " | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
-		printf " | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
-		printf " | CPU a trabajar a su maxima velocidad.                               |"
-		printf " |                                                                     |"
-		printf " | Se va a descargar un programa, mueve la barra al 100% pulsa aplicar |"
-		printf " |                                                                     |"
-		printf " | > Pulsa una INTRO para continuar...                                 |"
-		printf " -----------------------------------------------------------------------"
-		scanf
-		printf " >> Descargando CPM.exe desde las dependencias de GitHub..."
-		Call CPUcorePark()
-		printf " >> Ejecutando CPM.exe..."
-		oWSH.Run currentFolder & "\CPM.exe"
-		showMenu(2)
-	End If
 End Function
 
 Function CPUcorePark()
@@ -520,101 +792,6 @@ Function updateCheck()
 	End If
 End Function
 
-Function updateHostsFile()
-	hostsFile = oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
-	oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
-	oWEB.Send
-	If oFSO.FileExists(hostsFile & ".cwd") = False Then oFSO.CopyFile hostsFile, hostsFile & ".cwd"
-	Set F = oFSO.OpenTextFile(hostsFile, 2, True)
-		F.Write oWEB.ResponseText
-	F.Close
-	Set F = oFSO.OpenTextFile(hostsFile, 8, True)
-		F.WriteLine "#Antimalware"
-		F.WriteLine "0.0.0.0 tracking.opencandy.com.s3.amazonaws.com"
-		F.WriteLine "0.0.0.0 media.opencandy.com"
-		F.WriteLine "0.0.0.0 cdn.opencandy.com"
-		F.WriteLine "0.0.0.0 tracking.opencandy.com"
-		F.WriteLine "0.0.0.0 api.opencandy.com"
-		F.WriteLine "0.0.0.0 api.recommendedsw.com"
-		F.WriteLine "0.0.0.0 installer.betterinstaller.com"
-		F.WriteLine "0.0.0.0 installer.filebulldog.com"
-		F.WriteLine "0.0.0.0 d3oxtn1x3b8d7i.cloudfront.net"
-		F.WriteLine "0.0.0.0 inno.bisrv.com"
-		F.WriteLine "0.0.0.0 nsis.bisrv.com"
-		F.WriteLine "0.0.0.0 cdn.file2desktop.com"
-		F.WriteLine "0.0.0.0 cdn.goateastcach.us"
-		F.WriteLine "0.0.0.0 cdn.guttastatdk.us"
-		F.WriteLine "0.0.0.0 cdn.inskinmedia.com"
-		F.WriteLine "0.0.0.0 cdn.insta.oibundles2.com"
-		F.WriteLine "0.0.0.0 cdn.insta.playbryte.com"
-		F.WriteLine "0.0.0.0 cdn.llogetfastcach.us"
-		F.WriteLine "0.0.0.0 cdn.montiera.com"
-		F.WriteLine "0.0.0.0 cdn.msdwnld.com"
-		F.WriteLine "0.0.0.0 cdn.mypcbackup.com"
-		F.WriteLine "0.0.0.0 cdn.ppdownload.com"
-		F.WriteLine "0.0.0.0 cdn.riceateastcach.us"
-		F.WriteLine "0.0.0.0 cdn.shyapotato.us"
-		F.WriteLine "0.0.0.0 cdn.solimba.com"
-		F.WriteLine "0.0.0.0 cdn.tuto4pc.com"
-		F.WriteLine "0.0.0.0 cdn.appround.biz"
-		F.WriteLine "0.0.0.0 cdn.bigspeedpro.com"
-		F.WriteLine "0.0.0.0 cdn.bispd.com"
-		F.WriteLine "0.0.0.0 cdn.bisrv.com"
-		F.WriteLine "0.0.0.0 cdn.cdndp.com"
-		F.WriteLine "0.0.0.0 cdn.download.sweetpacks.com"
-		F.WriteLine "0.0.0.0 cdn.dpdownload.com"
-		F.WriteLine "0.0.0.0 cdn.visualbee.net"
-		F.WriteLine "#Telemetry"
-		F.WriteLine "0.0.0.0 vortex.data.microsoft.com"
-		F.WriteLine "0.0.0.0 vortex-win.data.microsoft.com"
-		F.WriteLine "0.0.0.0 telecommand.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 telecommand.telemetry.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 oca.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 oca.telemetry.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 sqm.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 sqm.telemetry.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 watson.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 watson.telemetry.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 redir.metaservices.microsoft.com"
-		F.WriteLine "0.0.0.0 choice.microsoft.com"
-		F.WriteLine "0.0.0.0 choice.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 df.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 wes.df.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 reports.wes.df.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 services.wes.df.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 sqm.df.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 watson.ppe.telemetry.microsoft.com"
-		F.WriteLine "0.0.0.0 telemetry.appex.bing.net"
-		F.WriteLine "0.0.0.0 telemetry.urs.microsoft.com"
-		F.WriteLine "0.0.0.0 telemetry.appex.bing.net:443"
-		F.WriteLine "0.0.0.0 settings-sandbox.data.microsoft.com"
-		F.WriteLine "0.0.0.0 vortex-sandbox.data.microsoft.com"
-		F.WriteLine "0.0.0.0 survey.watson.microsoft.com"
-		F.WriteLine "0.0.0.0 watson.live.com"
-		F.WriteLine "0.0.0.0 watson.microsoft.com"
-		F.WriteLine "0.0.0.0 statsfe2.ws.microsoft.com"
-		F.WriteLine "0.0.0.0 corpext.msitadfs.glbdns2.microsoft.com"
-		F.WriteLine "0.0.0.0 compatexchange.cloudapp.net"
-		F.WriteLine "0.0.0.0 cs1.wpc.v0cdn.net"
-		F.WriteLine "0.0.0.0 a-0001.a-msedge.net"
-		F.WriteLine "0.0.0.0 statsfe2.update.microsoft.com.akadns.net"
-		F.WriteLine "0.0.0.0 sls.update.microsoft.com.akadns.net"
-		F.WriteLine "0.0.0.0 fe2.update.microsoft.com.akadns.net"
-		F.WriteLine "0.0.0.0 diagnostics.support.microsoft.com"
-		F.WriteLine "0.0.0.0 corp.sts.microsoft.com"
-		F.WriteLine "0.0.0.0 statsfe1.ws.microsoft.com"
-		F.WriteLine "0.0.0.0 pre.footprintpredict.com"
-		F.WriteLine "0.0.0.0 i1.services.social.microsoft.com"
-		F.WriteLine "0.0.0.0 i1.services.social.microsoft.com.nsatc.net"
-		F.WriteLine "0.0.0.0 feedback.windows.com"
-		F.WriteLine "0.0.0.0 feedback.microsoft-hohm.com"
-		F.WriteLine "0.0.0.0 feedback.search.microsoft.com"
-	F.Close
-End Function
-
-'''''''''''''''''''''''''''''''''''''''''''''''''''''''
-
 Function showBanner()
 	printf " _____ _ _           _____         _    _____         _     _   "
 	printf "|  _  |_| |_ ___ ___|     |_ _ _ _| |  |   __|___ ___|_|___| |_ "
@@ -660,7 +837,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call menuOneDrive()
+			Call menuWindowsUpdate()
 		Case 2
 			Call disableUAC()
 		Case 3
@@ -919,105 +1096,6 @@ Function showKeyboardTips()
 	
 	MsgBox msg, vbOkOnly, "AikonCWD Script: Atajos de teclado"
 	Call showMenu(0)
-End Function
-
-Function disableSpyware()
-	printf ""
-	printf " Deshabilitando Telemetry usando el registro..."
-	wait(1)
-		On Error Resume Next
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\DataCollection\AllowTelemetry", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..riencehost.appxmain_31bf3856ad364e35_10.0.10240.16384_none_0ab8ea80e84d4093\f!telemetry.js", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!dss-winrt-telemetry.js", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry.js", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry-event_8ac43a41e5030538", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\COMPONENTS\DerivedData\Components\amd64_microsoft-windows-c..lemetry.lib.cortana_31bf3856ad364e35_10.0.10240.16384_none_40ba2ec3d03bceb0\f!proactive-telemetry-inter_58073761d33f144b", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\MRT\DontOfferThroughWUAU", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\AITEnable", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\SQMClient\Windows\CEIPEnable", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\AppCompat\DisableUAR", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Device Metadata\PreventDeviceMetadataFromNetwork", 1, "REG_DWORD"		
-	printf ""
-	printf " INFO: Telemetry deshabilitado correctamente"
-	
-	pathLOG = oWSH.ExpandEnvironmentStrings("%ProgramData%") & "\Microsoft\Diagnosis\ETLLogs\AutoLogger\AutoLogger-Diagtrack-Listener.etl"
-	printf ""
-	printf " Borrando DiagTrack Log..."
-	wait(1)
-		If oFSO.FileExists(pathLOG) Then oFSO.DeleteFile(pathLOG)
-		oWSH.Run "cmd /C echo " & chr(34) & chr(34) & " > " & pathLOG
-	printf ""
-	printf " INFO: DiagTrack Log borrado correctamente"
-
-	printf ""
-	printf " Deshabilitando servicios de seguimiento..."
-	wait(1)
-		oWSH.Run "sc stop DiagTrack"
-		oWSH.Run "sc stop RetailDemo"
-		oWSH.Run "sc stop WMPNetworkSvc"
-		oWSH.Run "sc stop dmwappushservice"
-		oWSH.Run "sc stop diagnosticshub.standardcollector.service"
-		oWSH.Run "sc config DiagTrack start=disabled"
-		oWSH.Run "sc config RetailDemo start=disabled"
-		oWSH.Run "sc config WMPNetworkSvc start=disabled"
-		oWSH.Run "sc config dmwappushservice start=disabled"
-		oWSH.Run "sc config diagnosticshub.standardcollector.service start=disabled"
-	printf ""
-	printf " INFO: Servicios de seguimiento deshabilitados"
-
-	printf ""
-	printf " Deshabilitando tareas programadas que envian datos a Microsoft..."	
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Application Experience\Microsoft Compatibility Appraiser" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Application Experience\ProgramDataUpdater" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\KernelCeipTask" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\Uploader" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\AppID\SmartScreenSpecific" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\DiskDiagnostic\Microsoft-Windows-DiskDiagnosticDataCollector" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\NetTrace\GatherNetworkInfo" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Error Reporting\QueueReporting" & chr(34) & " /DISABLE"
-	printf ""
-	printf " INFO: Tareas programadas de seguimiento deshabilitadas"
-
-	printf ""
-	printf " Deshabilitando acceso a los servidores de publicidad de Microsoft..."
-	wait(1)
-	Set F = oFSO.CreateTextFile(oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts", True)
-		F.WriteLine "127.0.0.1	localhost"
-		F.WriteLine "::1		localhost"
-		F.WriteLine "127.0.0.1	local"
-	F.Close
-	printf ""
-	printf " INFO: Fichero HOSTS escrito correctamente"
-	Call showMenu(2)
-End Function
-
-Function disableDefender()
-	printf ""
-	printf " Deshabilitando Windows Defender usando el registro..."
-	wait(1)
-		oWSH.Run "sc stop WdNisSvc"
-		oWSH.Run "sc stop WinDefend"
-		oWSH.Run "sc config WdNisSvc start=disabled"
-		oWSH.Run "sc config WinDefend start=disabled"	
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cache Maintenance" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Cleanup" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan" & chr(34) & " /DISABLE"
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Defender\Windows Defender Verification" & chr(34) & " /DISABLE"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows Defender\DisableAntiSpyware", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection", 1, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable", 1, "REG_DWORD"
-		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\NOC_GLOBAL_SETTING_TOASTS_ENABLED", 0, "REG_DWORD"
-	printf ""
-	printf " INFO: Windows Defender deshabilitado correctamente"
-	printf " WARNING: Si no tienes antivirus, te recomiendo 360 Total Security: www.360totalsecurity.com"
-	wait(1)
-	Call showMenu(2)
 End Function
 
 Function showActivation()
