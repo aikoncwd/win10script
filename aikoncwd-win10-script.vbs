@@ -21,6 +21,7 @@ Call updateCheck()
 Call showMenu(1)
 
 Function menuSysTweaks()
+	printf ""
 	printl " # Deshabilitar 'Acceso Rapido' como opcion por defecto en Explorer? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\LaunchTo", 1, "REG_DWORD"
@@ -110,8 +111,14 @@ Function menuSysTweaks()
 	Else
 		oWSH.RegWrite "HKLM\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience", 1, "REG_DWORD"
 	End If
+	printf ""
+	printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
 	oWSH.Run "taskkill.exe /F /IM explorer.exe"
+	Wait(5)
 	oWSH.Run "explorer.exe"
+	printf ""
+	printf "Todos los tweaks se han aplicado correctamente"
+	Call showMenu(2)
 End Function
 
 Function menuOneDrive()
@@ -275,7 +282,7 @@ End Function
 Function click_derecho(n)
 	If n = 1 Then
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Icon", "themecpl.dll"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\MUIVerb", "Personalizar (clásico)"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\MUIVerb", "Personalizar (classic)"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Position", "Bottom"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\SubCommands", ""
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\MUIVerb", "Temas"
@@ -286,7 +293,7 @@ Function click_derecho(n)
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\MUIVerb", "Fondo Pantalla"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\CommandFlags", 32, "REG_DWORD"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,@desktop"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\MUIVerb", "Cambiar tamaño texto"
+		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\MUIVerb", "Cambiar grosor texto"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\ControlPanelName", "Microsoft.Display"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\Icon", "display.dll,-1"
 		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
@@ -333,6 +340,7 @@ Function powerSSD()
 End Function
 
 Function optimizarSistema()
+	printf ""
 	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\Control Panel\Desktop\WaitToKillAppTimeout", 1000, "REG_SZ"
@@ -372,6 +380,25 @@ Function optimizarSistema()
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 20, "REG_DWORD"
+	End If
+	
+	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
+	If LCase(scanf) = "s" Then
+		printf " _______________________________________________________________________"
+		printf " | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
+		printf " | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
+		printf " | CPU a trabajar a su maxima velocidad.                               |"
+		printf " |                                                                     |"
+		printf " | Se va a descargar un programa, mueve la barra al 100% pulsa aplicar |"
+		printf " |                                                                     |"
+		printf " | > Pulsa una INTRO para continuar...                                 |"
+		printf " -----------------------------------------------------------------------"
+		scanf
+		printf " >> Descargando CPM.exe desde las dependencias de GitHub..."
+		Call CPUcorePark()
+		printf " >> Ejecutando CPM.exe..."
+		oWSH.Run currentFolder & "\CPM.exe"
+		showMenu(2)
 	End If
 End Function
 
@@ -434,7 +461,7 @@ Function updateCheck()
 	Else
 		printf "   Tienes la ultima version"
 		printf "   Iniciando el script..."
-		Wait(2)
+		Wait(1)
 	End If
 End Function
 
@@ -578,7 +605,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call regTweaks()
+			Call optimizarSistema()
 		Case 2
 			Call disableUAC()
 		Case 3
