@@ -117,13 +117,38 @@ Function menuSysTweaks()
 	Wait(5)
 	oWSH.Run "explorer.exe"
 	printf ""
-	printf "Todos los tweaks se han aplicado correctamente"
+	printf "Todos los tweaks de sistema se han aplicado correctamente"
 	Call showMenu(2)
 End Function
 
 Function menuOneDrive()
-	Call disableOneDrive()
-	Call deleteOneDrive()
+	cls
+	printf ""
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "  1 = Deshabilitar Microsoft One Drive"
+	printf "  2 = Habilitar Microsoft One Drive"
+	printf "  3 = Desinstalar Microsoft One Drive"
+	printf ""
+	printf "  0 = Volver al menu principal"
+	printf ""
+	printl "  > "
+	res = scanf
+	Select Case res
+		Case 1
+			Call disableOneDrive()
+		Case 2
+			Call enableOneDrive()
+		Case 3
+			printf ""
+			printl "  >> Desinstalar definitivamente One Drive. Opcion no reversible. Continuar? (s/n) > "
+			If scanf = "s" Then Call deleteOneDrive()
+		Case 0
+			Call showMenu(0)
+		Case Else
+			Call menuOneDrive()
+	End Select
+	Call menuOneDrive()
 End Function
 
 Function menuCortana()
@@ -139,6 +164,7 @@ Function menuWindowsDefender()
 End Function
 
 Function menuWindowsUpdate()
+	printf ""
 	printl " # Deshabilitar 'Windows Auto Update'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\DeferUpgrade", 1, "REG_DWORD"
@@ -178,9 +204,13 @@ Function menuWindowsUpdate()
 	Else
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DriverSearching\DontSearchWindowsUpdate", 0, "REG_DWORD"
 	End If
+	printf ""
+	printf "Todos los tweaks de Windows Update se han aplicado correctamente"
+	Call showMenu(2)
 End Function
 
 Function menuPerfomance()
+	printf ""
 	printl " # Desinstalar WindowsFeedbackReport y WindowsContactSupport? (s/n) > "
 	If LCase(scanf) = "s" Then
 		Call IWT()
@@ -188,9 +218,11 @@ Function menuPerfomance()
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-Windows-ContactSupport /r"
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-WindowsFeedback /r"
 		oWSH.Run currentFolder & "\IWT.exe /h /o /l"
-		Wait(2)
-		oFSO.DeleteFile(currentFolder & "\Packages.txt")
+		Wait(3)
 		oFSO.DeleteFile(currentFolder & "\IWT.exe")
+		printf ""
+		printf "Todos los tweaks de rendimiento se han aplicado correctamente"
+		Call showMenu(2)
 	End If
 End Function
 
@@ -201,17 +233,8 @@ Function menuLicense()
 End Function
 
 '''''''''''''''''''''''''''''''''''''''
-Function deleteOneDrive()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
-	oWEB.Send
-
-	Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
-		F.Write oWEB.ResponseText
-	F.Close
-	oWSH.Run currentFolder & "\deleteOneDrive.bat"
-End Function
-
 Function disableOneDrive()
+	On Error Resume Next
 	printf ""
 	printf " Deshabilitando OneDrive..."
 	wait(1)
@@ -229,17 +252,39 @@ Function disableOneDrive()
 		oWSH.RegDelete "HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\OneDrive"
 	printf ""
 	printf " INFO: OneDrive deshabilitado correctamente"
-	Call showMenu(2)
+	Wait(2)
+	Call menuOneDrive()
 End Function
 
-Function deleteCortana()
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
+Function enableOneDrive()
+	On Error Resume Next
+	printf ""
+	printf " Habilitando OneDrive..."
+	wait(1)
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\OneDrive\DisableFileSyncNGSC", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableLibrariesDefaultSaveToOneDrive", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\OneDrive\DisableMeteredNetworkFileSync", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive\DisableLibrariesDefaultSaveToOneDrive", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SOFTWARE\Wow6432Node\Policies\Microsoft\Windows\Onedrive\DisableMeteredNetworkFileSync", 0, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CLASSES_ROOT\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CURRENT_USER\Software\Classes\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
+		oWSH.RegWrite "HKEY_CURRENT_USER\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
+	printf ""
+	printf " INFO: OneDrive habilitado correctamente"
+	Wait(2)
+	Call menuOneDrive()
+End Function
+
+Function deleteOneDrive()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
 	oWEB.Send
 
-	Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
+	Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
 		F.Write oWEB.ResponseText
 	F.Close
-	oWSH.Run currentFolder & "\deleteCortana.bat"
+	oWSH.Run currentFolder & "\deleteOneDrive.bat"
 End Function
 
 Function disableCortana()
@@ -257,6 +302,16 @@ Function disableCortana()
 	End If
 	oWSH.Run "taskkill.exe /F /IM explorer.exe"
 	oWSH.Run "explorer.exe"
+End Function
+
+Function deleteCortana()
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
+	oWEB.Send
+
+	Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
+		F.Write oWEB.ResponseText
+	F.Close
+	oWSH.Run currentFolder & "\deleteCortana.bat"
 End Function
 
 Function telemetryOFF()
@@ -605,7 +660,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call optimizarSistema()
+			Call menuOneDrive()
 		Case 2
 			Call disableUAC()
 		Case 3
