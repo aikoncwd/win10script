@@ -216,7 +216,7 @@ Function menuOneDrive()
 			printf ""
 			printl "  >> Desinstalar definitivamente OneDrive. Opcion no reversible. Continuar? (s/n) > "
 			If scanf = "s" Then
-				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.sql", False
+				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
 				oWEB.Send
 				Wait(1)
 				Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
@@ -273,7 +273,7 @@ Function menuCortana()
 			printf ""
 			printl "  >> Desinstalar definitivamente Cortana. Opcion no reversible. Continuar? (s/n) > "
 			If scanf = "s" Then
-				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.sql", False
+				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
 				oWEB.Send
 				Wait(1)
 				Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
@@ -309,7 +309,7 @@ Function menuTelemetry()
 	Select Case scanf
 		Case "1"
 			printf " Aplicando parches para deshabilitar Telemetry (10 segundos)..."
-			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.sql", False
+			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
 			oWEB.Send
 			Wait(1)
 			Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
@@ -471,7 +471,7 @@ Function menuTelemetry()
 			printf " INFO: Fichero HOSTS escrito correctamente"
 			Wait(2)
 		Case "2"
-			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.sql", False
+			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
 			oWEB.Send
 			Wait(1)
 			Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
@@ -740,7 +740,7 @@ End Function
 Function updateCheck()
 	printf ""
 	printf " > Version actual: " & currentVersion
-	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/updateCheck.sql", False
+	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/updateCheck", False
 	oWEB.Send
 	Wait(1)
 	printf " > Version GitHub: " & oWEB.responseText
