@@ -26,7 +26,7 @@ Function menuSysTweaks()
 	printf " _____         _                _____               _       "
 	printf "|   __|_ _ ___| |_ ___ _____   |_   _|_ _ _ ___ ___| |_ ___ "
 	printf "|__   | | |_ -|  _| -_|     |    | | | | | | -_| .'| '_|_ -|"
-	printf "|_____|_  |___|_| |___|_|_|_|    |_| |_____|___|__,|_,_|___|"
+	printf "|_____|_  |___|_| |___|_|_|_|    |_| |_____|___|_|_|_,_|___|"
 	printf "      |___|                                                 "	
 	printf ""
 	printl " # Deshabilitar 'Acceso Rapido' como opcion por defecto en Explorer? (s/n) > "
@@ -507,7 +507,7 @@ Function menuPerfomance()
 	printf " _____         ___                              _____               _   "
 	printf "|  _  |___ ___|  _|___ _____ ___ ___ ___ ___   |_   _|_ _ _ ___ ___| |_ "
 	printf "|   __| -_|  _|  _| . |     | .'|   |  _| -_|    | | | | | | -_| .'| '_|"
-	printf "|__|  |___|_| |_| |___|_|_|_|__,|_|_|___|___|    |_| |_____|___|__,|_,_|"                                                                        
+	printf "|__|  |___|_| |_| |___|_|_|_|_|_|_|_|___|___|    |_| |_____|___|__,|_,_|"                                                                        
 	printf ""
 	printl " # Desinstalar WindowsFeedbackReport y WindowsContactSupport? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -544,7 +544,10 @@ Function menuPerfomance()
 		oWSH.Run "sc start EFS"
 		oWSH.Run "sc start CscService"
 	End If
-	printl " # Deshabilitar servicios Wifi? (No usar en laptops!) (s/n) > "
+	printf ""
+	printf " >> No utilizar si usas un portatil o Wifi <<"
+	printf ""
+	printl " # Deshabilitar servicios Wifi? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.Run "sc config WlanSvc start=disabled"
 		oWSH.Run "sc stop WlanSvc"
@@ -552,11 +555,14 @@ Function menuPerfomance()
 		oWSH.Run "sc config WlanSvc start=auto"
 		oWSH.Run "sc start WlanSvc"
 	End If
-	printl " # Deshabilitar la compresion de ficheros? (tarda un poco!) (s/n) > "
+	printl " # Cambiar la configuracion de la compresion de ficheros? (tarda un poco!) (s/n) > "
 	If LCase(scanf) = "s" Then
-		oWSH.Run "compact /CompactOs:never"
-	Else
-		oWSH.Run "compact /CompactOs:always"
+		printl " -> Deshabilitar la compresion de ficheros en el disco duro principal? (s/n) > "
+		If LCase(scanf) = "s" Then
+			oWSH.Run "compact /CompactOs:never"
+		Else
+			oWSH.Run "compact /CompactOs:always"
+		End If
 	End If
 	Wait(3)
 	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
@@ -568,16 +574,16 @@ Function menuPerfomance()
 	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		printf ""
-		printf "  -----------------------------------------------------------------------"
-		printf "  | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
-		printf "  | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
-		printf "  | CPU a trabajar a su maxima velocidad.                               |"
-		printf "  |                                                                     |"
-		printf "  | Se va a descargar un programa, mueve la barra al 100% y pulsa       |"
-		printf "  | aplicar.                                                            |"
-		printf "  |                                                                     |"
-		printf "  | > Pulsa una INTRO para continuar...                                 |"
-		printf "  -----------------------------------------------------------------------"
+		printf "  ---------------------------------------------------------------------"
+		printf "  | Por defecto, Windows aparca los cores de tu CPU cuando no hay una |"
+		printf "  | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu |"
+		printf "  | CPU a trabajar a su maxima velocidad.                             |"
+		printf "  |                                                                   |"
+		printf "  | Se va a descargar un programa, mueve la barra al 100% y pulsa     |"
+		printf "  | aplicar.                                                          |"
+		printf "  |                                                                   |"
+		printf "  | > Pulsa una INTRO para continuar...                               |"
+		printf "  ---------------------------------------------------------------------"
 		scanf
 		printf " >> Descargando CPM.exe desde las dependencias de GitHub..."
 		Call CPUcorePark()
