@@ -568,16 +568,16 @@ Function menuPerfomance()
 	printl " # Modificar la configuracion de 'CPU Core Parking'? (s/n) > "
 	If LCase(scanf) = "s" Then
 		printf ""
-		printf " -----------------------------------------------------------------------"
-		printf " | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
-		printf " | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
-		printf " | CPU a trabajar a su maxima velocidad.                               |"
-		printf " |                                                                     |"
-		printf " | Se va a descargar un programa, mueve la barra al 100% y pulsa       |"
-		printf " | aplicar.                                                            |"
-		printf " |                                                                     |"
-		printf " | > Pulsa una INTRO para continuar...                                 |"
-		printf " -----------------------------------------------------------------------"
+		printf "  -----------------------------------------------------------------------"
+		printf "  | Por defecto, Windows aparca los cores de tu CPU cuando no hay una   |"
+		printf "  | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu   |"
+		printf "  | CPU a trabajar a su maxima velocidad.                               |"
+		printf "  |                                                                     |"
+		printf "  | Se va a descargar un programa, mueve la barra al 100% y pulsa       |"
+		printf "  | aplicar.                                                            |"
+		printf "  |                                                                     |"
+		printf "  | > Pulsa una INTRO para continuar...                                 |"
+		printf "  -----------------------------------------------------------------------"
 		scanf
 		printf " >> Descargando CPM.exe desde las dependencias de GitHub..."
 		Call CPUcorePark()
@@ -881,6 +881,9 @@ Function showMenu(n)
 			printf " Gracias por utilizar mi script :)"
 			printf "                          AikonCWD"
 			wait(1)
+			If oFSO.FileExists(currentFOlder & "\CPM.exe") = True then oFSO.DeleteFile(currentFOlder & "\CPM.exe")
+			If oFSO.FileExists(currentFOlder & "\IWT.exe") = True then oFSO.DeleteFile(currentFOlder & "\IWT.exe")
+			If oFSO.FileExists(currentFOlder & "\ACT.exe") = True then oFSO.DeleteFile(currentFOlder & "\ACT.exe")
 			WScript.Quit
 		Case Else
 			printf ""
