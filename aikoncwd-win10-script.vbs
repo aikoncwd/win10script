@@ -229,7 +229,6 @@ Function menuOneDrive()
 		Case Else
 			Call menuOneDrive()
 	End Select
-	Call menuOneDrive()
 End Function
 
 Function menuCortana()
@@ -286,7 +285,6 @@ Function menuCortana()
 		Case Else
 			Call menuCortana()
 	End Select
-	Call menuCortana()
 End Function
 
 Function menuTelemetry()
@@ -483,7 +481,6 @@ Function menuTelemetry()
 		Case Else
 			Call menuTelemetry()
 	End Select
-	Call menuTelemetry()
 End Function
 
 Function menuWindowsDefender()
@@ -550,7 +547,6 @@ Function menuWindowsDefender()
 		Case Else
 			Call menuWindowsDefender()
 	End Select
-	Call menuWindowsDefender()
 End Function
 
 Function menuWindowsUpdate()
@@ -559,7 +555,7 @@ Function menuWindowsUpdate()
 	printf " _ _ _ _       _                  _____       _     _       "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |___ _| |___| |_ ___ "
 	printf "| | | | |   | . | . | | | |_ -|  |  |  | . | . | .'|  _| -_|"
-	printf "|_____|_|_|_|___|___|_____|___|  |_____|  _|___|__,|_| |___|"
+	printf "|_____|_|_|_|___|___|_____|___|  |_____|  _|___|_|_|_| |___|"
 	printf "                                       |_|                  "
 	printf ""
 	printl " # Deshabilitar 'Windows Auto Update'? (s/n) > "
@@ -711,20 +707,117 @@ Function menuPerfomance()
 End Function
 
 Function menuPowerSSD()
+	On Error Resume Next
+	cls
+	printf " _____ _____ ____     _____     _   _       _             "
+	printf "|   __|   __|    \   |     |___| |_|_|_____|_|___ ___ ___ "
+	printf "|__   |__   |  |  |  |  |  | . |  _| |     | |- _| -_|  _|"
+	printf "|_____|_____|____/   |_____|  _|_| |_|_|_|_|_|___|___|_|  "
+	printf "                           |_|                            "
+	printf ""
+	printf " Este script va a modificar las siguientes configuraciones:"
+	printf ""
+	printf "  > Habilitar TRIM"
+	printf "  > Deshabilitar VSS (Shadow Copy)"
+	printf "  > Deshabilitar Windows Search"
+	printf "  > Deshabilitar Servicios de Indexacion"
+	printf "  > Deshabilitar defragmentador de discos"
+	printf "  > Deshabilitar hibernacion del sistema"
+	printf "  > Deshabilitar Prefetcher + Superfetch"
+	printf "  > Deshabilitar ClearPageFileAtShutdown + LargeSystemCache"
+	printf ""
+	printl "  # Deseas continuar y aplicar los cambios? (s/n) "	
+	If scanf = "s" Then
+		printf ""
+		oWSH.Run "fsutil behavior set disabledeletenotify 0"
+		printf " # TRIM habilitado"
+		wait(1)
+		oWSH.Run "vssadmin Delete Shadows /All /Quiet"
+		oWSH.Run "sc stop VSS"
+		oWSH.Run "sc config VSS start=disabled"
+		printf " # Shadow Copy eliminada y deshabilitada"
+		wait(1)
+		oWSH.Run "sc stop WSearch"
+		oWSH.Run "sc config WSearch start=disabled"
+		printf " # Windows Search + Indexing Service deshabilitados"
+		wait(1)
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\OptimizeComplete", "No"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\Enable", "N"
+		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Defrag\ScheduledDefrag" & chr(34) & " /DISABLE"
+		printf " # Defragmentador de disco deshabilitado"
+		wait(1)		
+		oWSH.Run "powercfg -h off"
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power\HiberbootEnabled", 0, "REG_DWORD"
+		printf " # Hibernacion deshabilitada"
+		wait(1)
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters\EnablePrefetcher", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters\EnableSuperfetch", 0, "REG_DWORD"
+		oWSH.Run "sc stop SysMain"
+		oWSH.Run "sc config SysMain start=disabled"
+		printf " # Prefetcher + Superfetch deshabilitados"
+		wait(1)
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\ClearPageFileAtShutdown", 0, "REG_DWORD"
+		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\LargeSystemCache", 0, "REG_DWORD"
+		printf " # ClearPageFileAtShutdown + LargeSystemCache deshabilitados"
+		wait(1)
+		printf ""
+		printf " INFO: Felicidades, acabas de prolongar la vida y el rendimiento de tu SSD"	
+	Else
+		printf ""
+		printf " INFO: Operacion cancelada por el usuario"
+	End If
+	Call showMenu(3)
 End Function
 
 Function menuLicense()
+	On Error Resume Next
+	cls                                                              
+	printf " _ _ _ _       _                  __    _                     "
+	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |_|___ ___ ___ ___ ___ "
+	printf "| | | | |   | . | . | | | |_ -|  |  |__| |  _| -_|   |_ -| -_|"
+	printf "|_____|_|_|_|___|___|_____|___|  |_____|_|___|___|_|_|___|___|"
+	printf ""
+	printf ""
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "  1 = Mostrar estado de la activacion de Windows 10"
+	printf "  2 = Activar Windows 10 / Microsoft Office con KMS"
+	printf ""
+	printf "  0 = Volver al menu principal"
+	printf ""
+	printl "  > "
+	Select Case scanf
+		Case "1"
+			printf ""
+			printf " En unos segundos aparecera el estado de tu activacion..."
+			wait(1)
+			oWSH.Run "slmgr.vbs /dli"
+			oWSH.Run "slmgr.vbs /xpr"
+		Case "2"
+			printf ""
+			printl " # Zona Restringida; Introduce el password para continuar > "
+			If scanf = "admin" Then
+				printf ""
+				printf " > Descargando KMS..."
+				Call KMS
+				printf " > Ejecutando KMS..."
+				oWSH.Run currentFolder & "\ACT.exe"
+				Call menuLicense()
+			Else
+				printf ""
+				printf " Password incorrecto, activacion KMS cancelada."
+				wait(2)
+				Call menuLicense()
+			End If
+		Case "0"
+			Call showMenu(0)
+		Case Else
+			Call menuLicense()
+	End Select
 End Function
 
 '''''''''''''''''''''''''''''''''''''''
-Function powerSSD()
-	oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power\HiberbootEnabled", 0, "REG_DWORD"
-	oWSH.Run "powercfg -h off"
-	
-	'Deshabilitar Defrag
-	oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\OptimizeComplete", "No"
-	oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Dfrg\BootOptimizeFunction\Enable", "N"
-End Function
+' 1002 - telefono
 
 Function KMS()
 	oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
@@ -815,7 +908,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call menuPerfomance()
+			Call menuLicense()
 		Case 2
 			Call disableUAC()
 		Case 3
@@ -1079,17 +1172,6 @@ Function showKeyboardTips()
 	Call showMenu(0)
 End Function
 
-Function showActivation()
-	printf ""
-	printf " En unos segundos aparecera el estado de tu activacion..."
-	wait(1)
-		oWSH.Run "slmgr.vbs /dli"
-		oWSH.Run "slmgr.vbs /xpr"
-	printf ""
-	printf " INFO: Script slmgr ejecutado correctamente"
-	Call showMenu(2)
-End Function
-
 Function cleanApps()
 	printf ""
 	printf " Este script va a desinstalar el siguiente listado de Apps:"
@@ -1127,61 +1209,6 @@ Function cleanApps()
 		oWSH.Run "powershell get-appxpackage -Name *Office.Sway* | Remove-AppxPackage", 1, True
 		printf ""
 		printf " INFO: Las Apps se han desinstalado correctamente..."
-	Else
-		printf ""
-		printf " INFO: Operacion cancelada por el usuario"
-	End If
-	wait(1)
-	Call showMenu(2)
-End Function
-
-Function powerSSD()
-	printf ""
-	printf " Este script va a modificar las siguientes configuraciones:"
-	printf ""
-	printf "  > Habilitar TRIM"
-	printf "  > Deshabilitar VSS (Shadow Copy)"
-	printf "  > Deshabilitar Windows Search + Indexing Service"
-	printf "  > Deshabilitar defragmentador de discos"
-	printf "  > Deshabilitar hibernacion del sistema"
-	printf "  > Deshabilitar Prefetcher + Superfetch"
-	printf "  > Deshabilitar ClearPageFileAtShutdown + LargeSystemCache"
-	printf ""
-	printl " Deseas continuar? (s/n) "
-	
-	If scanf = "s" Then
-		printf ""
-		oWSH.Run "fsutil behavior set disabledeletenotify 0"
-		printf " # TRIM habilitado"
-		wait(1)
-		oWSH.Run "vssadmin Delete Shadows /All /Quiet"
-		oWSH.Run "sc stop VSS"
-		oWSH.Run "sc config VSS start=disabled"
-		printf " # Shadow Copy eliminada y deshabilitada"
-		wait(1)
-		oWSH.Run "sc stop WSearch"
-		oWSH.Run "sc config WSearch start=disabled"
-		printf " # Windows Search + Indexing Service deshabilitados"
-		wait(1)
-		oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Defrag\ScheduledDefrag" & chr(34) & " /DISABLE"
-		printf " # Defragmentador de disco deshabilitado"
-		wait(1)
-		oWSH.Run "powercfg -h off"
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Power\HiberbootEnabled", 0, "REG_DWORD"
-		printf " # Hibernacion deshabilitada"
-		wait(1)
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters\EnablePrefetcher", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\PrefetchParameters\EnableSuperfetch", 0, "REG_DWORD"
-		oWSH.Run "sc stop SysMain"
-		oWSH.Run "sc config SysMain start=disabled"
-		printf " # Prefetcher + Superfetch deshabilitados"
-		wait(1)
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\ClearPageFileAtShutdown", 0, "REG_DWORD"
-		oWSH.RegWrite "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\LargeSystemCache", 0, "REG_DWORD"
-		printf " # ClearPageFileAtShutdown + LargeSystemCache deshabilitados"
-		wait(1)
-		printf ""
-		printf " INFO: Felicidades, acabas de prolongar la vida y el rendimiento de tu SSD"	
 	Else
 		printf ""
 		printf " INFO: Operacion cancelada por el usuario"
