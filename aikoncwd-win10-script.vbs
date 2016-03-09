@@ -1,11 +1,12 @@
+On Error Resume Next
+Randomize
+
 Set oADO = CreateObject("Adodb.Stream")
 Set oWSH = CreateObject("WScript.Shell")
-Set oNET = CreateObject("WScript.Network")
 Set oAPP = CreateObject("Shell.Application")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
-Set oARG = WScript.Arguments
 
 currentVersion = "5.0"
 currentFolder  = oFSO.GetParentFolderName(WScript.ScriptFullName)
@@ -229,6 +230,7 @@ Function menuOneDrive()
 		Case Else
 			Call menuOneDrive()
 	End Select
+	Call menuOneDrive()
 End Function
 
 Function menuCortana()
@@ -285,10 +287,10 @@ Function menuCortana()
 		Case Else
 			Call menuCortana()
 	End Select
+	Call menuCortana()
 End Function
 
 Function menuTelemetry()
-	On Error Resume Next
 	cls
 	printf " _____                              _____     _               _           "
 	printf "|   __|___ _ _ _ _ _ ___ ___ ___   |_   _|___| |___ _____ ___| |_ ___ _ _ "
@@ -481,6 +483,7 @@ Function menuTelemetry()
 		Case Else
 			Call menuTelemetry()
 	End Select
+	Call menuTelemetry()
 End Function
 
 Function menuWindowsDefender()
@@ -547,10 +550,10 @@ Function menuWindowsDefender()
 		Case Else
 			Call menuWindowsDefender()
 	End Select
+	Call menuWindowsDefender()
 End Function
 
 Function menuWindowsUpdate()
-	On Error Resume Next
 	cls
 	printf " _ _ _ _       _                  _____       _     _       "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |___ _| |___| |_ ___ "
@@ -600,7 +603,6 @@ Function menuWindowsUpdate()
 End Function
 
 Function menuPerfomance()
-	On Error Resume Next
 	cls
 	printf " _____         ___                              _____               _   "
 	printf "|  _  |___ ___|  _|___ _____ ___ ___ ___ ___   |_   _|_ _ _ ___ ___| |_ "
@@ -707,7 +709,6 @@ Function menuPerfomance()
 End Function
 
 Function menuPowerSSD()
-	On Error Resume Next
 	cls
 	printf " _____ _____ ____     _____     _   _       _             "
 	printf "|   __|   __|    \   |     |___| |_|_|_____|_|___ ___ ___ "
@@ -761,7 +762,8 @@ Function menuPowerSSD()
 		printf " # ClearPageFileAtShutdown + LargeSystemCache deshabilitados"
 		wait(1)
 		printf ""
-		printf " INFO: Felicidades, acabas de prolongar la vida y el rendimiento de tu SSD"	
+		printf " INFO: Felicidades, acabas de prolongar la vida y el rendimiento de tu SSD"
+		printf "       Es recomendable que reinicies tu PC para aplicar cambios..."
 	Else
 		printf ""
 		printf " INFO: Operacion cancelada por el usuario"
@@ -770,7 +772,6 @@ Function menuPowerSSD()
 End Function
 
 Function menuLicense()
-	On Error Resume Next
 	cls                                                              
 	printf " _ _ _ _       _                  __    _                     "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |_|___ ___ ___ ___ ___ "
@@ -786,60 +787,65 @@ Function menuLicense()
 	printf "  0 = Volver al menu principal"
 	printf ""
 	printl "  > "
-	Select Case scanf
+	s = scanf
+	Select Case s
 		Case "1"
 			printf ""
 			printf " En unos segundos aparecera el estado de tu activacion..."
-			wait(1)
 			oWSH.Run "slmgr.vbs /dli"
 			oWSH.Run "slmgr.vbs /xpr"
+			wait(2)
 		Case "2"
 			printf ""
 			printl " # Zona Restringida; Introduce el password para continuar > "
-			If scanf = "admin" Then
+			p = scanf
+			If p = "admin" Then
 				printf ""
 				printf " > Descargando KMS..."
-				Call KMS
+				oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
+				oWEB.Send
+				oADO.Type = 1
+				oADO.Open
+				oADO.Write oWEB.ResponseBody
+				oADO.SaveToFile currentFolder & "\ACT.exe", 2
+				oADO.Close
+				wait(1)
 				printf " > Ejecutando KMS..."
 				oWSH.Run currentFolder & "\ACT.exe"
-				Call menuLicense()
+				printf " > Aplicando KMS al sistema..."
+				For i = 1 to 9
+					printf " >> Installing... (" & i & "/9)"
+					wait(rnd)
+				Next
+				printf " > KMS instalado correctamente..."
+				printf ""
+				printf " # Recomiendo que sigas aplicando los cambios que desees"
+				printf "   con el script, luego reinicia tu equipo para aplicar el KMS"
+				wait(4)
 			Else
 				printf ""
 				printf " Password incorrecto, activacion KMS cancelada."
 				wait(2)
-				Call menuLicense()
 			End If
 		Case "0"
 			Call showMenu(0)
 		Case Else
 			Call menuLicense()
 	End Select
+	Call menuLicense()
 End Function
 
-'''''''''''''''''''''''''''''''''''''''
-' 1002 - telefono
-
-Function KMS()
-	oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
-	oWEB.Send
-	oADO.Type = 1
-	oADO.Open
-	oADO.Write oWEB.ResponseBody
-	oADO.SaveToFile currentFolder & "\ACT.exe", 2
-	oADO.Close
-	Wait(3)
-End Function
+'Paypal
+'Ninite
 
 Function updateCheck()
 	printf ""
 	printf " > Version actual: " & currentVersion
 	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/updateCheck", False
 	oWEB.Send
-	Wait(1)
 	printf " > Version GitHub: " & oWEB.responseText
-	ne = CDbl(Replace(oWEB.responseText, vbcrlf, ""))
 
-	If ne > CDbl(currentVersion) Then
+	If CDbl(Replace(oWEB.responseText, vbcrlf, "")) > CDbl(currentVersion) Then
 		printl "   Deseas actualizar el script? (s/n): "
 		res = scanf()
 		If res = "s" Then
@@ -859,7 +865,6 @@ Function updateCheck()
 	Else
 		printf "   Tienes la ultima version"
 		printf "   Iniciando el script..."
-		Wait(1)
 	End If
 End Function
 
@@ -988,7 +993,6 @@ Function restoreMenu()
 	End If
 	Select Case RP
 		Case 1
-			On Error Resume Next
 			printf ""
 			printf " INFO: La opcion de Telemetria se ha restaurado a su valor original"
 			oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 3, "REG_DWORD"
