@@ -6,6 +6,7 @@ Set oWSH = CreateObject("WScript.Shell")
 Set oAPP = CreateObject("Shell.Application")
 Set oFSO = CreateObject("Scripting.FileSystemObject")
 Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
+Set oVOZ = CreateObject("SAPI.SpVoice")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 
 currentVersion = "5.0"
@@ -23,6 +24,7 @@ Call showMenu(1)
 
 Function menuSysTweaks()
 	cls
+	On Error Resume Next
 	printf ""
 	printf " _____         _                _____               _       "
 	printf "|   __|_ _ ___| |_ ___ _____   |_   _|_ _ _ ___ ___| |_ ___ "
@@ -86,7 +88,7 @@ Function menuSysTweaks()
 	End If
 	printl " # Abrir cmd.exe al pulsar Win+U? (s/n) > "
 	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger", "cmd.exe"
+		oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger", "cmd.exe", "REG_SZ"
 	Else
 		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger"
 	End If
@@ -148,6 +150,7 @@ Function menuSysTweaks()
 		printf ""
 		printf " > Executing UserAccountControlSettings.exe"
 		oWSH.Run "UserAccountControlSettings.exe"
+		printf ""
 	End If
 	printl " # Habilitar/Deshabilitar el inicio de sesion sin password? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -159,6 +162,7 @@ Function menuSysTweaks()
 		printf ""
 		printf " > Executing control userpasswords2"
 		oWSH.Run "control userpasswords2"
+		printf ""
 	End If
 	printl " # Utilizar control de volumen clasico? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -175,7 +179,7 @@ Function menuSysTweaks()
 	printf ""
 	printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
 	oWSH.Run "taskkill.exe /F /IM explorer.exe"
-	Wait(5)
+	wait(5)
 	oWSH.Run "explorer.exe"
 	printf ""
 	printf " Todos los tweaks de sistema se han aplicado correctamente"
@@ -183,7 +187,8 @@ Function menuSysTweaks()
 End Function
 
 Function menuOneDrive()
-	cls                                                                         
+	cls
+	On Error Resume Next	
 	printf " _____ _                     ___ _      _____            ____      _         "
 	printf "|     |_|___ ___ ___ ___ ___|  _| |_   |     |___ ___   |    \ ___|_|_ _ ___ "
 	printf "| | | | |  _|  _| . |_ -| . |  _|  _|  |  |  |   | -_|  |  |  |  _| | | | -_|"
@@ -193,7 +198,7 @@ Function menuOneDrive()
 	printf ""
 	printf "  1 = Deshabilitar Microsoft One Drive"
 	printf "  2 = Habilitar Microsoft One Drive"
-	printf "  3 = Desinstalar Microsoft One Drive"
+	printf "  3 = Desinstalar Microsoft One Drive (!)"
 	printf ""
 	printf "  0 = Volver al menu principal"
 	printf ""
@@ -217,7 +222,7 @@ Function menuOneDrive()
 				oWSH.RegDelete "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Run\OneDrive"
 			printf ""
 			printf " INFO: OneDrive deshabilitado correctamente"
-			Wait(2)
+			wait(2)
 		Case "2"
 			printf ""
 			printf " Habilitando OneDrive..."
@@ -234,14 +239,14 @@ Function menuOneDrive()
 				oWSH.RegWrite "HKCU\Software\Classes\Wow6432Node\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}\System.IsPinnedToNameSpaceTree", 1, "REG_DWORD"
 			printf ""
 			printf " INFO: OneDrive habilitado correctamente"
-			Wait(2)
+			wait(2)
 		Case "3"
 			printf ""
 			printl "  >> Desinstalar definitivamente OneDrive. Opcion no reversible. Continuar? (s/n) > "
 			If scanf = "s" Then
 				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteOneDrive.bat", False
 				oWEB.Send
-				Wait(1)
+				wait(1)
 				Set F = oFSO.CreateTextFile(currentFolder & "\deleteOneDrive.bat")
 					F.Write oWEB.ResponseText
 				F.Close
@@ -256,7 +261,8 @@ Function menuOneDrive()
 End Function
 
 Function menuCortana()
-	cls                                                                         
+	cls
+	On Error Resume Next
 	printf " _____ _                     ___ _      _____         _               "
 	printf "|     |_|___ ___ ___ ___ ___|  _| |_   |     |___ ___| |_ ___ ___ ___ "
 	printf "| | | | |  _|  _| . |_ -| . |  _|  _|  |   --| . |  _|  _| .'|   | .'|"
@@ -266,7 +272,7 @@ Function menuCortana()
 	printf ""
 	printf "  1 = Deshabilitar Microsoft Cortana"
 	printf "  2 = Habilitar Microsoft Cortana"
-	printf "  3 = Desinstalar Microsoft Cortana"
+	printf "  3 = Desinstalar Microsoft Cortana (!)"
 	printf ""
 	printf "  0 = Volver al menu principal"
 	printf ""
@@ -280,7 +286,7 @@ Function menuCortana()
 			printf ""
 			printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
 			oWSH.Run "taskkill.exe /F /IM explorer.exe"
-			Wait(5)
+			wait(5)
 			oWSH.Run "explorer.exe"
 		Case "2"
 			oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Windows Search\AllowCortana", 1, "REG_DWORD"
@@ -290,15 +296,16 @@ Function menuCortana()
 			printf ""
 			printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
 			oWSH.Run "taskkill.exe /F /IM explorer.exe"
-			Wait(5)
+			wait(5)
 			oWSH.Run "explorer.exe"
 		Case "3"
 			printf ""
+			printf "  >> Perderas la opcion de usar el buscador del menu inicio"
 			printl "  >> Desinstalar definitivamente Cortana. Opcion no reversible. Continuar? (s/n) > "
 			If scanf = "s" Then
 				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
 				oWEB.Send
-				Wait(1)
+				wait(1)
 				Set F = oFSO.CreateTextFile(currentFolder & "\deleteCortana.bat")
 					F.Write oWEB.ResponseText
 				F.Close
@@ -314,6 +321,7 @@ End Function
 
 Function menuTelemetry()
 	cls
+	On Error Resume Next
 	printf " _____                              _____     _               _           "
 	printf "|   __|___ _ _ _ _ _ ___ ___ ___   |_   _|___| |___ _____ ___| |_ ___ _ _ "
 	printf "|__   | . | | | | | | .'|  _| -_|    | | | -_| | -_|     | -_|  _|  _| | |"
@@ -330,15 +338,16 @@ Function menuTelemetry()
 	printl "  > "
 	Select Case scanf
 		Case "1"
+			printf ""
 			printf " Aplicando parches para deshabilitar Telemetry (10 segundos)..."
 			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryOFF.bat", False
 			oWEB.Send
-			Wait(1)
+			wait(1)
 			Set F = oFSO.CreateTextFile(currentFolder & "\telemetryOFF.bat")
 				F.Write oWEB.ResponseText
 			F.Close
 			oWSH.Run currentFolder & "\telemetryOFF.bat"
-			Wait(9)
+			wait(9)
 			printf " Deshabilitando Telemetry usando el registro..."
 			wait(1)
 				oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\DataCollection\AllowTelemetry", 0, "REG_DWORD"
@@ -401,7 +410,7 @@ Function menuTelemetry()
 			hostsFile = oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
 			oWEB.Open "GET", "https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts", False
 			oWEB.Send
-			Wait(1)
+			wait(1)
 			If oFSO.FileExists(hostsFile & ".cwd") = False Then oFSO.CopyFile hostsFile, hostsFile & ".cwd"
 			Set F = oFSO.OpenTextFile(hostsFile, 2, True)
 				F.Write oWEB.ResponseText
@@ -491,11 +500,11 @@ Function menuTelemetry()
 			F.Close
 			printf ""
 			printf " INFO: Fichero HOSTS escrito correctamente"
-			Wait(2)
+			wait(2)
 		Case "2"
 			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
 			oWEB.Send
-			Wait(1)
+			wait(1)
 			Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
 				F.Write oWEB.ResponseText
 			F.Close
@@ -509,7 +518,8 @@ Function menuTelemetry()
 End Function
 
 Function menuWindowsDefender()
-	cls                                                                                                                                           
+	cls
+	On Error Resume Next
 	printf " _ _ _ _       _                  ____      ___           _         "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |    \ ___|  _|___ ___ _| |___ ___ "
 	printf "| | | | |   | . | . | | | |_ -|  |  |  | -_|  _| -_|   | . | -_|  _|"
@@ -545,7 +555,7 @@ Function menuWindowsDefender()
 			printf ""
 			printf " INFO: Windows Defender deshabilitado correctamente"
 			printf " WARNING: Si no tienes antivirus, te recomiendo 360 Total Security: www.360totalsecurity.com"
-			Wait(3)
+			wait(3)
 		Case "2"
 			printf ""
 			printf " Habilitando Windows Defender usando el registro..."
@@ -577,6 +587,7 @@ End Function
 
 Function menuWindowsUpdate()
 	cls
+	On Error Resume Next
 	printf " _ _ _ _       _                  _____       _     _       "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |___ _| |___| |_ ___ "
 	printf "| | | | |   | . | . | | | |_ -|  |  |  | . | . | .'|  _| -_|"
@@ -626,6 +637,7 @@ End Function
 
 Function menuPerfomance()
 	cls
+	On Error Resume Next
 	printf " _____         ___                              _____               _   "
 	printf "|  _  |___ ___|  _|___ _____ ___ ___ ___ ___   |_   _|_ _ _ ___ ___| |_ "
 	printf "|   __| -_|  _|  _| . |     | .'|   |  _| -_|    | | | | | | -_| .'| '_|"
@@ -640,12 +652,12 @@ Function menuPerfomance()
 		oADO.Write oWEB.ResponseBody
 		oADO.SaveToFile currentFolder & "\IWT.exe", 2
 		oADO.Close
-		Wait(3)
+		wait(3)
 		oWSH.Run currentFolder & "\IWT.exe /o /l"
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-Windows-ContactSupport /r"
 		oWSH.Run currentFolder & "\IWT.exe /o /c Microsoft-WindowsFeedback /r"
 		oWSH.Run currentFolder & "\IWT.exe /h /o /l"
-		Wait(3)
+		wait(3)
 		oFSO.DeleteFile(currentFolder & "\IWT.exe")
 	End If
 	printl " # Acelerar el cierre de aplicaciones y servicios? (s/n) > "
@@ -693,6 +705,7 @@ Function menuPerfomance()
 		printf ""
 		printf " > Executing cleanmgr.exe"
 		oWSH.Run "cleanmgr.exe"
+		printf ""
 	End If
 	printl " # Instalar/Desinstalar caracteristicas adicionales de Windows (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -704,6 +717,7 @@ Function menuPerfomance()
 		printf ""
 		printf " > Executing optionalfeatures.exe"
 		oWSH.Run "optionalfeatures.exe"
+		printf ""
 	End If
 	printl " # Cambiar la configuracion de la compresion de ficheros? (tarda un poco!) (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -713,8 +727,8 @@ Function menuPerfomance()
 		Else
 			oWSH.Run "compact /CompactOs:always"
 		End If
+		wait(3)
 	End If
-	Wait(3)
 	printl " # Habilitar el 100% del ancho de banda para el sistema? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKLM\SOFTWARE\Policies\Microsoft\Windows\Psched\Psched", 0, "REG_DWORD"
@@ -743,7 +757,7 @@ Function menuPerfomance()
 		oADO.Write oWEB.ResponseBody
 		oADO.SaveToFile currentFolder & "\CPM.exe", 2
 		oADO.Close
-		Wait(3)
+		wait(3)
 		printf " >> Ejecutando CPM.exe..."
 		oWSH.Run currentFolder & "\CPM.exe"
 	End If
@@ -754,11 +768,12 @@ End Function
 
 Function menuPowerSSD()
 	cls
-	printf " _____ _____ ____     _____     _   _       _             "
-	printf "|   __|   __|    \   |     |___| |_|_|_____|_|___ ___ ___ "
-	printf "|__   |__   |  |  |  |  |  | . |  _| |     | |- _| -_|  _|"
-	printf "|_____|_____|____/   |_____|  _|_| |_|_|_|_|_|___|___|_|  "
-	printf "                           |_|                            "
+	On Error Resume Next
+	printf " _____ _____ ____  _____     _   _       _             "
+	printf "|   __|   __|    \|     |___| |_|_|_____|_|___ ___ ___ "
+	printf "|__   |__   |  |  |  |  | . |  _| |     | |- _| -_|  _|"
+	printf "|_____|_____|____/|_____|  _|_| |_|_|_|_|_|___|___|_|  "
+	printf "                        |_|                            "
 	printf ""
 	printf " Este script va a modificar las siguientes configuraciones:"
 	printf ""
@@ -816,7 +831,8 @@ Function menuPowerSSD()
 End Function
 
 Function menuLicense()
-	cls                                                              
+	cls
+	On Error Resume Next
 	printf " _ _ _ _       _                  __    _                     "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |  |  |_|___ ___ ___ ___ ___ "
 	printf "| | | | |   | . | . | | | |_ -|  |  |__| |  _| -_|   |_ -| -_|"
@@ -881,6 +897,7 @@ End Function
 
 Function menuCleanApps()
 	cls
+	On Error Resume Next
 	printf " _ _ _ _       _                  _____     _           _____             "
 	printf "| | | |_|___ _| |___ _ _ _ ___   |     |___| |_ ___ ___|  _  |___ ___ ___ "
 	printf "| | | | |   | . | . | | | |_ -|  | | | | -_|  _|  _| . |     | . | . |_ -|"
@@ -955,6 +972,7 @@ End Function
 
 Function donatePaypal()
 	cls
+	On Error Resume Next
 	printf " ____                  _                    _____                 _ "
 	printf "|    \ ___ ___ ___ ___|_|___ ___ ___ ___   |  _  |___ _ _ ___ ___| |"
 	printf "|  |  | . |   | .'|  _| | . |   | -_|_ -|  |   __| .'| | | . | .'| |"
@@ -970,12 +988,12 @@ Function donatePaypal()
 	printf " Secreto: Escribeme luego un e-mail a: aikon.bcn@gmail.com"
 	printf " y te obsequiare con un dibujo sobre la tematica que tu quieras"
 	printf ""
-	printl " > Quieres donar? (s/n) "
+	printl " > Quieres donar? (s/n) > "
 	If scanf = "s" Then
 		printf ""
 		printf "   Muchisimas gracias!! :)"
 		printf "   Ejecutando -> https://www.paypal.me/aikoncwd"
-		wait(2)
+		oVOZ.Speak "Muchas gracias por la donacion. Gente como tu hace posible este script. Recibe un abrazo, Aikon"
 		oWSH.Run "https://www.paypal.me/aikoncwd"
 	Else
 		printf ""
@@ -985,6 +1003,7 @@ Function donatePaypal()
 End Function
 
 Function updateCheck()
+	On Error Resume Next
 	printf ""
 	printf " > Version actual: " & currentVersion
 	oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/updateCheck", False
@@ -999,12 +1018,12 @@ Function updateCheck()
 			printl " > Descargando nueva version desde GitHub... "
 			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/aikoncwd-win10-script.vbs", False
 			oWEB.Send
-			Wait(1)
+			wait(1)
 			Set F = oFSO.CreateTextFile(WScript.ScriptFullName, 2, True)
 				F.Write oWEB.responseText
 			F.Close
 			printf "OK!"
-			Wait(1)
+			wait(1)
 			oWSH.Run WScript.ScriptFullName
 			WScript.Quit
 		End If
@@ -1023,7 +1042,7 @@ Function showBanner()
 End Function
 
 Function showMenu(n)
-	Wait(n)
+	wait(n)
 	cls
 	Call showBanner
 	printf " Selecciona una opcion:"
@@ -1043,9 +1062,9 @@ Function showMenu(n)
 	printf "  11 = Mostrar atajos de teclado utiles para Windows 10"
 	printf ""
 	printf "  99 = Restore Menu -> Restaurar modificaciones del script"
-	printf "  00 = Colabora con el crecimiento de este script!"
+	printf " 999 = Colabora con el crecimiento de este script!"
 	printf ""
-	printf "  0 = Salir"
+	printf " 0 = Salir"
 	printf ""
 	printl " > "
 	RP = scanf
@@ -1057,33 +1076,31 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call menuLicense()
+			Call menuSysTweaks()
 		Case 2
-			Call disableUAC()
+			Call menuPerfomance()
 		Case 3
-			Call cleanSO()
+			Call menuPowerSSD()
 		Case 4
-			Call noPWD()
+			Call menuCleanApps()
 		Case 5
-			Call showKeyboardTips()
+			Call menuTelemetry()
 		Case 6
-			Call optionalFeatures()
+			Call menuOneDrive()
 		Case 7
-			Call disableSpyware()
+			Call menuCortana()
 		Case 8
-			Call cleanApps()
+			Call menuWindowsDefender()
 		Case 9
-			Call disableDefender()
+			Call menuWindowsUpdate()
 		Case 10
-			Call disableOneDrive()
+			Call menuLicense()
 		Case 11
-			Call powerSSD()
-		Case 12
-			Call showActivation()
-		Case 13
-			Call activate30()
+			Call showKeyboardTips()
 		Case 99
 			Call restoreMenu()
+		Case 999
+			Call donatePaypal()
 		Case 0
 			cls
 			printf ""
@@ -1093,6 +1110,10 @@ Function showMenu(n)
 			If oFSO.FileExists(currentFolder & "\CPM.exe") = True then oFSO.DeleteFile(currentFolder & "\CPM.exe")
 			If oFSO.FileExists(currentFolder & "\IWT.exe") = True then oFSO.DeleteFile(currentFolder & "\IWT.exe")
 			If oFSO.FileExists(currentFolder & "\ACT.exe") = True then oFSO.DeleteFile(currentFolder & "\ACT.exe")
+			If oFSO.FileExists(currentFolder & "\deleteCortana.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteCortana.bat")
+			If oFSO.FileExists(currentFolder & "\deleteOneDrive.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteOneDrive.bat")
+			If oFSO.FileExists(currentFolder & "\telemetryOFF.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryOFF.bat")
+			If oFSO.FileExists(currentFolder & "\telemetryON.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryON.bat")
 			WScript.Quit
 		Case Else
 			printf ""
@@ -1244,7 +1265,7 @@ Function restoreMenu()
 			Call restoreMenu()
 			Exit Function
 	End Select
-	Wait(2)
+	wait(2)
 	Call restoreMenu()
 End Function
 
@@ -1260,7 +1281,7 @@ Function scanf()
 	scanf = LCase(WScript.StdIn.ReadLine)
 End Function
 
-Function Wait(n)
+Function wait(n)
 	WScript.Sleep Int(n * 1000)
 End Function
 
@@ -1330,7 +1351,7 @@ Function RunAsUAC()
 		printf ""
 		printf " El script necesita ejecutarse con permisos elevados..."
 		printf " acepta el siguiente mensaje:"
-		Wait(1)
+		wait(1)
 		oAPP.ShellExecute "cscript", "//NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34), "", "runas", 1
 		WScript.Quit
 	End If
