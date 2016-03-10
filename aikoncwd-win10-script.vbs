@@ -58,7 +58,7 @@ Function menuSysTweaks()
 	Else
 		oWSH.RegWrite "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\HideDesktopIcons\NewStartPanel\{20D04FE0-3AEA-1069-A2D8-08002B30309D}", 1, "REG_DWORD"
 	End If
-	printl " # Mostrar siempre la extesion para archivos conocidos? (s/n) > "
+	printl " # Mostrar siempre la extension para archivos conocidos? (s/n) > "
 	If LCase(scanf) = "s" Then
 		oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced\HideFileExt", 0, "REG_DWORD"
 	Else
@@ -137,6 +137,28 @@ Function menuSysTweaks()
 		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\"
 		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\"
 		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\"
+	End If
+	printl " # Habilitar/Deshabilitar el control de cuentas de usuario UAC? (s/n) > "
+	If LCase(scanf) = "s" Then
+		printf ""
+		printf " Ahora se ejecutara una ventana..."
+		printf " Mueve la barra vertical hasta el nivel mas bajo"
+		printf " Acepta los cambios y reinicia el ordenador"
+		wait(2)
+		printf ""
+		printf " > Executing UserAccountControlSettings.exe"
+		oWSH.Run "UserAccountControlSettings.exe"
+	End If
+	printl " # Habilitar/Deshabilitar el inicio de sesion sin password? (s/n) > "
+	If LCase(scanf) = "s" Then
+		printf ""
+		printf " Ahora se ejecutara una ventana..."
+		printf " Desmarca la opcion: Los usuarios deben escribir su nombre y password para usar el equipo"
+		printf " Acepta los cambios y reinicia el ordenador"
+		wait(2)
+		printf ""
+		printf " > Executing control userpasswords2"
+		oWSH.Run "control userpasswords2"
 	End If
 	printl " # Utilizar control de volumen clasico? (s/n) > "
 	If LCase(scanf) = "s" Then
@@ -661,6 +683,28 @@ Function menuPerfomance()
 		oWSH.Run "sc config WlanSvc start=auto"
 		oWSH.Run "sc start WlanSvc"
 	End If
+	printl " # Ejecutar limpiador de Windows. Libera espacio y borrar Windows.old (s/n) > "
+	If LCase(scanf) = "s" Then	
+		printf ""
+		printf " Ahora se ejecutara una ventana..."
+		printf " Marca las opciones deseadas de limpieza"
+		printf " Acepta los cambios y reinicia el ordenador"
+		wait(2)
+		printf ""
+		printf " > Executing cleanmgr.exe"
+		oWSH.Run "cleanmgr.exe"
+	End If
+	printl " # Instalar/Desinstalar caracteristicas adicionales de Windows (s/n) > "
+	If LCase(scanf) = "s" Then
+		printf ""
+		printf " Ahora se ejecutara una ventana..."
+		printf " Marca/Desmarca las opciones deseadas"
+		printf " Acepta los cambios y reinicia el ordenador"
+		wait(2)
+		printf ""
+		printf " > Executing optionalfeatures.exe"
+		oWSH.Run "optionalfeatures.exe"
+	End If
 	printl " # Cambiar la configuracion de la compresion de ficheros? (tarda un poco!) (s/n) > "
 	If LCase(scanf) = "s" Then
 		printl " -> Deshabilitar la compresion de ficheros en el disco duro principal? (s/n) > "
@@ -799,7 +843,7 @@ Function menuLicense()
 			printf ""
 			printl " # Zona Restringida; Introduce el password para continuar > "
 			p = scanf
-			If p = "admin" Then
+			If p = "pirata" Then
 				printf ""
 				printf " > Descargando KMS..."
 				oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
@@ -835,6 +879,80 @@ Function menuLicense()
 	Call menuLicense()
 End Function
 
+Function menuCleanApps()
+	cls
+	printf " _ _ _ _       _                  _____     _           _____             "
+	printf "| | | |_|___ _| |___ _ _ _ ___   |     |___| |_ ___ ___|  _  |___ ___ ___ "
+	printf "| | | | |   | . | . | | | |_ -|  | | | | -_|  _|  _| . |     | . | . |_ -|"
+	printf "|_____|_|_|_|___|___|_____|___|  |_|_|_|___|_| |_| |___|__|__|  _|  _|___|"
+	printf "                                                             |_| |_|      "
+	printf " Este script va a desinstalar el siguiente listado de Apps:"
+	printf ""
+	printf "  > Bing, Zune, Skype, XboxApp"
+	printf "  > Getstarted, Messagin, 3D Builder"
+	printf "  > Windows Maps, Phone, Camera, Alarms, People"
+	printf "  > Windows Communications Apps, Sound Recorder"
+	printf "  > Microsoft Office Hub, Office Sway, OneNote"
+	printf "  > Solitaire Collection, CandyCrushSaga"
+	printf ""
+	printl " La opcion NO es reversible. Deseas continuar? (s/n) "
+	
+	If scanf = "s" Then
+		oWSH.Run "powershell get-appxpackage -Name *Bing* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Zune* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *XboxApp* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *OneNote* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *SkypeApp* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *3DBuilder* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Getstarted* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Microsoft.People* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *MicrosoftOfficeHub* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *MicrosoftSolitaireCollection* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *WindowsCamera* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *WindowsAlarms* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *WindowsMaps* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *WindowsPhone* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *WindowsSoundRecorder* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *windowscommunicationsapps* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *CandyCrushSaga* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Messagin* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *ConnectivityStore* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *CommsPhone* | Remove-AppxPackage", 1, True
+		oWSH.Run "powershell get-appxpackage -Name *Office.Sway* | Remove-AppxPackage", 1, True
+		printf ""
+		printf " > Las Apps se han desinstalado correctamente..."
+	Else
+		printf ""
+		printf " > Operacion cancelada por el usuario"
+	End If
+	wait(1)
+	Call showMenu(2)
+End Function
+
+Function showKeyboardTips()
+	msg = msg & "WIN+A		Abre el centro de actividades" & vbcrlf
+	msg = msg & "WIN+C		Activa el reconocimiento de voz de Cortana" & vbcrlf
+	msg = msg & "WIN+D		Muestra el escritorio" & vbcrlf
+	msg = msg & "WIN+E		Abre el explorador de Windows" & vbcrlf
+	msg = msg & "WIN+G		Activa Game DVR para grabar la pantalla" & vbcrlf
+	msg = msg & "WIN+H		Compartir en las apps Modern para Windows 10" & vbcrlf
+	msg = msg & "WIN+I		Abre la configuracion del sistema" & vbcrlf
+	msg = msg & "WIN+K		Inicia 'Conectar' para enviar datos a dispositivos" & vbcrlf
+	msg = msg & "WIN+L		Bloquea el equipo" & vbcrlf
+	msg = msg & "WIN+R		Ejecutar un comando" & vbcrlf
+	msg = msg & "WIN+S		Activa Cortana" & vbcrlf
+	msg = msg & "WIN+X		Abre el menu de opciones avanzadas" & vbcrlf
+	msg = msg & "WIN+TAB		Abre la vista de tareas" & vbcrlf
+	msg = msg & "WIN+Flechas	Pega una ventana a la pantalla (Windows Snap)" & vbcrlf
+	msg = msg & "WIN+CTRL+D	Crea un nuevo escritorio virtual" & vbcrlf
+	msg = msg & "WIN+CTRL+F4	Cierra un escritorio virtual" & vbcrlf
+	msg = msg & "WIN+CTRL+Flechas	Cambia de escritorio virtual" & vbcrlf
+	msg = msg & "WIN+SHIFT+Flechas	Mueve la ventana actual de un monitor a otro" & vbcrlf
+	
+	MsgBox msg, vbOkOnly, "AikonCWD Script: Atajos de teclado"
+	Call showMenu(0)
+End Function
+
 Function donatePaypal()
 	cls
 	printf " ____                  _                    _____                 _ "
@@ -855,7 +973,9 @@ Function donatePaypal()
 	printl " > Quieres donar? (s/n) "
 	If scanf = "s" Then
 		printf ""
-		printf "Ejecutando -> https://www.paypal.me/aikoncwd"
+		printf "   Muchisimas gracias!! :)"
+		printf "   Ejecutando -> https://www.paypal.me/aikoncwd"
+		wait(2)
 		oWSH.Run "https://www.paypal.me/aikoncwd"
 	Else
 		printf ""
@@ -863,8 +983,6 @@ Function donatePaypal()
 	End If
 	Call showMenu(3)
 End Function
-
-'Ninite
 
 Function updateCheck()
 	printf ""
@@ -910,30 +1028,28 @@ Function showMenu(n)
 	Call showBanner
 	printf " Selecciona una opcion:"
 	printf ""
-	printf "   1 = Instalar/Desinstalar varios Tweaks para Windows 10"
+	printf "   1 = Activar/Descativar varios tweaks de sistema"
+	printf "   2 = Activar/Descativar varios tweaks para mejorar el rendimiento"
+	printf "   3 = Optimizar y prolongar la vida de tu disco duro SSD"
+	printf "   4 = Desinstalar MetroApps de Windows 10 pre-instaladas"
 	printf ""
-	printf "   2 = Deshabilitar Control de Cuentas de Usuario (UAC)"
-	printf "   3 = Ejecutar limpiador de Windows. Libera espacio y borrar Windows.old"
-	printf "   4 = Habilitar/Deshabilitar inicio de sesion sin password"
-	printf "   5 = Mostrar listado de combinacion de teclas utiles en Win10"
-	printf "   6 = Instalar/Desinstalar caracteristicas de Windows"
+	printf "   5 = Impedir que se envien datos a Microsoft (Spyware & Telemetry)"
+	printf "   6 = Configurar Microsoft One Drive"
+	printf "   7 = Configurar Microsoft Cortana"
+	printf "   8 = Configurar Windows Defender"
+	printf "   9 = Configurar Windows Update"
 	printf ""
-	printf "   7 = Impedir que Microsoft recopile informacion de mi PC (Spyware & Telemetry)"
-	printf "   8 = Desinstalar Metro Apps pre-instaladas en Windows 10"
-	printf "   9 = Deshabilitar Windows Defender"
-	printf "  10 = Deshabilitar OneDrive"
+	printf "  10 = Opciones de licencia de Windows 10"
+	printf "  11 = Mostrar atajos de teclado utiles para Windows 10"
 	printf ""
-	printf "  11 = Optimizar y prolongar la vida de tu disco duro SSD"
+	printf "  99 = Restore Menu -> Restaurar modificaciones del script"
+	printf "  00 = Colabora con el crecimiento de este script!"
 	printf ""
-	printf "  12 = Mostrar estado de la activacion de Windows 10"
-	printf "  13 = Activar Windows 10; Ejecuta slmgr /ato 30 veces seguidas"
-	printf ""
-	printf "  99 = Restore Menu; Restaura la configuracion original"
-	printf "   0 = Salir"
+	printf "  0 = Salir"
 	printf ""
 	printl " > "
 	RP = scanf
-	If Not isNumeric(RP) = True Then
+	If isNumeric(RP) = False Then
 		printf ""
 		printf " ERROR: Opcion invalida, solo se permiten numeros..."
 		Call showMenu(2)
@@ -941,7 +1057,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call donatePaypal()
+			Call menuLicense()
 		Case 2
 			Call disableUAC()
 		Case 3
@@ -1130,123 +1246,6 @@ Function restoreMenu()
 	End Select
 	Wait(2)
 	Call restoreMenu()
-End Function
-
-Function disableUAC()
-	printf ""
-	printf " Ahora se ejecutara una ventana..."
-	printf " Mueve la barra vertical hasta el nivel mas bajo"
-	printf " Acepta los cambios y reinicia el ordenador"
-	wait(2)
-	printf ""
-	printf " INFO: Executing UserAccountControlSettings.exe"
-	oWSH.Run "UserAccountControlSettings.exe"
-	Call showMenu(2)
-End Function
-
-Function cleanSO()
-	printf ""
-	printf " Ahora se ejecutara una ventana..."
-	printf " Marca las opciones deseadas de limpieza"
-	printf " Acepta los cambios y reinicia el ordenador"
-	wait(2)
-	printf ""
-	printf " INFO: Executing cleanmgr.exe"
-	oWSH.Run "cleanmgr.exe"
-	Call showMenu(2)
-End Function
-
-Function noPWD()
-	printf ""
-	printf " Ahora se ejecutara una ventana..."
-	printf " Desmarca la opcion: Los usuarios deben escribir su nombre y password para usar el equipo"
-	printf " Acepta los cambios y reinicia el ordenador"
-	wait(2)
-	printf ""
-	printf " INFO: Executing control userpasswords2"
-	oWSH.Run "control userpasswords2"
-	Call showMenu(2)
-End Function
-
-Function optionalFeatures()
-	printf ""
-	printf " Ahora se ejecutara una ventana..."
-	printf " Marca/Desmarca las opciones deseadas"
-	printf " Acepta los cambios y reinicia el ordenador"
-	wait(2)
-	printf ""
-	printf " INFO: Executing optionalfeatures.exe"
-	oWSH.Run "optionalfeatures.exe"
-	Call showMenu(2)
-End Function
-
-Function showKeyboardTips()
-	msg = msg & "WIN+A		Abre el centro de actividades" & vbcrlf
-	msg = msg & "WIN+C		Activa el reconocimiento de voz de Cortana" & vbcrlf
-	msg = msg & "WIN+D		Muestra el escritorio" & vbcrlf
-	msg = msg & "WIN+E		Abre el explorador de Windows" & vbcrlf
-	msg = msg & "WIN+G		Activa Game DVR para grabar la pantalla" & vbcrlf
-	msg = msg & "WIN+H		Compartir en las apps Modern para Windows 10" & vbcrlf
-	msg = msg & "WIN+I		Abre la configuracion del sistema" & vbcrlf
-	msg = msg & "WIN+K		Inicia 'Conectar' para enviar datos a dispositivos" & vbcrlf
-	msg = msg & "WIN+L		Bloquea el equipo" & vbcrlf
-	msg = msg & "WIN+R		Ejecutar un comando" & vbcrlf
-	msg = msg & "WIN+S		Activa Cortana" & vbcrlf
-	msg = msg & "WIN+X		Abre el menu de opciones avanzadas" & vbcrlf
-	msg = msg & "WIN+TAB		Abre la vista de tareas" & vbcrlf
-	msg = msg & "WIN+Flechas	Pega una ventana a la pantalla (Windows Snap)" & vbcrlf
-	msg = msg & "WIN+CTRL+D	Crea un nuevo escritorio virtual" & vbcrlf
-	msg = msg & "WIN+CTRL+F4	Cierra un escritorio virtual" & vbcrlf
-	msg = msg & "WIN+CTRL+Flechas	Cambia de escritorio virtual" & vbcrlf
-	msg = msg & "WIN+SHIFT+Flechas	Mueve la ventana actual de un monitor a otro" & vbcrlf
-	
-	MsgBox msg, vbOkOnly, "AikonCWD Script: Atajos de teclado"
-	Call showMenu(0)
-End Function
-
-Function cleanApps()
-	printf ""
-	printf " Este script va a desinstalar el siguiente listado de Apps:"
-	printf ""
-	printf "  > Bing, Zune, Skype, XboxApp"
-	printf "  > Getstarted, Messagin, 3D Builder"
-	printf "  > Windows Maps, Phone, Camera, Alarms, People"
-	printf "  > Windows Communications Apps, Sound Recorder"
-	printf "  > Microsoft Office Hub, Office Sway, OneNote"
-	printf "  > Solitaire Collection, CandyCrushSaga"
-	printf ""
-	printl " La opcion NO es reversible. Deseas continuar? (s/n) "
-	
-	If scanf = "s" Then
-		oWSH.Run "powershell get-appxpackage -Name *Bing* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *Zune* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *XboxApp* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *OneNote* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *SkypeApp* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *3DBuilder* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *Getstarted* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *Microsoft.People* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *MicrosoftOfficeHub* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *MicrosoftSolitaireCollection* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *WindowsCamera* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *WindowsAlarms* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *WindowsMaps* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *WindowsPhone* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *WindowsSoundRecorder* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *windowscommunicationsapps* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *CandyCrushSaga* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *Messagin* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *ConnectivityStore* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *CommsPhone* | Remove-AppxPackage", 1, True
-		oWSH.Run "powershell get-appxpackage -Name *Office.Sway* | Remove-AppxPackage", 1, True
-		printf ""
-		printf " INFO: Las Apps se han desinstalado correctamente..."
-	Else
-		printf ""
-		printf " INFO: Operacion cancelada por el usuario"
-	End If
-	wait(1)
-	Call showMenu(2)
 End Function
 
 Function printf(txt)
