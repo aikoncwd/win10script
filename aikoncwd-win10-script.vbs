@@ -835,7 +835,35 @@ Function menuLicense()
 	Call menuLicense()
 End Function
 
-'Paypal
+Function donatePaypal()
+	cls
+	printf " ____                  _                    _____                 _ "
+	printf "|    \ ___ ___ ___ ___|_|___ ___ ___ ___   |  _  |___ _ _ ___ ___| |"
+	printf "|  |  | . |   | .'|  _| | . |   | -_|_ -|  |   __| .'| | | . | .'| |"
+	printf "|____/|___|_|_|_|_|___|_|___|_|_|___|___|  |__|  |_|_|_  |  _|_|_|_|"
+	printf "                                                     |___|_|        "
+	printf ""
+	printf " # Te ha gustado este script ?"
+	printf " # Sus funciones te han servidor de utilidad ?"
+	printf " # Quieres invitar al autor del script a tomar una cerveza ?"
+	printf ""
+	printf " Realiza una donacion hoy mismo!"
+	printf ""
+	printf " Secreto: Escribeme luego un e-mail a: aikon.bcn@gmail.com"
+	printf " y te obsequiare con un dibujo sobre la tematica que tu quieras"
+	printf ""
+	printl " > Quieres donar? (s/n) "
+	If scanf = "s" Then
+		printf ""
+		printf "Ejecutando -> https://www.paypal.me/aikoncwd"
+		oWSH.Run "https://www.paypal.me/aikoncwd"
+	Else
+		printf ""
+		printf ":("
+	End If
+	Call showMenu(3)
+End Function
+
 'Ninite
 
 Function updateCheck()
@@ -913,7 +941,7 @@ Function showMenu(n)
 	End If
 	Select Case RP
 		Case 1
-			Call menuLicense()
+			Call donatePaypal()
 		Case 2
 			Call disableUAC()
 		Case 3
