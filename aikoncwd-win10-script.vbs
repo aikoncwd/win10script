@@ -9,7 +9,7 @@ Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
 Set oVOZ = CreateObject("SAPI.SpVoice")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 
-currentVersion = "5.0"
+currentVersion = "5.1"
 currentFolder  = oFSO.GetParentFolderName(WScript.ScriptFullName)
 
 Call ForceConsole()
@@ -980,7 +980,7 @@ Function donatePaypal()
 	printf "                                                     |___|_|        "
 	printf ""
 	printf " # Te ha gustado este script ?"
-	printf " # Sus funciones te han servidor de utilidad ?"
+	printf " # Sus funciones te han servido de utilidad ?"
 	printf " # Quieres invitar al autor del script a tomar una cerveza ?"
 	printf ""
 	printf " Realiza una donacion hoy mismo!"
