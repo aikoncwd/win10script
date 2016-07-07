@@ -312,6 +312,7 @@ Function menuOneDrive()
 		Case Else
 			Call menuOneDrive()
 	End Select
+	Call menuOneDrive()
 End Function
 
 Function menuCortana()
@@ -379,6 +380,7 @@ Function menuCortana()
 		Case Else
 			Call menuCortana()
 	End Select
+	Call menuCortana()
 End Function
 
 Function menuTelemetry()
@@ -576,6 +578,7 @@ Function menuTelemetry()
 		Case Else
 			Call menuTelemetry()
 	End Select
+	Call menuTelemetry()
 End Function
 
 Function menuWindowsDefender()
@@ -643,6 +646,7 @@ Function menuWindowsDefender()
 		Case Else
 			Call menuWindowsDefender()
 	End Select
+	Call menuWindowsDefender()
 End Function
 
 Function menuWindowsUpdate()
@@ -938,6 +942,7 @@ Function menuLicense()
 		Case Else
 			Call menuLicense()
 	End Select
+	Call menuLicense()
 End Function
 
 Function menuCleanApps()
@@ -1226,6 +1231,8 @@ Function restoreMenu()
 			Call restoreMenu()
 			Exit Function
 	End Select
+	wait(2)
+	Call restoreMenu()
 End Function
 
 Function printf(txt)
