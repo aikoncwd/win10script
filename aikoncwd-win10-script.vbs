@@ -929,7 +929,7 @@ Function menuLicense()
 			oADO.Type = 1
 			oADO.Open
 			oADO.Write oWEB.ResponseBody
-			oADO.SaveToFile currentFolder & "\CPM.exe", 2
+			oADO.SaveToFile currentFolder & "\SKP.exe", 2
 			oADO.Close
 			wait(3)
 			printf " >> Ejecutando SKP.exe..."
