@@ -228,6 +228,7 @@ Function menuSysTweaks()
 		Set F = oFSO.CreateTextFile(currentFolder & "\photoview.reg")
 			F.Write oWEB.ResponseText
 		F.Close
+		wait(1)
 		oWSH.Run "reg import " & currentFolder & "\photoview.reg"
 	End If
 	printf ""
