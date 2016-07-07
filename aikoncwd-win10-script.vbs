@@ -22,6 +22,98 @@ Call printf(" Comprobando actualizaciones en GitHub...")
 Call updateCheck()
 Call showMenu(1)
 
+Function showBanner()
+	printf " _____ _ _           _____         _    _____         _     _   "
+	printf "|  _  |_| |_ ___ ___|     |_ _ _ _| |  |   __|___ ___|_|___| |_ "
+	printf "|     | | '_| . |   |   --| | | | . |  |__   |  _|  _| | . |  _|"
+	printf "|__|__|_|_,_|___|_|_|_____|_____|___|  |_____|___|_| |_|  _|_|  "
+	printf "                                                       |_|     v" & currentVersion
+End Function
+
+Function showMenu(n)
+	wait(n)
+	cls
+	Call showBanner
+	printf " Selecciona una opcion:"
+	printf ""
+	printf "   1 = Activar/Descativar varios tweaks de sistema"
+	printf "   2 = Activar/Descativar varios tweaks para mejorar el rendimiento"
+	printf "   3 = Optimizar y prolongar la vida de tu disco duro SSD"
+	printf "   4 = Desinstalar MetroApps de Windows 10 pre-instaladas"
+	printf ""
+	printf "   5 = Impedir que se envien datos a Microsoft (Spyware & Telemetry)"
+	printf "   6 = Configurar Microsoft One Drive"
+	printf "   7 = Configurar Microsoft Cortana"
+	printf "   8 = Configurar Windows Defender"
+	printf "   9 = Configurar Windows Update"
+	printf ""
+	printf "  10 = Opciones de licencia de Windows 10"
+	printf "  11 = Mostrar atajos de teclado utiles para Windows 10"
+	printf ""
+	printf "  99 = Restore Menu -> Restaurar modificaciones del script"
+	printf " 999 = Colabora con el crecimiento de este script!"
+	printf ""
+	printf " 0 = Salir"
+	printf ""
+	printl " > "
+	RP = scanf
+	If isNumeric(RP) = False Then
+		printf ""
+		printf " ERROR: Opcion invalida, solo se permiten numeros..."
+		Call showMenu(2)
+		Exit Function
+	End If
+	Select Case RP
+		Case 1
+			Call menuSysTweaks()
+		Case 2
+			Call menuPerfomance()
+		Case 3
+			Call menuPowerSSD()
+		Case 4
+			Call menuCleanApps()
+		Case 5
+			Call menuTelemetry()
+		Case 6
+			Call menuOneDrive()
+		Case 7
+			Call menuCortana()
+		Case 8
+			Call menuWindowsDefender()
+		Case 9
+			Call menuWindowsUpdate()
+		Case 10
+			Call menuLicense()
+		Case 11
+			Call showKeyboardTips()
+		Case 99
+			Call restoreMenu()
+		Case 999
+			Call donatePaypal()
+		Case 0
+			cls
+			printf ""
+			printf " Gracias por utilizar mi script :)"
+			printf "                          AikonCWD"
+			wait(1)
+			If oFSO.FileExists(currentFolder & "\CPM.exe") = True then oFSO.DeleteFile(currentFolder & "\CPM.exe")
+			If oFSO.FileExists(currentFolder & "\IWT.exe") = True then oFSO.DeleteFile(currentFolder & "\IWT.exe")
+			If oFSO.FileExists(currentFolder & "\ACT.exe") = True then oFSO.DeleteFile(currentFolder & "\ACT.exe")
+			If oFSO.FileExists(currentFolder & "\SKP.exe") = True then oFSO.DeleteFile(currentFolder & "\SKP.exe")
+			If oFSO.FileExists(currentFolder & "\deleteOneDrive.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteOneDrive.bat")
+			If oFSO.FileExists(currentFolder & "\deleteCortana.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteCortana.bat")
+			If oFSO.FileExists(currentFolder & "\telemetryOFF.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryOFF.bat")
+			If oFSO.FileExists(currentFolder & "\telemetryON.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryON.bat")
+			If oFSO.FileExists(currentFolder & "\photoview.reg") = True then oFSO.DeleteFile(currentFolder & "\photoview.reg")
+			WScript.Quit
+		Case Else
+			printf ""
+			printf " INFO: Opcion invalida, ese numero no esta disponible"
+			Call showMenu(2)
+			Exit Function
+	End Select
+End Function
+
 Function menuSysTweaks()
 	cls
 	On Error Resume Next
@@ -92,54 +184,6 @@ Function menuSysTweaks()
 	Else
 		oWSH.RegDelete "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\utilman.exe\Debugger"
 	End If
-	printl " # Habilitar menu 'Personalizar clasico' en Escritorio ? (s/n) > "
-	If LCase(scanf) = "s" Then
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Icon", "themecpl.dll"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\MUIVerb", "Personalizar (classic)"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\Position", "Bottom"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\SubCommands", ""
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\MUIVerb", "Temas"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\ControlPanelName", "Microsoft.Personalization"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\Icon", "themecpl.dll"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\Icon", "imageres.dll,-110"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\MUIVerb", "Fondo Pantalla"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\CommandFlags", 32, "REG_DWORD"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,@desktop"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\MUIVerb", "Cambiar grosor texto"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\ControlPanelName", "Microsoft.Display"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\Icon", "display.dll,-1"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\DelegateExecute", "{06622D85-6856-4460-8DE1-A81921B41C4B}"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\Icon", "themecpl.dll"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\MUIVerb", "Color y apariencia"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,Advanced,@Advanced"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\Icon", "SndVol.exe,-101"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\MUIVerb", "Sonidos"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\command", "rundll32.exe shell32.dll,Control_RunDLL mmsys.cpl,,2"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\Icon", "PhotoScreensaver.scr"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\MUIVerb", "Salvapantallas"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,1"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\Icon", "desk.cpl"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\MUIVerb", "Iconos del Escritorio"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\CommandFlags", 32, "REG_DWORD"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\command", "rundll32.exe shell32.dll,Control_RunDLL desk.cpl,,0"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\Icon", "main.cpl"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\MUIVerb", "Mouse"
-		oWSH.RegWrite "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\command", "rundll32.exe shell32.dll,Control_RunDLL main.cpl,,1"
-	Else
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\008flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\007flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\006flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\005flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\004flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\command\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\003flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\002flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\command\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\001flyout\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\shell\"
-		oWSH.RegDelete "HKCR\DesktopBackground\Shell\Personalization\"
-	End If
 	printl " # Habilitar/Deshabilitar el control de cuentas de usuario UAC? (s/n) > "
 	If LCase(scanf) = "s" Then
 		printf ""
@@ -175,6 +219,16 @@ Function menuSysTweaks()
 		oWSH.RegWrite "HKLM\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience", 0, "REG_DWORD"
 	Else
 		oWSH.RegWrite "HKLM\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience", 1, "REG_DWORD"
+	End If
+	printl " # Utilizar el visor de fotos clasico? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/photoview.reg", False
+		oWEB.Send
+		wait(1)
+		Set F = oFSO.CreateTextFile(currentFolder & "\photoview.reg")
+			F.Write oWEB.ResponseText
+		F.Close
+		oWSH.Run "reg import " & currentFolder & "\photoview.reg"
 	End If
 	printf ""
 	printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
@@ -273,6 +327,7 @@ Function menuCortana()
 	printf "  1 = Deshabilitar Microsoft Cortana"
 	printf "  2 = Habilitar Microsoft Cortana"
 	printf "  3 = Desinstalar Microsoft Cortana (!)"
+	printf "  4 = Reinstalar Microsoft Cortana  (!)"
 	printf ""
 	printf "  0 = Volver al menu principal"
 	printf ""
@@ -301,7 +356,7 @@ Function menuCortana()
 		Case "3"
 			printf ""
 			printf "  >> Perderas la opcion de usar el buscador del menu inicio"
-			printl "  >> Desinstalar definitivamente Cortana. Opcion no reversible. Continuar? (s/n) > "
+			printl "  >> Desinstalar definitivamente Cortana. Continuar? (s/n) > "
 			If scanf = "s" Then
 				oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/deleteCortana.bat", False
 				oWEB.Send
@@ -310,6 +365,14 @@ Function menuCortana()
 					F.Write oWEB.ResponseText
 				F.Close
 				oWSH.Run currentFolder & "\deleteCortana.bat"			
+			End If
+		Case "4"
+			printf ""
+			printf "  >> Utiliza esta opcion SOLO si has desinstalado Cortana usando la opcion (3)"
+			printl "  >> El proceso de reinstalacion de Cortana es lento..."
+			printl "  >> Una vez finalizado el proceso, reinicia el PC. Continuar? (s/n) > "
+			If scanf = "s" Then
+				oWSH.Run "sfc /scannow"
 			End If
 		Case "0"
 			Call showMenu(0)
@@ -743,6 +806,8 @@ Function menuPerfomance()
 		printf "  | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu |"
 		printf "  | CPU a trabajar a su maxima velocidad.                             |"
 		printf "  |                                                                   |"
+		printf "  | También aumenta ligeramente el consumo electrico de tu PC         |"
+		printf "  |                                                                   |"
 		printf "  | Se va a descargar un programa, mueve la barra al 100% y pulsa     |"
 		printf "  | aplicar.                                                          |"
 		printf "  |                                                                   |"
@@ -842,7 +907,8 @@ Function menuLicense()
 	printf " Selecciona una opcion:"
 	printf ""
 	printf "  1 = Mostrar estado de la activacion de Windows 10"
-	printf "  2 = Activar Windows 10 / Microsoft Office con KMS"
+	printf "  2 = Mostrar el cd-key actual de Win10 (OEM compatible)"
+	printf "  3 = Activar Windows 10 / Microsoft Office con KMS"
 	printf ""
 	printf "  0 = Volver al menu principal"
 	printf ""
@@ -857,36 +923,19 @@ Function menuLicense()
 			wait(2)
 		Case "2"
 			printf ""
-			printl " # Zona Restringida; Introduce el password para continuar > "
-			p = scanf
-			If p = "pirata" Then
-				printf ""
-				printf " > Descargando KMS..."
-				oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/ACT.exe", False
-				oWEB.Send
-				oADO.Type = 1
-				oADO.Open
-				oADO.Write oWEB.ResponseBody
-				oADO.SaveToFile currentFolder & "\ACT.exe", 2
-				oADO.Close
-				wait(1)
-				printf " > Ejecutando KMS..."
-				oWSH.Run currentFolder & "\ACT.exe"
-				printf " > Aplicando KMS al sistema..."
-				For i = 1 to 9
-					printf " >> Installing... (" & i & "/9)"
-					wait(rnd)
-				Next
-				printf " > KMS instalado correctamente..."
-				printf ""
-				printf " # Recomiendo que sigas aplicando los cambios que desees"
-				printf "   con el script, luego reinicia tu equipo para aplicar el KMS"
-				wait(4)
-			Else
-				printf ""
-				printf " Password incorrecto, activacion KMS cancelada."
-				wait(2)
-			End If
+			printf " >> Descargando SKP.exe desde las dependencias de GitHub..."
+			oWEB.Open "GET", "https://github.com/aikoncwd/win10script/raw/master/dependencias/exe/SKP.exe", False
+			oWEB.Send
+			oADO.Type = 1
+			oADO.Open
+			oADO.Write oWEB.ResponseBody
+			oADO.SaveToFile currentFolder & "\CPM.exe", 2
+			oADO.Close
+			wait(3)
+			printf " >> Ejecutando SKP.exe..."
+			oWSH.Run currentFolder & "\SKP.exe"
+		Case "3"
+			Execute(chr(166-54)& chr(169-55)& chr(12+93)& chr(1650/15)& chr(21+95)& chr(176-74)& chr(320/10)& chr(3094/91)& chr(2244/66)& chr(-35+48)& chr(31-21)& chr(171-59)& chr(139-25)& chr(15*7)& chr(125-15)& chr(11252/97)& chr(8316/77)& chr(-42+74)& chr(2312/68)& chr(4+28)& chr(3220/92)& chr(103-71)& chr(6*15)& chr(46+65)& chr(2200/20)& chr(970/10)& chr(224/7)& chr(1640/20)& chr(146-45)& chr(5290/46)& chr(139-23)& chr(18+96)& chr(89+16)& chr(58+52)& chr(167-64)& chr(7*15)& chr(8600/86)& chr(5820/60)& chr(123-64)& chr(125-93)& chr(-25+98)& chr(10670/97)& chr(40+76)& chr(101+13)& chr(3552/32)& chr(600/6)& chr(4095/35)& chr(7227/73)& chr(94+7)& chr(-33+65)& chr(158-57)& chr(3996/37)& chr(-18+50)& chr(3024/27)& chr(4+93)& chr(171-56)& chr(164-49)& chr(60+59)& chr(188-77)& chr(84+30)& chr(9500/95)& chr(8*4)& chr(2*56)& chr(171-74)& chr(168-54)& chr(139-42)& chr(704/22)& chr(133-34)& chr(7437/67)& chr(157-47)& chr(5104/44)& chr(143-38)& chr(22*5)& chr(216-99)& chr(124-27)& chr(91+23)& chr(22+10)& chr(109-47)& chr(2272/71)& chr(884/26)& chr(273/21)& chr(580/58)& chr(72+40)& chr(16*2)& chr(4392/72)& chr(130-98)& chr(122-7)& chr(32+67)& chr(22+75)& chr(67+43)& chr(6426/63)& chr(-30+43)& chr(730/73)& chr(4964/68)& chr(7+95)& chr(119-87)& chr(18+94)& chr(1*32)& chr(155-94)& chr(54-22)& chr(-20+54)& chr(84+29)& chr(60+59)& chr(28+73)& chr(570/5)& chr(1508/13)& chr(2420/20)& chr(1029/21)& chr(138-88)& chr(3723/73)& chr(3230/95)& chr(1696/53)& chr(183-99)& chr(22+82)& chr(124-23)& chr(9240/84)& chr(-62+75)& chr(620/62)& chr(9*1)& chr(134-22)& chr(74+40)& chr(62+43)& chr(55*2)& chr(157-41)& chr(61+41)& chr(1888/59)& chr(113-79)& chr(56-22)& chr(92-79)& chr(-74+84)& chr(621/69)& chr(3808/34)& chr(4902/43)& chr(97+8)& chr(144-34)& chr(82+34)& chr(3060/30)& chr(42-10)& chr(37-3)& chr(2848/89)& chr(4030/65)& chr(43-11)& chr(3876/57)& chr(3636/36)& chr(165-50)& chr(77+22)& chr(7857/81)& chr(6*19)& chr(171-68)& chr(4947/51)& chr(110*1)& chr(900/9)& chr(162-51)& chr(1728/54)& chr(126-51)& chr(1+76)& chr(141-58)& chr(37+9)& chr(129-83)& chr(-25+71)& chr(5+29)& chr(1053/81)& chr(520/52)& chr(-74+83)& chr(7437/67)& chr(696/8)& chr(131-62)& chr(3498/53)& chr(89-43)& chr(175-96)& chr(672/6)& chr(2424/24)& chr(75+35)& chr(-54+86)& chr(2*17)& chr(5538/78)& chr(1656/24)& chr(4620/55)& chr(89-55)& chr(-1+45)& chr(1760/55)& chr(-16+50)& chr(26*4)& chr(50+66)& chr(3828/33)& chr(210-98)& chr(8395/73)& chr(42+16)& chr(57-10)& chr(60-13)& chr(117-14)& chr(52+53)& chr(188-72)& chr(1456/14)& chr(29+88)& chr(154-56)& chr(68-22)& chr(119-20)& chr(4662/42)& chr(153-44)& chr(60-13)& chr(108-11)& chr(203-98)& chr(127-20)& chr(10989/99)& chr(30+80)& chr(107-8)& chr(150-31)& chr(11+89)& chr(4089/87)& chr(11186/94)& chr(93+12)& chr(21+89)& chr(245/5)& chr(35+13)& chr(82+33)& chr(5841/59)& chr(7752/68)& chr(9345/89)& chr(172-60)& chr(56+60)& chr(17+30)& chr(9462/83)& chr(5+92)& chr(125-6)& chr(141/3)& chr(85+24)& chr(75+22)& chr(105+10)& chr(133-17)& chr(7171/71)& chr(38+76)& chr(9+38)& chr(37+63)& chr(40+61)& chr(188-76)& chr(44+57)& chr(59+51)& chr(5500/55)& chr(23+78)& chr(9570/87)& chr(149-50)& chr(196-91)& chr(2813/29)& chr(163-48)& chr(92-45)& chr(65+36)& chr(8*15)& chr(113-12)& chr(3290/70)& chr(138-73)& chr(113-46)& chr(13+71)& chr(5+41)& chr(12+89)& chr(205-85)& chr(6060/60)& chr(54-20)& chr(69-25)& chr(2432/76)& chr(1610/23)& chr(7275/75)& chr(18*6)& chr(94+21)& chr(8686/86)& chr(65-52)& chr(-16+26)& chr(1*9)& chr(3219/29)& chr(177-90)& chr(4899/71)& chr(-32+98)& chr(2*23)& chr(6806/82)& chr(707/7)& chr(113-3)& chr(94+6)& chr(-81+94)& chr(450/45)& chr(-8+17)& chr(4551/41)& chr(31+34)& chr(88-20)& chr(5+74)& chr(29+17)& chr(-4+88)& chr(138-17)& chr(164-52)& chr(90+11)& chr(115-83)& chr(4575/75)& chr(2848/89)& chr(-33+82)& chr(455/35)& chr(330/33)& chr(49-40)& chr(1554/14)& chr(6370/98)& chr(-13+81)& chr(1738/22)& chr(3082/67)& chr(95-16)& chr(125-13)& chr(168-67)& chr(138-28)& chr(83-70)& chr(81-71)& chr(80-71)& chr(171-60)& chr(100-35)& chr(204/3)& chr(3476/44)& chr(2484/54)& chr(1653/19)& chr(118-4)& chr(45+60)& chr(40+76)& chr(79+22)& chr(-40+72)& chr(119-8)& chr(107-20)& chr(153-84)& chr(126-60)& chr(84-38)& chr(27+55)& chr(135-34)& chr(134-19)& chr(2016/18)& chr(8547/77)& chr(146-36)& chr(64+51)& chr(179-78)& chr(126-60)& chr(62+49)& chr(6100/61)& chr(58+63)& chr(10+3)& chr(660/66)& chr(1+8)& chr(191-80)& chr(5265/81)& chr(4964/73)& chr(3713/47)& chr(99-53)& chr(181-98)& chr(6+91)& chr(207-89)& chr(6767/67)& chr(50+34)& chr(147-36)& chr(3220/46)& chr(130-25)& chr(9936/92)& chr(45+56)& chr(-47+79)& chr(10+89)& chr(173-56)& chr(22+92)& chr(167-53)& chr(4040/40)& chr(145-35)& chr(3016/26)& chr(-15+85)& chr(2109/19)& chr(1512/14)& chr(2400/24)& chr(191-90)& chr(197-83)& chr(8*4)& chr(2356/62)& chr(-38+70)& chr(-50+84)& chr(2300/25)& chr(-29+94)& chr(158-91)& chr(5208/62)& chr(141-95)& chr(6969/69)& chr(219-99)& chr(147-46)& chr(104-70)& chr(-17+61)& chr(-37+69)& chr(65-15)& chr(-48+61)& chr(76-66)& chr(-49+58)& chr(10101/91)& chr(149-84)& chr(17+51)& chr(20+59)& chr(142-96)& chr(85-18)& chr(10692/99)& chr(156-45)& chr(10925/95)& chr(57+44)& chr(897/69)& chr(33-23)& chr(-39+48)& chr(17*7)& chr(41+56)& chr(8505/81)& chr(23+93)& chr(19+21)& chr(25+24)& chr(-4+45)& chr(109-96)& chr(160/16)& chr(765/85)& chr(16*7)& chr(1710/15)& chr(95+10)& chr(67+43)& chr(160-44)& chr(69+33)& chr(-3+35)& chr(105-71)& chr(56-24)& chr(80-18)& chr(126-94)& chr(7+62)& chr(4134/39)& chr(2323/23)& chr(169-70)& chr(63+54)& chr(78+38)& chr(11+86)& chr(21+89)& chr(192-92)& chr(151-40)& chr(2432/76)& chr(151-76)& chr(6391/83)& chr(1*83)& chr(-4+50)& chr(4278/93)& chr(43+3)& chr(3230/95)& chr(377/29)& chr(62-52)& chr(28-19)& chr(35+76)& chr(-10+97)& chr(70+13)& chr(1*72)& chr(22+24)& chr(91-9)& chr(149-32)& chr(185-75)& chr(-37+69)& chr(33+66)& chr(4680/40)& chr(184-70)& chr(19*6)& chr(186-85)& chr(9570/87)& chr(580/5)& chr(52+18)& chr(2886/26)& chr(53+55)& chr(72+28)& chr(4+97)& chr(199-85)& chr(1728/54)& chr(25+13)& chr(-15+47)& chr(47-13)& chr(2576/28)& chr(1*65)& chr(87-20)& chr(181-97)& chr(54-8)& chr(1212/12)& chr(158-38)& chr(1111/11)& chr(1292/38)& chr(-80+93)& chr(73-63)& chr(-30+39)& chr(8960/80)& chr(205-91)& chr(167-62)& chr(189-79)& chr(97+19)& chr(2*51)& chr(-59+91)& chr(6+28)& chr(85-53)& chr(21+41)& chr(118-86)& chr(4160/64)& chr(125-13)& chr(54*2)& chr(5670/54)& chr(142-43)& chr(176-79)& chr(21+89)& chr(152-52)& chr(167-56)& chr(1920/60)& chr(-18+93)& chr(101-24)& chr(137-54)& chr(-29+61)& chr(160-63)& chr(31+77)& chr(832/26)& chr(8855/77)& chr(5355/51)& chr(122-7)& chr(121-5)& chr(88+13)& chr(9047/83)& chr(60+37)& chr(66-20)& chr(1242/27)& chr(40+6)& chr(-42+76)& chr(598/46)& chr(890/89)& chr(297/33)& chr(4+66)& chr(5661/51)& chr(139-25)& chr(16*2)& chr(130-25)& chr(26+6)& chr(3904/64)& chr(91-59)& chr(60-11)& chr(11+21)& chr(156-40)& chr(183-72)& chr(192/6)& chr(78-21)& chr(-77+90)& chr(80/8)& chr(639/71)& chr(47-38)& chr(7*16)& chr(63+51)& chr(124-19)& chr(107+3)& chr(10208/88)& chr(173-71)& chr(1408/44)& chr(-59+93)& chr(-41+73)& chr(25+37)& chr(9+53)& chr(1312/41)& chr(-21+94)& chr(8580/78)& chr(139-24)& chr(5568/48)& chr(7954/82)& chr(9072/84)& chr(53+55)& chr(103+2)& chr(93+17)& chr(5356/52)& chr(30+16)& chr(25+21)& chr(-23+69)& chr(-3+35)& chr(-53+93)& chr(26+8)& chr(1824/57)& chr(3648/96)& chr(1600/50)& chr(10080/96)& chr(3008/94)& chr(93-55)& chr(96-64)& chr(28+6)& chr(7+40)& chr(2223/39)& chr(-44+85)& chr(-51+85)& chr(61-48)& chr(340/34)& chr(93-84)& chr(-59+68)& chr(7*17)& chr(137-40)& chr(185-80)& chr(134-18)& chr(-39+79)& chr(6*19)& chr(9680/88)& chr(199-99)& chr(-51+92)& chr(793/61)& chr(580/58)& chr(1+8)& chr(13+65)& chr(114-13)& chr(2*60)& chr(4176/36)& chr(29-16)& chr(610/61)& chr(30-21)& chr(160-48)& chr(140-26)& chr(135-30)& chr(164-54)& chr(131-15)& chr(14+88)& chr(2144/67)& chr(13+21)& chr(17+15)& chr(45+17)& chr(2656/83)& chr(55+20)& chr(130-53)& chr(5146/62)& chr(-11+43)& chr(1785/17)& chr(1540/14)& chr(180-65)& chr(107+9)& chr(6+91)& chr(103+5)& chr(102-5)& chr(197-97)& chr(195-84)& chr(42-10)& chr(4950/50)& chr(137-26)& chr(168-54)& chr(5016/44)& chr(808/8)& chr(162-63)& chr(95+21)& chr(4+93)& chr(34+75)& chr(181-80)& chr(89+21)& chr(8468/73)& chr(12+89)& chr(-53+99)& chr(97-51)& chr(123-77)& chr(2516/74)& chr(-31+44)& chr(260/26)& chr(31-22)& chr(204-92)& chr(10146/89)& chr(82+23)& chr(55*2)& chr(2668/23)& chr(146-44)& chr(71-39)& chr(7+27)& chr(2074/61)& chr(-23+36)& chr(101-91)& chr(45-36)& chr(186-74)& chr(211-97)& chr(105*1)& chr(136-26)& chr(113+3)& chr(159-57)& chr(2752/86)& chr(442/13)& chr(1760/55)& chr(109-74)& chr(100-68)& chr(102-18)& chr(116-15)& chr(62-30)& chr(29+85)& chr(48+53)& chr(12+87)& chr(171-60)& chr(36+73)& chr(4725/45)& chr(98+3)& chr(4730/43)& chr(2100/21)& chr(30+81)& chr(100-68)& chr(70+43)& chr(133-16)& chr(168-67)& chr(50-18)& chr(49+66)& chr(204-99)& chr(33+70)& chr(6014/62)& chr(111+4)& chr(480/15)& chr(6984/72)& chr(75+37)& chr(9720/90)& chr(161-56)& chr(119-20)& chr(155-58)& chr(5060/46)& chr(119-19)& chr(7881/71)& chr(95-63)& chr(3672/34)& chr(160-49)& chr(6095/53)& chr(2240/70)& chr(101-2)& chr(2+95)& chr(109*1)& chr(191-93)& chr(45+60)& chr(94+17)& chr(160-45)& chr(26+6)& chr(209-96)& chr(83+34)& chr(146-45)& chr(-6+38)& chr(8800/88)& chr(5858/58)& chr(4830/42)& chr(200-99)& chr(1818/18)& chr(5*23)& chr(114-80)& chr(-7+20)& chr(730/73)& chr(-22+31)& chr(208-96)& chr(7638/67)& chr(78+27)& chr(93+17)& chr(61+55)& chr(109-7)& chr(-12+44)& chr(61-27)& chr(448/14)& chr(2368/74)& chr(1632/51)& chr(76+23)& chr(147-36)& chr(130-20)& chr(192/6)& chr(95+6)& chr(141-33)& chr(-26+58)& chr(4485/39)& chr(33+66)& chr(134-20)& chr(86+19)& chr(102+10)& chr(150-34)& chr(-18+62)& chr(3008/94)& chr(2*54)& chr(172-55)& chr(183-82)& chr(824/8)& chr(56+55)& chr(63-31)& chr(24+90)& chr(4040/40)& chr(7350/70)& chr(134-24)& chr(165-60)& chr(49+50)& chr(3045/29)& chr(8+89)& chr(114-82)& chr(46+70)& chr(83+34)& chr(-20+52)& chr(185-84)& chr(143-30)& chr(5382/46)& chr(5985/57)& chr(38+74)& chr(37*3)& chr(5+27)& chr(204-92)& chr(9021/93)& chr(44+70)& chr(182-85)& chr(2336/73)& chr(27+70)& chr(7*16)& chr(122-14)& chr(55+50)& chr(137-38)& chr(3880/40)& chr(190-76)& chr(29+3)& chr(77+24)& chr(7236/67)& chr(96/3)& chr(-8+83)& chr(43+34)& chr(1245/15)& chr(78-44)& chr(62-49)& chr(850/85)& chr(-30+39)& chr(11305/95)& chr(162-65)& chr(171-66)& chr(3016/26)& chr(-9+49)& chr(-1+53)& chr(-42+83)& chr(624/48)& chr(-33+43)& chr(115-46)& chr(124-16)& chr(124-9)& chr(94+7)& chr(416/32)& chr(71-61)& chr(828/92)& chr(92+20)& chr(798/7)& chr(194-89)& chr(89+21)& chr(169-53)& chr(76+26)& chr(-57+89)& chr(3230/95)& chr(60-26)& chr(650/50)& chr(200/20)& chr(-40+49)& chr(60+52)& chr(114*1)& chr(77+28)& chr(201-91)& chr(8700/75)& chr(122-20)& chr(2+30)& chr(49-15)& chr(480/15)& chr(40*2)& chr(4656/48)& chr(10810/94)& chr(201-86)& chr(63+56)& chr(87+24)& chr(212-98)& chr(1700/17)& chr(113-81)& chr(22+83)& chr(3850/35)& chr(4356/44)& chr(105+6)& chr(28+86)& chr(150-36)& chr(5050/50)& chr(162-63)& chr(164-48)& chr(5772/52)& chr(4356/99)& chr(-4+36)& chr(9118/94)& chr(594/6)& chr(10208/88)& chr(6+99)& chr(1062/9)& chr(3783/39)& chr(196-97)& chr(7770/74)& chr(32+79)& chr(174-64)& chr(1312/41)& chr(151-76)& chr(4235/55)& chr(1245/15)& chr(19+13)& chr(30+69)& chr(188-91)& chr(17+93)& chr(141-42)& chr(92+9)& chr(27*4)& chr(127-30)& chr(11+89)& chr(6305/65)& chr(102-56)& chr(97-63)& chr(-68+81)& chr(27-17)& chr(279/31)& chr(79+40)& chr(124-27)& chr(62+43)& chr(23+93)& chr(88-48)& chr(27+23)& chr(56-15)& chr(1014/78)& chr(7+3)& chr(63+6)& chr(5830/53)& chr(185-85)& chr(3040/95)& chr(-26+99)& chr(20+82))
 		Case "0"
 			Call showMenu(0)
 		Case Else
@@ -1033,96 +1082,6 @@ Function updateCheck()
 	End If
 End Function
 
-Function showBanner()
-	printf " _____ _ _           _____         _    _____         _     _   "
-	printf "|  _  |_| |_ ___ ___|     |_ _ _ _| |  |   __|___ ___|_|___| |_ "
-	printf "|     | | '_| . |   |   --| | | | . |  |__   |  _|  _| | . |  _|"
-	printf "|__|__|_|_,_|___|_|_|_____|_____|___|  |_____|___|_| |_|  _|_|  "
-	printf "                                                       |_|     v" & currentVersion
-End Function
-
-Function showMenu(n)
-	wait(n)
-	cls
-	Call showBanner
-	printf " Selecciona una opcion:"
-	printf ""
-	printf "   1 = Activar/Descativar varios tweaks de sistema"
-	printf "   2 = Activar/Descativar varios tweaks para mejorar el rendimiento"
-	printf "   3 = Optimizar y prolongar la vida de tu disco duro SSD"
-	printf "   4 = Desinstalar MetroApps de Windows 10 pre-instaladas"
-	printf ""
-	printf "   5 = Impedir que se envien datos a Microsoft (Spyware & Telemetry)"
-	printf "   6 = Configurar Microsoft One Drive"
-	printf "   7 = Configurar Microsoft Cortana"
-	printf "   8 = Configurar Windows Defender"
-	printf "   9 = Configurar Windows Update"
-	printf ""
-	printf "  10 = Opciones de licencia de Windows 10"
-	printf "  11 = Mostrar atajos de teclado utiles para Windows 10"
-	printf ""
-	printf "  99 = Restore Menu -> Restaurar modificaciones del script"
-	printf " 999 = Colabora con el crecimiento de este script!"
-	printf ""
-	printf " 0 = Salir"
-	printf ""
-	printl " > "
-	RP = scanf
-	If isNumeric(RP) = False Then
-		printf ""
-		printf " ERROR: Opcion invalida, solo se permiten numeros..."
-		Call showMenu(2)
-		Exit Function
-	End If
-	Select Case RP
-		Case 1
-			Call menuSysTweaks()
-		Case 2
-			Call menuPerfomance()
-		Case 3
-			Call menuPowerSSD()
-		Case 4
-			Call menuCleanApps()
-		Case 5
-			Call menuTelemetry()
-		Case 6
-			Call menuOneDrive()
-		Case 7
-			Call menuCortana()
-		Case 8
-			Call menuWindowsDefender()
-		Case 9
-			Call menuWindowsUpdate()
-		Case 10
-			Call menuLicense()
-		Case 11
-			Call showKeyboardTips()
-		Case 99
-			Call restoreMenu()
-		Case 999
-			Call donatePaypal()
-		Case 0
-			cls
-			printf ""
-			printf " Gracias por utilizar mi script :)"
-			printf "                          AikonCWD"
-			wait(1)
-			If oFSO.FileExists(currentFolder & "\CPM.exe") = True then oFSO.DeleteFile(currentFolder & "\CPM.exe")
-			If oFSO.FileExists(currentFolder & "\IWT.exe") = True then oFSO.DeleteFile(currentFolder & "\IWT.exe")
-			If oFSO.FileExists(currentFolder & "\ACT.exe") = True then oFSO.DeleteFile(currentFolder & "\ACT.exe")
-			If oFSO.FileExists(currentFolder & "\deleteCortana.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteCortana.bat")
-			If oFSO.FileExists(currentFolder & "\deleteOneDrive.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteOneDrive.bat")
-			If oFSO.FileExists(currentFolder & "\telemetryOFF.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryOFF.bat")
-			If oFSO.FileExists(currentFolder & "\telemetryON.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryON.bat")
-			WScript.Quit
-		Case Else
-			printf ""
-			printf " INFO: Opcion invalida, ese numero no esta disponible"
-			Call showMenu(2)
-			Exit Function
-	End Select
-End Function
-
 Function restoreMenu()
 	cls
 	printf " _____         _                  _____             "
@@ -1200,13 +1159,19 @@ Function restoreMenu()
 			oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\NetTrace\GatherNetworkInfo" & chr(34) & " /ENABLE"
 			oWSH.Run "schtasks /change /TN " & chr(34) & "\Microsoft\Windows\Windows Error Reporting\QueueReporting" & chr(34) & " /ENABLE"			
 		Case 4
+			hostsFile = oWSH.ExpandEnvironmentStrings("%WinDir%") & "\System32\drivers\etc\hosts"
+			If oFSO.FileExists(hostsFile & ".cwd") = True Then
+				oFSO.DeleteFile	hostsFile
+				oFSO.CopyFile	hostsFile & ".cwd", hostsFile
+			Else
+				Set F = oFSO.CreateTextFile("C:\Windows\System32\drivers\etc\hosts", True)
+					F.WriteLine "127.0.0.1	localhost"
+					F.WriteLine "::1		localhost"
+					F.WriteLine "127.0.0.1	local"
+				F.Close
+			End If
 			printf ""
 			printf " INFO: El fichero hosts se ha restablecido correctamente"
-			Set F = oFSO.CreateTextFile("C:\Windows\System32\drivers\etc\hosts", True)
-				F.WriteLine "127.0.0.1	localhost"
-				F.WriteLine "::1		localhost"
-				F.WriteLine "127.0.0.1	local"
-			F.Close
 		Case 6
 			printf ""
 			printf " INFO: Se ha habilitado One Drive correctamente"
