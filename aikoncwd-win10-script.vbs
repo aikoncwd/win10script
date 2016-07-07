@@ -806,7 +806,7 @@ Function menuPerfomance()
 		printf "  | alta demanda de trabajo. Deshabilitar el Core Parking obliga a tu |"
 		printf "  | CPU a trabajar a su maxima velocidad.                             |"
 		printf "  |                                                                   |"
-		printf "  | También aumenta ligeramente el consumo electrico de tu PC         |"
+		printf "  | Tambien aumenta ligeramente el consumo electrico de tu PC         |"
 		printf "  |                                                                   |"
 		printf "  | Se va a descargar un programa, mueve la barra al 100% y pulsa     |"
 		printf "  | aplicar.                                                          |"
