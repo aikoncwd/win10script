@@ -176,6 +176,16 @@ Function menuSysTweaks()
 	Else
 		oWSH.RegWrite "HKLM\Software\Microsoft\Windows\CurrentVersion\ImmersiveShell\UseActionCenterExperience", 1, "REG_DWORD"
 	End If
+	printl " # Utilizar el visor de fotos clasico? (s/n) > "
+	If LCase(scanf) = "s" Then
+		oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/photoview.reg", False
+		oWEB.Send
+		wait(1)
+		Set F = oFSO.CreateTextFile(currentFolder & "\photoview.reg")
+			F.Write oWEB.ResponseText
+		F.Close
+		oWSH.Run "reg import " & currentFolder & "\photoview.reg"
+	End If
 	printf ""
 	printf " >> Reiniciando el explorador de Windows... espera 5 segundos!"
 	oWSH.Run "taskkill.exe /F /IM explorer.exe"
@@ -1110,10 +1120,11 @@ Function showMenu(n)
 			If oFSO.FileExists(currentFolder & "\CPM.exe") = True then oFSO.DeleteFile(currentFolder & "\CPM.exe")
 			If oFSO.FileExists(currentFolder & "\IWT.exe") = True then oFSO.DeleteFile(currentFolder & "\IWT.exe")
 			If oFSO.FileExists(currentFolder & "\ACT.exe") = True then oFSO.DeleteFile(currentFolder & "\ACT.exe")
-			If oFSO.FileExists(currentFolder & "\deleteCortana.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteCortana.bat")
 			If oFSO.FileExists(currentFolder & "\deleteOneDrive.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteOneDrive.bat")
+			If oFSO.FileExists(currentFolder & "\deleteCortana.bat") = True then oFSO.DeleteFile(currentFolder & "\deleteCortana.bat")
 			If oFSO.FileExists(currentFolder & "\telemetryOFF.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryOFF.bat")
 			If oFSO.FileExists(currentFolder & "\telemetryON.bat") = True then oFSO.DeleteFile(currentFolder & "\telemetryON.bat")
+			If oFSO.FileExists(currentFolder & "\photoview.reg") = True then oFSO.DeleteFile(currentFolder & "\photoview.reg")
 			WScript.Quit
 		Case Else
 			printf ""
