@@ -111,3 +111,45 @@ Además se descargará un fichero hosts personalizado que bloquea todos los serv
 ## (6) Microsoft OneDrive
 
 Si no utilizas el servicio de OneDrive recomiendo deshabilitarlo. Si desinstalas OneDrive recuerda que la opción no es reversible
+
+## (7) Microsoft Cortana
+
+¿Utilizas Cortana como asistente personal? No? Pues ahorra algo de espacio y recursos deshabilitando o desinstalando Cortana. Desinstalar Cortana es una función algo compleja, para restaurar Cortana en un futuro deberás usar la opción (4) para ejecutar un `sfc.exe /scannow`, ésta opción suele demorar varios minutos (incluso 1 hora), así que prepara el tiempo con antelación.
+
+## (8) Windows Defender
+
+Con ésta opción podrás deshabilitar Windows Defender de forma definitiva. De ésta forma podrás instalar otro Antivirus de tu preferencia. Si decides deshabilitar Windows Defender asegurate de instalar otra solución antivirus, yo te recomiendo:
+
+- 360 Total Security
+- Avira Antivirus
+- Avast! Antivirus
+- AVG Antivirus
+
+## (9) Windows Updater
+
+Podrás personalizar de que modo quieres que tu Windows 10 se actualice, las opciones posibles son:
+
+    # Deshabilitar 'Windows Auto Update'? (s/n) > n
+    # Deshabilitar 'Windows Update Sharing'? (s/n) > n
+    # Deshabilitar 'Windows Update App'? (s/n) > n
+    # Deshabilitar 'Windows Update Driver'? (s/n) > n
+
+Utiliza las teclas *s* y *n* para indicar si quieres habilitar o no cada opción.
+
+## (10) Opciones de Licencia Windows 10
+
+Desde aquí podrás 3 útiles opciones relacionadas con la activación y licencia de tu Windows 10:
+
+1. Mostrar estado d ela licencia; Un sencillo script mostrará si tienes activado correctamente tu Windows 10, aquí un ejemplo de un Windows correctamente actualizado:
+
+![](http://i.imgur.com/jflOhlW.png)
+
+2. Mostrar la licencia y cd-key instalada. Compatible con OEM; Un sencillo programa te mostrará tu licencia actual, incluso se has upgradeado desde una versión anterior de Windows:
+
+![](http://i.imgur.com/7G3scY3.png)
+
+3. Activar tu Windows 10 (también sirve para Office); Un sencillo activador KMS para activar y licenciar tu Windows 10. Requiere una constraseña para evitar un mal uso.
+
+## (11) Atajos de teclado para Windows 10
+
+to be continued...
