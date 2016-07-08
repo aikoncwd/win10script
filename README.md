@@ -7,7 +7,7 @@
 |---|---|
 |**Versión**|v5.1|
 |**Fecha**|07/07/2016|
-|**Descarga**|[ZIP File](www.google.es)|
+|**Descarga**|[ZIP File](https://github.com/aikoncwd/win10script/raw/master/releases/aikoncwd-win10-script-v5.1.zip)|
 
 ## Introducción
 
@@ -152,4 +152,27 @@ Desde aquí podrás 3 útiles opciones relacionadas con la activación y licenci
 
 ## (11) Atajos de teclado para Windows 10
 
-to be continued...
+Muestra un mensaje con los atajos de teclado nuevos en Windows 10, podrás crear escritorios virtuales o desplazar ventanas para organizar tu espacio de trabajo:
+
+![](http://i.imgur.com/FRv4CSF.png)
+
+## (99) Restore Menu
+
+Desde aquí podrás restaurar cualquier opción modificada por el script. Es muy útil si queremos restaurar el comportamiento de la búsquedas desde el menú inicio (cortana) o para volver a habilitar las Shadow Copies (Restaurar Sistema). Simplemente pulsa la opción deseada para restaurar:
+
+    1 = Habilitar Telemetria
+    2 = Habilitar servicios DiagTrack, RetailDemo y Dmwappush
+    3 = Habilitar tareas programadas que envian datos a Microsoft
+    4 = Restaurar hosts y acceso a servidores de publicidad de Microsoft
+    5 = Habilitar Windows Defender Antivirus
+    6 = Habilitar OneDrive
+    7 = Habilitar Shadow Copy (VSS) e Instantaneas de Volumen
+    8 = Habilitar Windows Search + Indexing Service
+    9 = Habilitar tarea programada del Defragmentador de discos
+    10 = Habilitar la hibernacion en el sistema
+    11 = Habilitar Prefetcher + Superfetch
+    12 = Deshabilitar el tema oscuro (Dark Theme)
+    
+## (999) DOnaciones Paypal
+
+Te ha gustado el script? Quieres colaborar e invitar a AikonCWD a una caña? Puedes hacer una donación de cualquier cantidad usando esa opción. Recibirás un genial dibujo a cambio y me eterna gratitud :smile:
