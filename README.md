@@ -68,7 +68,7 @@ Deshabilitar el **CPU Core Parking** puede evitar cuellos de botella en algunas 
 
 ## (3) Optimizar discos SSD
 
-Éste conjunto de opciones permiten mejorar y prolongar la vida de tus discos SSD. Utiliza ésta opción si tienes Windows 10 instalado en un disco SSD:
+Éste conjunto de opciones permiten mejorar y prolongar la vida de tus **discos SSD**. Utiliza ésta opción si tienes Windows 10 instalado en un disco SSD:
 
     > Habilitar TRIM
     > Deshabilitar VSS (Shadow Copy)
@@ -79,11 +79,19 @@ Deshabilitar el **CPU Core Parking** puede evitar cuellos de botella en algunas 
     > Deshabilitar Prefetcher + Superfetch
     > Deshabilitar ClearPageFileAtShutdown + LargeSystemCache
 
-Al utilizar ésta opción, se deshabilita el sistema de *Shadow Copies* (no podrás usar Restaurar Sistema) y el servicio de Buscador/Indexación (no podrás usar el buscador del menú inicio). Dichas opciones pueden ser restauradas a mano desde el menú de restauración (opción 99)
+Al utilizar ésta opción, se deshabilita el sistema de **Shadow Copies** (no podrás usar Restaurar Sistema en caso de fallo o virus!) y el servicio de **Buscador/Indexación** (no podrás usar el buscador del menú inicio). Dichas opciones pueden ser restauradas a mano desde el menú de restauración (opción 99). Si deseas optimizar tu **SSD** pero deseas mantener las opciones del buscador de Windows y Restaurar Sistema, haz lo siguiente:
+
+1. Opción (3): Aplica optimización de SSD
+2. Opción (99): Menu restaurar
+3. Opción (7): Restaura Shadow Copies
+4. Opción (8): Restaura Indexación
+5. Opción (0): Salir de Restore Menu
+6. Opción (0): Salir del script
+7. Reiniciar tu PC
 
 ## (4) Desinstalar Windows MetroApps
 
-Windows 10 trae preinstalados muchos programas en el menú táctil/metro. El listado es el siguiente:
+Windows 10 trae preinstalados muchos programas en el menú táctil/metro. El 99% de los casos, esos programas no los utilizarás y ocupan memória en tu disco duro. El listado es el siguiente:
 
     > Bing, Zune, Skype, XboxApp
     > Getstarted, Messagin, 3D Builder
@@ -92,11 +100,13 @@ Windows 10 trae preinstalados muchos programas en el menú táctil/metro. El lis
     > Microsoft Office Hub, Office Sway, OneNote
     > Solitaire Collection, CandyCrushSaga
 
-Utiliza ésta opción y todas las aplicaciones serán desinstaladas.
+Utiliza ésta opción y todas las aplicaciones serán desinstaladas. El proceso dura varios minutos (aparecerán pantallas azules), espera a que termine todo el proceso. El proceso de desinstalar las MetroApps, es irreversible.
 
 ## (5) Elimina todo el Spyware y Telemetry de Win10
 
-Poco más que añadir, ésta opción te permite eliminar todo el telemetry de Windows 10. Si lo deseas puedes revertir los cambios para volver a habilitar el Telemetry. Con ésta nueva opción del script, Cortana no se deshabilita de form apredeterminada.
+Poco más que añadir, ésta opción te permite eliminar todo el telemetry de Windows 10. Si lo deseas puedes revertir los cambios para volver a habilitar el Telemetry. Con ésta nueva opción del script, Cortana no se deshabilita de forma predeterminada.
+
+Además se descargará un fichero hosts personalizado que bloquea todos los servidores de spyware/telemetry de Windows 10, así como los principales dominios de publicidad y adware de Internet.
 
 ## (6) Microsoft OneDrive
 
