@@ -37,7 +37,20 @@ Descomprimimos el fichero y situamos el script en cualquier carpeta (Mis Documen
 
 Permite personalizar el aspecto de tu Windows 10, habilitando o deshabilitando algunas características ocultas:
 
-![](http://i.imgur.com/vclpm3y.png)
+    # Deshabilitar 'Acceso Rapido' como opcion por defecto en Explorer?
+    # Crear icono 'Modo Dios' en el Escritorio?
+    # Habilitar el tema oscuro de Windows 'Dark Theme'?
+    # Mostrar icono 'Mi PC' en el Escritorio?
+    # Mostrar siempre la extension para archivos conocidos?
+    # Deshabilitar 'Lock Screen'?
+    # Forzar 'Vista Clasica' en el Panel de Control?
+    # Deshabilitar 'Reporte de Errores' de Windows?
+    # Abrir cmd.exe al pulsar Win+U?
+    # Habilitar/Deshabilitar el control de cuentas de usuario UAC?
+    # Habilitar/Deshabilitar el inicio de sesion sin password?
+    # Utilizar control de volumen clasico?
+    # Utilizar el centro de notificaciones clasico?
+    # Utilizar el visor de fotos clasico?
 
 Utiliza las teclas *s* y *n* para indicar si quieres habilitar o no cada opción.
 
@@ -47,9 +60,11 @@ Permite deshabilitar funciones poco utilizadas y reducir el consumo de recursos 
 
 ![](http://i.imgur.com/eQvUyHp.png)
 
-La cuarta opción permite deshabilitar el Wifi, no utilices esa opción si estás en un portátil o si tu conexión a internet depende de algún sistema Wifi. Solo recomendable para equipos de sobremesa con cable ethernet.  
-El proceso de cambiar la configuración de compresión de ficheros es lento. Si decides utilizar esa opción deberás esperar varios minutos hasta que el proceso termine.  
-Deshabilitar el CPU Core Parking puede evitar cuellos de botella en algunas aplicaciones y juegos, pero incrementará ligeramente la electricidad consumida por tu CPU.
+Encontrarás una opción para deshabilitar wl Wifi. **Si tu PC utiliza conexión Wifi para acceder a Internet (por ejemplo un portátil), no desactives el Wifi.** Ésta opción solo es recomendable para equipos de sobremesa que utilicen cable ethernet para conectarse.
+
+**El proceso de cambiar la configuración de compresión de ficheros es lento.** Si decides utilizar esa opción deberás esperar varios minutos hasta que el proceso termine.
+
+Deshabilitar el **CPU Core Parking** puede evitar cuellos de botella en algunas aplicaciones y juegos, pero incrementará ligeramente la electricidad consumida por tu CPU.
 
 ## (3) Optimizar discos SSD
 
@@ -81,7 +96,7 @@ Utiliza ésta opción y todas las aplicaciones serán desinstaladas.
 
 ## (5) Elimina todo el Spyware y Telemetry de Win10
 
-Paco más que añadir, ésta opción te permite eliminar todo el telemetry de Windows 10. Si lo deseas puedes revertir los cambios para volver a habilitar el Telemetry. Con ésta nueva opción del script, Cortana no se deshabilita de form apredeterminada.
+Poco más que añadir, ésta opción te permite eliminar todo el telemetry de Windows 10. Si lo deseas puedes revertir los cambios para volver a habilitar el Telemetry. Con ésta nueva opción del script, Cortana no se deshabilita de form apredeterminada.
 
 ## (6) Microsoft OneDrive
 
