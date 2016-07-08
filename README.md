@@ -173,6 +173,6 @@ Desde aquí podrás restaurar cualquier opción modificada por el script. Es muy
     11 = Habilitar Prefetcher + Superfetch
     12 = Deshabilitar el tema oscuro (Dark Theme)
     
-## (999) DOnaciones Paypal
+## (999) Donaciones Paypal
 
 Te ha gustado el script? Quieres colaborar e invitar a **AikonCWD** a una caña? Puedes hacer una donación de cualquier cantidad usando esa opción. Recibirás un genial dibujo a cambio y me eterna gratitud :smile:
