@@ -5,9 +5,9 @@
 ## Información rápida
 |||
 |---|---|
-|**Versión**|v5.1|
-|**Fecha**|07/07/2016|
-|**Descarga**|[ZIP File](https://github.com/aikoncwd/win10script/raw/master/releases/aikoncwd-win10-script-v5.1.zip)|
+|**Versión**|v5.2|
+|**Fecha**|15/07/2016|
+|**Descarga**|[ZIP File](https://github.com/aikoncwd/win10script/raw/master/releases/aikoncwd-win10-script-v5.2.zip)|
 
 ## Introducción
 
