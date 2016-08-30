@@ -19,9 +19,6 @@ reg add "HKLM\Software\Policies\Microsoft\Windows\SettingSync" /v "DisableSettin
 reg add "HKLM\Software\Policies\Microsoft\Windows\Device Metadata" /v "PreventDeviceMetadataFromNetwork" /t REG_DWORD /d "1" /f
 reg add "HKLM\Software\Policies\Microsoft\Windows\SettingSync" /v "DisableSettingSyncUserOverride" /t REG_DWORD /d "1" /f
 set datetime=%date% %time:~0,8%
-chcp 1251> nul 
-netsh.exe advfirewall firewall add rule name="Block Microsoft Telemetry IP" dir=out action=block localip=any remoteip="23.212.108.121-23.212.108.162,64.4.0.0/18,65.52.0.0/14,111.221.29.0-111.221.29.255,157.56.91.77,168.62.0.0/15,168.61.0.0/16" description="Rule created by Toogle Tweaker on %datetime%. Do not edit rule by hand" enable=yes
-chcp 1251> nul 
 net stop DiagTrack 
 net stop diagnosticshub.standardcollector.service 
 net stop dmwappushservice 
