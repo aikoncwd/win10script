@@ -9,7 +9,7 @@ Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
 Set oVOZ = CreateObject("SAPI.SpVoice")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 
-currentVersion = "5.2"
+currentVersion = "5.3"
 currentFolder  = oFSO.GetParentFolderName(WScript.ScriptFullName)
 
 Call ForceConsole()
@@ -396,6 +396,7 @@ Function menuTelemetry()
 	printf ""
 	printf "  1 = Deshabilitar TODO el Telemetry"
 	printf "  2 = Habilitar TODO el Telemetry"
+	printf "  3 = Solucionar problemas con Skype"
 	printf ""
 	printf "  0 = Volver al menu principal"
 	printf ""
@@ -568,6 +569,14 @@ Function menuTelemetry()
 			End If
 			wait(2)
 		Case "2"
+			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
+			oWEB.Send
+			wait(1)
+			Set F = oFSO.CreateTextFile(currentFolder & "\telemetryON.bat")
+				F.Write oWEB.ResponseText
+			F.Close
+			oWSH.Run currentFolder & "\telemetryON.bat"
+		Case "3"
 			oWEB.Open "GET", "https://raw.githubusercontent.com/aikoncwd/win10script/master/dependencias/telemetryON.bat", False
 			oWEB.Send
 			wait(1)
