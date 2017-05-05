@@ -36,8 +36,8 @@ Function showMenu(n)
 	Call showBanner
 	printf " Selecciona una opcion:"
 	printf ""
-	printf "   1 = Activar/Descativar varios tweaks de sistema"
-	printf "   2 = Activar/Descativar varios tweaks para mejorar el rendimiento"
+	printf "   1 = Activar/Desactivar varios tweaks de sistema"
+	printf "   2 = Activar/Desactivar varios tweaks para mejorar el rendimiento"
 	printf "   3 = Optimizar y prolongar la vida de tu disco duro SSD"
 	printf "   4 = Desinstalar MetroApps de Windows 10 pre-instaladas"
 	printf ""
@@ -1123,7 +1123,7 @@ Function restoreMenu()
 	RP = scanf
 	If Not isNumeric(RP) = True Then
 		printf ""
-		printf " ERROR: Opcion invalida, solo se permiten numero..."
+		printf " ERROR: Opcion invalida, solo se permiten numeros..."
 		Call restoreMenu()
 		Exit Function
 	End If
