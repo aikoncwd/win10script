@@ -9,7 +9,7 @@ Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
 Set oVOZ = CreateObject("SAPI.SpVoice")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 
-currentVersion = "5.3"
+currentVersion = "5.4"
 currentFolder  = oFSO.GetParentFolderName(WScript.ScriptFullName)
 
 Call ForceConsole()
