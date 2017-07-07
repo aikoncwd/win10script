@@ -1238,6 +1238,8 @@ Function restoreMenu()
 			printf ""
 			printf " Info: Se ha habilitado el Sensor preview, comprueba si ya funcionan los sensores, cómo el acelerometro o el de luz."
 			oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\SensorPermissionState", 1,  "REG_DWORD"
+                        oWSH.Run "sc start SensorDataService"
+			oWSH.Run "sc start SensrSvc"
 		Case 0
 			MsgBox "Si has restaurado alguna opcion/configuracion, te recomiendo que reinicies el sistema ahora", vbInformation + vbOkOnly, "AikonCWD Script for Win10"
 			Call showMenu(0)
