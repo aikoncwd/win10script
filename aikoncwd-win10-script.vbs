@@ -1115,8 +1115,9 @@ Function restoreMenu()
 	printf "   9 = Habilitar tarea programada del Defragmentador de discos"
 	printf "  10 = Habilitar la hibernacion en el sistema"
 	printf "  11 = Habilitar Prefetcher + Superfetch"
-	printf "  12 = Deshabilitar el tema oscuro (Dark Theme)"
 	printf ""
+	printf "  12 = Deshabilitar el tema oscuro (Dark Theme)"															
+	printf "  13 = Habilitar Monitorización para Sensores de Tablets con Windows 10"
 	printf "   0 = Salir; Regresar al menu principal"
 	printf ""
 	printl " > "
@@ -1233,6 +1234,10 @@ Function restoreMenu()
 			printf " INFO: Se ha deshabilitado el tema oscuro (Dark Theme)"
 			oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 1, "REG_DWORD"
 			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 1, "REG_DWORD"		
+		Case 13 
+			printf ""
+			printf " Info: Se ha habilitado el Sensor preview, comprueba si ya funcionan los sensores, cómo el acelerometro o el de luz.
+			oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\SensorPermissionState", 1,  "REG_DWORD"
 		Case 0
 			MsgBox "Si has restaurado alguna opcion/configuracion, te recomiendo que reinicies el sistema ahora", vbInformation + vbOkOnly, "AikonCWD Script for Win10"
 			Call showMenu(0)
