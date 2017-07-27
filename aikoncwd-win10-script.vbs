@@ -9,7 +9,7 @@ Set oWEB = CreateObject("MSXML2.ServerXMLHTTP")
 Set oVOZ = CreateObject("SAPI.SpVoice")
 Set oWMI = GetObject("winmgmts:\\.\root\CIMV2")
 
-currentVersion = "5.4"
+currentVersion = "5.5"
 currentFolder  = oFSO.GetParentFolderName(WScript.ScriptFullName)
 
 Call ForceConsole()
@@ -1117,7 +1117,7 @@ Function restoreMenu()
 	printf "  11 = Habilitar Prefetcher + Superfetch"
 	printf "  12 = Deshabilitar el tema oscuro (Dark Theme)"
 	printf ""															
-	printf "  13 = Habilitar Monitorización para Sensores de Tablets con Windows 10"
+	printf "  13 = Habilitar Monitorizacion para Sensores de Tablets con Windows 10"
 	printf "   0 = Salir; Regresar al menu principal"
 	printf ""
 	printl " > "
@@ -1236,7 +1236,7 @@ Function restoreMenu()
 			oWSH.RegWrite "HKCU\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize\AppsUseLightTheme", 1, "REG_DWORD"		
 		Case 13 
 			printf ""
-			printf " Info: Se ha habilitado el Sensor preview, comprueba si ya funcionan los sensores, cómo el acelerometro o el de luz."
+			printf " Info: Se ha habilitado el Sensor preview, comprueba si ya funcionan los sensores de acelerometro y luz."
 			oWSH.RegWrite "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Sensor\Overrides\{BFA794E4-F964-4FDB-90F6-51056BFE4B44}\SensorPermissionState", 1,  "REG_DWORD"
                         oWSH.Run "sc start SensorDataService"
 			oWSH.Run "sc start SensrSvc"
