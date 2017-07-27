@@ -5,8 +5,8 @@
 ## Información rápida
 |||
 |---|---|
-|**Versión**|v5.3|
-|**Fecha**|30/08/2016|
+|**Versión**|v5.5|
+|**Fecha**|07/07/2017|
 |**Descarga**|[ZIP File](https://github.com/aikoncwd/win10script/raw/master/releases/aikoncwd-win10-script-v5.3.zip)|
 
 ## Introducción
@@ -172,6 +172,7 @@ Desde aquí podrás restaurar cualquier opción modificada por el script. Es muy
     10 = Habilitar la hibernacion en el sistema
     11 = Habilitar Prefetcher + Superfetch
     12 = Deshabilitar el tema oscuro (Dark Theme)
+    13 = Rehabilitar la Monitorización de Sensores para Tabletas con Windows 10
     
 ## (999) Donaciones Paypal
 
