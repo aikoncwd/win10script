@@ -563,6 +563,10 @@ Function menuTelemetry()
 					F.WriteLine "0.0.0.0 feedback.windows.com"
 					F.WriteLine "0.0.0.0 feedback.microsoft-hohm.com"
 					F.WriteLine "0.0.0.0 feedback.search.microsoft.com"
+					F.WriteLine "0.0.0.0 redshell.io"
+					F.WriteLine "0.0.0.0 api.redshell.io"
+					F.WriteLine "0.0.0.0 treasuredata.com"
+					F.WriteLine "0.0.0.0 api.treasuredata.com"
 				F.Close
 				printf ""
 				printf " INFO: Fichero HOSTS escrito correctamente"
